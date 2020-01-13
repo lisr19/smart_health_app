@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>个人信息编辑页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					设备选择
+				</div>
+				<div class="baike-header-top-right">
+
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="my-form">
+			<div class="mui-scroll">
+				<!--主要内容-->
+
+				<!--<div class="login-select" id="family-button" style="margin-top: 1.1rem;">
+					家庭体检设备
+				</div>
+
+				<div class="login-select" id="scale-button">
+					乐心体脂秤
+				</div>-->
+				<div class="divice-select" id="family-button">
+                    <div class="divice-select-left">
+                    	<img src="img/divice.png" />
+                    </div>
+                    <div class="divice-select-center">
+                    	家庭检测设备组
+                    </div>
+                    <div class="divice-select-right">
+                    	<img src="img/right-tip.png" />
+                    </div>
+				</div>
+				<div class="divice-select" id="scale-button">
+                    <div class="divice-select-left">
+                    	<img src="img/weight.png" />
+                    </div>
+                    <div class="divice-select-center">
+                    	智能体脂秤
+                    </div>
+                    <div class="divice-select-right">
+                    	<img src="img/right-tip.png" />
+                    </div>
+				</div>
+				<div class="divice-select" id="watch-button">
+                    <div class="divice-select-left">
+                    	<img src="img/watch.png" />
+                    </div>
+                    <div class="divice-select-center">
+                    	智能手表
+                    </div>
+                    <div class="divice-select-right">
+                    	<img src="img/right-tip.png" />
+                    </div>
+				</div>
+				<div class="divice-add">
+					请期待更多设备~
+				</div>
+
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#my-form",
+				data: {
+					sex: '',
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+
+			//家庭检测设备
+			document.getElementById('family-button').addEventListener('tap', function() {
+
+				mui.openWindow({
+					url: 'familyCheck.html',
+					id: 'familyCheck'
+				})
+
+			})
+			
+			//乐心体脂秤
+			document.getElementById('scale-button').addEventListener('tap', function() {
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+				var sex = localStorage.getItem('sex');
+				var height = localStorage.getItem('height');
+				var weight = localStorage.getItem('weight');
+				var year = localStorage.getItem('year');
+				var month = localStorage.getItem('month');
+				var day = localStorage.getItem('day');
+				var userid = localStorage.getItem('userid');
+				if(mui.os.android) {
+					// 获取主Activity对象的实例
+					var main = plus.android.runtimeMainActivity();
+					var Intent = plus.android.importClass("android.content.Intent");
+					var intent = new Intent(main.getIntent());
+					intent.putExtra("token",token);
+					intent.putExtra("phone",phone);
+					intent.putExtra("sex",sex);
+					intent.putExtra("height",height);
+					intent.putExtra("weight",weight);
+					intent.putExtra("year",year);
+					intent.putExtra("month",month);
+					intent.putExtra("day",day);
+					intent.putExtra("userid",userid);
+					intent.setClassName(main, "com.sysu.Smart_health.LSBodyFat.LSBodyFat");
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+					main.startActivity(intent);
+
+				} else {
+					mui.alert('未知错误', '提示', null);
+				}
+                  
+//				mui.openWindow({
+//					url: 'lexinData.html',
+//					id: 'lexinData'
+//				})
+			})
+			
+			
+			//智能手表
+			document.getElementById('watch-button').addEventListener('tap', function() {
+
+				mui.openWindow({
+					url: 'SmartWatch.html',
+					id: 'SmartWatch'
+				})
+
+			})
+			
+		</script>
+	</body>
+
+</html>

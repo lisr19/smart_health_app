@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>物业通知页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					物业通知
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="property-from">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="tipContent">
+					<div class="tipList">
+						<!--单条消息-->
+						<!--<div class="tipList-One" v-for='item in propertyList' :desc = 'item.desc' :time = 'item.time' :title = 'item.title'>
+							<div class="tipList-One-left">
+								<img src="img/Rectangle 14.png" />
+							</div>
+							<div class="tipList-One-right">
+								<div class="tipList-One-right-title">
+									温馨提醒<span>{{item.time}}</span>
+								</div>
+								<div class="tipList-One-right-content">
+									{{item.title}}
+								</div>
+							</div>
+						</div>-->
+						<div class="noMessage-img" v-if="nomessage == '1'">
+							<img src="img/nomessage2.png" />
+							<span>暂无通知...</span>
+						</div>
+
+					</div>
+				</div>
+				<!--主要内容结束-->
+
+				<!--底部-->
+				<div class="footer">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/utils/http.js" ></script>
+		<script type="text/javascript" src="js/configUrl.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: '#property-from',
+				data: {
+					propertyList: '',
+					nomessage: '0',
+					
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+			});
+//			loadMesage();
+           loadProperty();
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+
+			mui(".tipList").on('tap', '.tipList-One', function() {
+				
+				var thisTip = this;
+				
+				var thisdesc = thisTip.getAttribute('desc');
+				var thistitle = thisTip.getAttribute('title');
+				var thistime = thisTip.getAttribute('time');
+				
+				mui.openWindow({
+					url:'propertyRead.html',
+					id:'propertyRead',
+					extras:{
+						desc:thisdesc,
+						time:thistime,
+						title:thistitle
+						
+					}
+					
+				})
+				
+				
+				
+			});
+			
+			
+			//物业服务H5页面
+			function loadProperty(){
+				
+				
+				var smallComId = localStorage.getItem('smallComId');
+				var token2 = localStorage.getItem('token2');
+				
+				
+				
+//				var params ={
+//					
+//					token:token2,
+//					smallCommunityCode:smallComId
+//					
+//				}
+//				
+//				
+//				var data = doGet('http://test.dgyunju.cn/collegesite/index.html',params,function(data){
+//					
+//					console.log('物业服务页面'+JSON.stringify(data));
+//					
+//					
+//					
+//				})
+                 console.log(token2);
+                 console.log(smallComId)
+              
+				
+				
+				
+				
+			}
+			
+
+			//物业通知接口
+			function loadMesage() {
+
+				var token2 = localStorage.getItem('token2');
+				console.log(token2)
+				mui.ajax('http://zhoushengli.s1.natapp.cc/propertyNotice/V1.0.0/getList', {
+					data: {
+						token: token2,
+						pageSize: 10,
+						currentPage: 1
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+
+						console.log('物业通知'+JSON.stringify(data));
+						if(data.code == '0') {
+							var datajson = data.data;
+							if(datajson == '') {
+								vm.nomessage = '1';
+							} else {
+								vm.propertyList = data.data.list;
+							}
+						} else {
+							vm.nomessage = '1';
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+		</script>
+	</body>
+
+</html>

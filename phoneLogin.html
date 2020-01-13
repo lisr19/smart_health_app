@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登录界面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+	</head>
+
+	<body>
+		<div class="login-title">
+			手机登录/注册
+		</div>
+		<div class="login-form" id="login-form">
+			<div class="login-username">
+				<div class="login-username-icon">
+					<img src="img/username.png" />
+				</div>
+				<input v-model="username" id="username" placeholder="请输入手机号进行登录/注册" />
+			</div>
+          	<!--遮盖层,防止多次点击-->
+		<div v-if="zhegai == '1'" class="model-div"></div>
+		</div>
+		<div class="login-submit">
+			<button type="button" id="submit-button" class="mui-btn login-button">获取验证码</button>
+
+		</div>
+		<div class="login-zhuce"><span id="register-button">密码登录</span> | <span id="onekey-button">一键登录</span></div>
+		<!--协议-->
+		<div class="service-tip">
+			<span>注册登录表示你已阅读并同意
+			<span style="color: #4A4A4A;text-decoration:underline;" id="readTip">智慧健康服务协议及隐私政策</span></span>
+		</div>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var vm = new Vue({
+				el: "#login-form",
+				data: {
+					username: '',
+					zhegai:'0',
+				}
+			})
+			//监听内容变化，有内容变色
+			vm.$watch('username', function() {
+				if(vm.username == null || vm.username == '') {
+					document.getElementById("submit-button").className = "mui-btn login-button";
+
+				} else {
+					document.getElementById("submit-button").className = "mui-btn-blue login-button-active";
+
+				}
+			});
+			mui.plusReady(
+				function() {
+					// 1. 声明的JS“扩展插件别名”
+					var _BARCODE = 'CtAccountPlugin',
+						B = window.plus.bridge,
+						CtAccountPlugin = {
+							// 2. 声明异步返回方法
+							onCreate: function(cbOk, cbErr) {
+								var success = typeof cbOk !== 'function' ? null : function(args) {
+										cbOk(args);
+									},
+									fail = typeof cbErr !== 'function' ? null : function(code) {
+										cbErr(code);
+									},
+									callbackID = B.callbackId(success, fail);
+								// 3. 通知Native层CtAccountPlugin扩展插件运行”onCreate”方法
+								return B.exec(_BARCODE, 'onCreate', [callbackID]);
+							}
+						};
+					window.plus.CtAccountPlugin = CtAccountPlugin;
+
+					//本地存有token则自动进入主界面
+					var userKEY = localStorage.getItem("token");
+					if(userKEY) {
+						mui.openWindow({
+							url: 'index.html',
+							id: 'index'
+						})
+					}
+
+					//登录功能
+					document.getElementById('submit-button').addEventListener('tap', function() {
+						login1();
+					});
+
+					//密码登录
+					document.getElementById('register-button').addEventListener('tap', function() {
+						mui.openWindow({
+							url: 'login.html',
+							id: 'login'
+						})
+
+					});
+
+					//一键登录
+					document.getElementById('onekey-button').addEventListener('tap', function() {
+
+						// 4. 调用拓展插件的方法，接收Native的返回结果
+						window.plus.CtAccountPlugin.onCreate(function(args) {
+							var data = JSON.parse(args);
+
+							var token = data.data.token;
+							var name = data.data.userInfo.name;
+							var sex = data.data.userInfo.sex;
+							var userid = data.data.userInfo.id;
+							//							var email = data.data.userInfo.email;
+							var phone = data.data.userInfo.phone;
+							var weight = data.data.userInfo.weight;
+							var height = data.data.userInfo.height;
+							var year = data.data.userInfo.year;
+							var month = data.data.userInfo.month;
+							var day = data.data.userInfo.day;
+							var idNumber = data.data.userInfo.idNumber;
+							var token2 = data.data.token2;
+
+							localStorage.setItem("token", token);
+							localStorage.setItem("token2", token2);
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+							//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year);
+							localStorage.setItem("month", month);
+							localStorage.setItem("day", day);
+							localStorage.setItem("idNumber", idNumber);
+
+							mui.openWindow({
+								url: 'index.html',
+								id: 'index'
+							});
+						}, function(code) {
+							mui.toast(code);
+						});
+
+					});
+				});
+
+			//获取验证码
+			function login1() {
+				var phone = vm.username;
+				
+				//手机号正则
+				var phoneReg = /(^1[3|4|5|7|8|9]\d{9}$)|(^09\d{8}$)/;
+				//电话
+				if (!phoneReg.test(phone)) {
+				mui.toast('请输入有效的手机号码！');
+				vm.zhegai = '0';
+					return;
+				}
+				
+				
+                vm.zhegai = '1';
+				mui.ajax(baseUrl + '/SMS/sendCode', {
+					data: {
+						phone: phone
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log('asd' + JSON.stringify(data));
+						if(data.code == '0'){
+							
+						mui.toast(data.data);
+                       
+                      }else{
+                      	
+                      	mui.toast(data.msg);
+                      }
+                      vm.zhegai = '0';
+					},
+					error: function(xhr, type, errorThrown) {
+                         vm.zhegai = '0';
+					}
+				});
+
+				mui.openWindow({
+					url: 'phoneLoginCheck.html',
+					id: 'phoneLoginCheck',
+					extras: {
+						phone: phone
+					}
+				})
+			}
+			
+			//密码登录
+					document.getElementById('readTip').addEventListener('tap', function() {
+						mui.openWindow({
+							url: 'lawTip.html',
+							id: 'lawTip'
+						})
+
+					});
+		</script>
+	</body>
+
+</html>

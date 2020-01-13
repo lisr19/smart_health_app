@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>编辑组成员页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link href="css/mui.picker.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					编辑家庭组成员
+				</div>
+				<div class="baike-header-top-right" id="addGroup">
+					添加
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="group-from">
+			<div class="mui-scroll">
+				<div class="groupName" id="editGroupName">
+					<span>家庭组名:</span><span id="groupName"></span>
+					<img src="img/right-tip.png" />
+				</div>
+				<!--主要内容-->
+				<div class="fenjiekuai"></div>
+
+				<div v-for="item in userList" class="family-option" style="margin-bottom: 0.3rem;">
+					<div class="family-option-header">
+						<img v-if="guolv(item.sex,item.year) == 1" src="img/woman.png" />
+						<img v-if="guolv(item.sex,item.year) == 2" src="img/mans.png" />
+
+						<img v-if="guolv(item.sex,item.year) == 3" src="img/girls.png" />
+						<img v-if="guolv(item.sex,item.year) == 4" src="img/boys.png" />
+						<span>{{item.name}}</span>
+						<button class="delete-user" @click="deletauser(item.id)">删除</button>
+					</div>
+					<div class="family-option-body">
+						<div>身高：{{item.height}}cm</div>
+						<div>体重：{{item.weight}}kg</div>
+						<div>电话：{{item.phone}}</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+        <div class="tuichu" id="editSub">
+			<span>删除家庭组</span>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#group-from",
+				data: {
+					userList: '',
+					groupid: '',
+					quanxian: 0,
+					groupAdmin:[]
+				},
+				methods: {
+					guolv: function(sex, year) { //根据条件改变头像
+						var year1 = year;
+						var myDate = new Date();
+						var thisYear = myDate.getFullYear();
+						var nianlin = thisYear - year;
+						if(nianlin > 18 && sex == 3) { //女人
+							return 1;
+						}
+						if(nianlin > 18 && sex != 3) { //男人			
+							return 2;
+						}
+						if(nianlin < 18 && sex == 3) { //小女孩
+							return 3;
+						}
+						if(nianlin < 18 && sex != 3) { //小男孩
+							return 4;
+						}
+
+					},
+					deletauser: function(userid) {
+
+						//删除用户
+						var userOwn = localStorage.getItem('userid');
+						if(vm.userList[0].id == userid) {
+							mui.toast('创建者不能删除');
+						} else {
+							if(vm.quanxian == 1) {
+
+								var groupid = vm.groupid;
+								var phone = localStorage.getItem('phone');
+								var token = localStorage.getItem("token");
+								console.log(groupid);
+								mui.ajax(baseUrl + '/group/delMember', {
+									headers: {
+										'Authorization': token,
+										phone: phone
+									},
+
+									data: {
+										group_id: groupid,
+										user_ids: userid
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'get', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+
+										mui.toast('删除成功');
+										location.reload();
+
+									},
+									error: function(xhr, type, errorThrown) {
+
+									}
+								});
+
+							}if(vm.quanxian == 0 && userOwn == userid) {
+
+								var groupid = vm.groupid;
+								var phone = localStorage.getItem('phone');
+								var token = localStorage.getItem("token");
+								console.log(groupid);
+								mui.ajax(baseUrl + '/group/delMember', {
+									headers: {
+										'Authorization': token,
+										phone: phone
+									},
+
+									data: {
+										group_id: groupid,
+										user_ids: userid
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'get', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+
+										mui.toast('你已退出家庭组');
+										mui.back();
+
+									},
+									error: function(xhr, type, errorThrown) {
+
+									}
+								});
+
+							} if(vm.quanxian == 0) {
+
+								mui.toast('只有创建人可以删除其他组成员');
+							}
+						}
+
+					}
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				loadUserData();
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				var opener = plus.webview.getWebviewById("familyHealthGroup");
+				mui.fire(opener, 'clearData-group');
+				mui.back();
+			});
+			
+			//删除组
+			document.getElementById('editSub').addEventListener('tap', function() {
+				var btnArray = ['取消', '确定删除'];
+					mui.confirm('删除后不可恢复，是否确定删除家庭', '删除确认', btnArray, function(e) {
+						 
+						if(e.index == 1) {
+						
+                             var params ={
+                             	ids:vm.groupid,
+                             	
+                             }
+                             var data = doGet('/group/del',params,function(data){
+                             
+                              if(data.code == '0'){
+                              	
+                              	mui.toast('删除成功！');
+                              	var opener = plus.webview.getWebviewById("familyHealthGroup");
+				                mui.fire(opener, 'clearData-group');
+				                mui.back();
+                              	
+                              }
+                             	
+                             	
+                             })
+                             
+                             
+							
+						} else {
+							return;
+						}
+					})
+				
+				
+				
+				
+			});
+			
+				
+			
+			
+            
+            
+            //全局监听事件刷新页面
+			window.addEventListener('clearData-edit', function(evt) {
+				loadUserData();
+			});
+
+			//添加成员
+			document.getElementById('addGroup').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'saoma.html',
+					id: 'saoma',
+					extras: {
+						groupid: vm.groupid,
+						groupAdmin:[]
+						
+					}
+
+				})
+			});
+			
+			//修改组名
+			document.getElementById('editGroupName').addEventListener('tap', function() {
+				var self = plus.webview.currentWebview();
+				mui.openWindow({
+					url: 'familyGroupEditName.html',
+					id: 'familyGroupEditName',
+					extras: {
+					    groupid:vm.groupid
+					}
+
+				})
+			});
+
+			//获取组内成员
+			function loadUserData() {
+
+				var self = plus.webview.currentWebview();
+				vm.groupid = self.groupid;
+				var groupName = localStorage.getItem('groupName');
+				document.getElementById('groupName').innerHTML = groupName;
+				var phone = localStorage.getItem('phone');
+				var token = localStorage.getItem("token");
+				var userid = localStorage.getItem('userid');
+
+				mui.ajax(baseUrl + '/user/findListByGroup', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+
+						groupId: vm.groupid
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+							mui.toast('查询失败！');
+							return;
+						} else {
+
+							vm.userList = data.data;
+                            
+                            //判断是否是创建人
+							var rows = data.data;
+							rows.sort(function(a, b) {
+								return Date.parse(a.groupJoinTime) - Date.parse(b.groupJoinTime); //时间正序
+							});
+							for(var i = 0, l = rows.length; i < l; i++) {
+							   vm.groupAdmin.push(rows[i].id);
+							}
+							
+
+							//根据创建人给与权限
+							if(userid != vm.groupAdmin[0]) {
+
+								vm.quanxian = 0;
+
+							} else {
+
+								vm.quanxian = 1;
+							}
+
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+		</script>
+	</body>
+
+</html>

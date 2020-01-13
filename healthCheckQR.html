@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>二维码信息</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					体检数据二维码
+				</div>
+				<div class="baike-header-top-right">
+					<!--打印-->
+				</div>
+			</div>
+		</div>
+		
+	    <!--二维码名片-->
+	    <div class="myself-code">
+	    	<div class="QR-code">
+	    		<div class="QR-container" id="qrcode"></div>
+	    		<div class="QR-miaoshu">
+                                                             扫一扫上面的二维码，可查看体检数据
+				</div>
+	    	</div>
+	    </div>
+		
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/qrcode.min.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+		    mui.init();
+			mui.plusReady(function() {
+
+				loadQRcode();
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			
+			
+			//生成二维码
+			function loadQRcode() {
+			
+			  
+			 var name = localStorage.getItem('name');
+			 
+			
+				
+			  var userData ='userCheck='+localStorage.getItem('userid')+'='+name;
+			  
+			  console.log(userData);
+				
+				// 二维码设置参数方式
+				var qrcode = new QRCode('qrcode', {
+					text: userData,//用户id生成二维码
+					width: 224,
+					height: 224,
+					colorDark: '#000000',
+					colorLight: '#ffffff',
+					correctLevel: QRCode.CorrectLevel.H
+				});
+				
+
+			}
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

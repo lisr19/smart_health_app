@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="UTF-8">
+		<title>空气质量页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div id="air-from">
+		
+				<div class="header" style="background-image: url(img/background.svg);background-size:cover;">
+					<div class="baike-header">
+						<div class="baike-header-left" id="back">
+							<img src="img/return.png" />
+						</div>
+						<div class="baike-header-right-center">
+							空气质量
+						</div>
+						<div class="baike-header-top-right" id="more">更多</div>
+					</div>
+					<div class="health-card">
+						<div class="baike-shadow"></div>
+						<div class="health-card-title">
+							<div class="health-zhishu">环境指数</div>
+							<div class="card-star">
+								<!--优-->
+								<span v-if="airMessage.PM25 <= 50"> 
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								</span>
+								<!--良-->
+								<span v-if="airMessage.PM25 > 50 && airMessage.PM25 < 100"> 
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								</span>
+								<!--轻度污染-->
+								<span v-if="airMessage.PM25 >= 100 && airMessage.PM25 < 150"> 
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								</span>
+								<!--中度污染-->
+								<span v-if="airMessage.PM25 >= 150 && airMessage.PM25 < 200"> 
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								</span>
+								<!--重度污染-->
+								<span v-if="airMessage.PM25 >= 200 && airMessage.PM25 < 300"> 
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								</span>
+								<!--严重污染-->
+								<span v-if="airMessage.PM25 >= 300"> 
+								<img src="img/Star Copy 2.png" />
+								</span>
+								
+
+							</div>
+							<div class="health-time" v-text="'更新时间 '+guolvDate()"></div>
+						</div>
+						<div class="health-miaoshu">
+							<p> 温馨提示:
+							<span v-if="airMessage.PM25 <= 50"> 空气很好，可以外出活动，呼吸新鲜空气，</span>
+							<span v-if="airMessage.PM25 > 50 && airMessage.PM25 < 100"> 可以正常进行室外活动，</span>
+							<span v-if="airMessage.PM25 >= 100 && airMessage.PM25 < 160"> 所有人应适当减少室外活动，</span>
+							
+							<span v-if="airMessage.T >= 27.9">天气炎热，请注意防暑，</span>
+							<span v-if="airMessage.T < 5">天气寒冷，请注意保暖，</span>
+							<span v-if="airMessage.H < 30">空气干燥，注意经常补充水分，</span>
+							<!--<span v-if="airMessage.HCHO > 0.08"> 室内甲醛超标，</span>-->
+							<span>祝您生活愉快。</span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+          
+          <div class="mui-scroll-wrapper" style="margin-top: 4.3rem;" >
+			<div class="mui-scroll">
+ 
+				<!--主内容区-->
+				<div class="health-check-content">
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								温度
+							</div>
+							<div class="today-title-right">
+								{{airMessage.T}} <span>°C</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.T >= 27.9">炎热</span>
+								<span v-if="airMessage.T < 27.9 && airMessage.T >= 18">温暖</span>
+								<span v-if="airMessage.T < 18 && airMessage.T >= 5">凉</span>
+								<span v-if="airMessage.T < 5">寒冷</span>
+							</div>
+							<!--<div class="today-time-right">今天下午9:19</div>-->
+						</div>
+					</div>
+
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								湿度
+							</div>
+							<div class="today-title-right">
+								{{airMessage.H}} <span>%</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.H < 30 ">干燥</span>
+								<span v-if="airMessage.H >= 30 && airMessage.H < 76">舒适</span>
+								<span v-if="airMessage.H >= 77 ">潮湿</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								PM2.5
+							</div>
+							<div class="today-title-right">
+								{{airMessage.PM25}} <span>μg/m3</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.PM25 < 50">优</span>
+								<span v-if="airMessage.PM25 >= 50  && airMessage.PM25 < 100">良</span>
+								<span v-if="airMessage.PM25 >= 100 && airMessage.PM25 < 150">轻度污染</span>
+								<span v-if="airMessage.PM25 >= 150 && airMessage.PM25 < 200">中毒污染</span>
+								<span v-if="airMessage.PM25 >= 200 && airMessage.PM25 < 300">重度污染</span>
+								<span v-if="airMessage.PM25 >= 300">严重污染</span>
+							</div>
+							
+						</div>
+					</div>
+
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								甲醛
+							</div>
+							<div class="today-title-right">
+								{{airMessage.HCHO}} <span>mg/m3</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.HCHO > 0.08">甲醛超标</span>
+								<span v-if="airMessage.HCHO <= 0.08">正常</span>
+							</div>
+						</div>
+					</div>
+					<!--<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								AQI
+							</div>
+							<div class="today-title-right">
+								108 
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">良好</div>
+						</div>
+					</div>-->
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								PM1
+							</div>
+							<div class="today-title-right">
+								{{airMessage.PM1}} <span>ug/m3</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.PM1 < 100">优</span>
+							</div>
+						</div>
+					</div>
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								PM10
+							</div>
+							<div class="today-title-right">
+								{{airMessage.PM10}} <span>ug/m3</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.PM10 < 40">优</span>
+								<span v-if="airMessage.PM10 >40 && airMessage.PM10 <= 50">良好</span>
+								<span v-if="airMessage.PM10 > 50">轻度污染</span>
+							</div>
+						</div>
+					</div>
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								CO2
+							</div>
+							<div class="today-title-right">
+								{{airMessage.CO2}} <span>ppm</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.CO2 < 1000">空气清新</span>
+								<span v-if="airMessage.CO2 >= 1000 && airMessage.CO2 < 5000">空气混浊</span>
+								<span v-if="airMessage.CO2 >= 5000">严重超标</span>
+							</div>
+						</div>
+					</div>
+					<div class="health-check-today">
+						<div class="today-title">
+							<div class="today-title-left">
+								VOC
+							</div>
+							<div class="today-title-right">
+								{{airMessage.VOC}} <span>mg/m3</span>
+							</div>
+						</div>
+						<div class="today-time">
+							<div class="today-time-left">
+								<span v-if="airMessage.VOC < 0.05">优</span>
+								<span v-if="airMessage.VOC >= 0.05 && airMessage.VOC < 1.1">良</span>
+								<span v-if="airMessage.VOC >= 1.1 && airMessage.VOC < 1.5 ">轻度污染</span>
+								<span v-if="airMessage.VOC >1.5 ">重度污染</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div style="width: 100%;height: 1.3rem;"></div>
+			</div>
+		</div>
+		
+	</div>	
+		<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js" ></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el:'#air-from',
+				data:{
+					airList:'',
+					airMessage:''
+				},
+				methods:{
+					//截取更新日期
+					guolvDate:function(){
+//					 if(datys != undefined){
+//					 
+//					 var daty =  datys.slice(5,-3);
+//					 
+//					 return daty;
+//					 
+//					}else{
+//					
+//					 return '（暂无数据）';
+//					 
+//					}
+                     var updateTime = new Date();
+                     var hours = updateTime.getHours();
+                     var minutes = updateTime.getMinutes();
+                     return hours+' : '+minutes;
+                     
+          
+					}
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听药品百科
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+				//跳转到全能家电
+				document.getElementById('more').addEventListener('tap', function() {
+				  console.log('跳转到全能家电');
+				  mui.confirm("是否跳转到全能家电APP？", "跳转确认", ['确定', '取消'], function(e) {
+					if(e.index == 0)
+						 window.location.href = 'smarthome://almighty';
+				})
+				});
+				
+				
+
+				//获取空气质量
+				loadAirResult();
+
+			});
+
+			//获取空气质量
+			function loadAirResult() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+				var userid = localStorage.getItem('userid');
+				var self = plus.webview.currentWebview();
+	            var groupId = self.groupid;
+				
+				
+				
+				var params = {
+						groupId: groupId,
+						
+					}
+				
+				var data = doGet('/airData/findByGroupId',params,function(data){
+					
+					    console.log('空气质量' + JSON.stringify(data));
+						if(data.code != '0') {
+							mui.toast('获取空气质量失败')
+						} else {
+							
+							if(data.data != null){
+							
+                            vm.airList = data.data;
+                            
+                            var airContent = data.data.content;
+                            
+                            var dataJson = JSON.parse(airContent);
+                            
+                            vm.airMessage = dataJson;
+                           }else{
+                           	
+                           	mui.toast('暂无数据！请检查设备');
+                           	
+                           }
+						}
+					
+				})
+				
+//				mui.ajax(baseUrl + '/data/findListByUserId', {
+//					headers: {
+//						'Authorization': token,
+//						phone: phone
+//					},
+//					data: {
+//						userId: userid,
+//						deviceTypeId: 8, //空气质量
+//						limit: 1
+//					},
+//					dataType: 'json', //服务器返回json格式数据
+//					type: 'get', //HTTP请求类型
+//					timeout: 10000, //超时时间设置为10秒；
+//					success: function(data) {
+//                  console.log('空气质量' + JSON.stringify(data));
+//						if(data.code != '0') {
+//							mui.toast('获取空气质量失败')
+//						} else {
+//							
+//							if(data.data != ''){
+//							
+//                          vm.airList = data.data[0];
+//                          
+//                          var airContent = data.data[0].content;
+//                          
+//                          var dataJson = JSON.parse(airContent);
+//                          
+//                          vm.airMessage = dataJson;
+//                         }else{
+//                         	
+//                         	mui.toast('暂无数据！请检查设备');
+//                         	
+//                         }
+//						}
+//
+//					},
+//					error: function(xhr, type, errorThrown) {
+//
+//					}
+//				});
+
+			}
+		</script>
+	</body>
+
+</html>

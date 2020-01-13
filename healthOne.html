@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>百科药品详细页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="mui-scroll-wrapper" id="yaopin-info">
+			<div class="mui-scroll">
+				<div class="header" style="background-image: url(img/background.svg);background-size:cover;">
+					<div class="baike-header">
+						<div class="baike-header-left" id="back">
+							<img src="img/return.png" />
+						</div>
+						<div class="baike-header-right">
+							{{yaopinInfoItem.name}}
+						</div> 
+					</div>
+					<div class="baike-card">
+						<div class="baike-shadow"></div>
+						<img v-if="yaopinInfoItem.imageUrl != 'http://img.39.net/ypk/images/nopic.gif'" :src="yaopinInfoItem.imageUrl" />
+							<img v-if="yaopinInfoItem.imageUrl == 'http://img.39.net/ypk/images/nopic.gif'" src="img/yaocai.jpg" />
+					</div>
+				</div>
+				
+				<!--主内容区-->
+				<div class="baike-yaopin-content">
+					<div class="baike-jianjie">
+						<div class="baike-jianjie-header">
+							功能主治
+						</div>
+						<p>{{yaopinInfoItem.functionalManage}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							入药部位
+						</div>
+						<p>{{yaopinInfoItem.medicinalPart}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							药品成分
+						</div>
+						<p>{{yaopinInfoItem.component}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							药理作用
+						</div>
+						<p>{{yaopinInfoItem.prescription}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							用法与用量
+						</div>
+						<p>{{yaopinInfoItem.usageDosage}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							宜忌
+						</div>
+						<p>{{yaopinInfoItem.compatIncompat}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							选方
+						</div>
+						<p>{{yaopinInfoItem.prescription}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							临床应用
+						</div>
+						<p>{{yaopinInfoItem.clinicalApplication}}</p>
+					</div>
+					<!--<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							不良反应
+						</div>
+						<p>1、除去杂质，洗净，润透，切厚片，干燥。 2、本品呈圆形的厚片。外表皮淡灰黄色至淡棕黄色，有纵皱纹。切面皮部黄白色，木部黄色。气微，味微甜后苦涩。</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							注意事项
+						</div>
+						<p>菘蓝，二年生草本，植株高50-2500px。光滑被粉霜。根肥厚，近圆锥形，直径2-75px，长20-750px，表面土黄色，具短横纹及少数须根。基生叶莲座状，叶片长圆形至宽倒披针形，长5-375px，宽1.5-100px，先端钝尖，边缘全缘，或稍具浅波齿，有圆形叶耳或不明显；茎顶部叶宽条形全缘，无柄。总状花序顶生或腋生，在枝顶组成圆锥状；萼片4，宽卵形或宽披针形，长2-3mm；花瓣4，黄色，宽楔形，长3-4mm，先端近平截边缘全缘，基部具不明显短爪；雄蕊6，4长2短，长雄蕊长3-3.2mm，短雄蕊长2-2.2mm；雌蕊1，子房近圆柱形，花柱界限不明显，柱头平截。短角果近长圆形，扁平，无毛，边缘具膜质翅，尤以两端的翅较宽，果瓣具中脉种子1颗，长圆形，淡褐色。花期4-5月，果期5-6月。喜湿暖环境，耐寒怕涝，宜选排水良好、疏松肥沃的砂质壤土。生于山地林缘较潮湿的地方。</p>
+					</div>-->
+				</div>
+
+				
+             <div style="width: 100%;height: 1.3rem;"></div>
+			</div>
+		</div>
+		<!--<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>-->
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<!--<script type="text/javascript" src="js/menu.js"></script>-->
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el:'#yaopin-info',
+				data:{
+					yaopinInfoItem:'',
+				}
+				
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听药品百科
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+                
+//              var self = plus.webview.currentWebview();
+//              var dataJson = self.yaopinInfo;
+//              vm.yaopinInfoList = dataJson;
+//              console.log(dataJson);
+
+//              获取药品详细信息
+                vm.yaopinInfoItem = JSON.parse(localStorage.getItem('yaopinInfo'));
+                
+                
+			});
+
+		</script>
+	</body>
+
+</html>

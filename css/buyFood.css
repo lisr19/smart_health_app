@@ -1,0 +1,281 @@
+/*
+ *2019-02-25
+ * 麦展豪
+ * */
+/**/
+.flex{
+	display: flex;
+}
+p{
+	margin: 0;
+}
+body{
+	margin: 0;
+}
+#app{
+	width: 100%;
+	font-size: 0;
+}
+/*头部样式*/
+header{
+	width: 100%;
+	height: 0.88rem;
+	text-align: center;
+	position: relative;
+	background: white;
+}
+/*返回按钮*/
+.return{
+	width: 0.66rem;
+	height: 0.66rem;
+	position: absolute;
+	left: 0.1rem;
+	top: 0.28rem;
+}
+.return img{
+	width: 30%;
+	height: 50%;
+}
+/*标题*/
+header p{
+	width:100%;
+	height:100%;
+	font-size:0.32rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.45rem;
+	margin:  0 auto;
+	line-height: 0.88rem;
+}
+/*主要内容*/
+.content{
+	width: 100%;
+	height: 12rem;
+	background: #F8F8F8;
+}
+/*个人信息*/
+.userMsg{
+	width: 6.9rem;
+	border-bottom: 0.01rem solid #D3D3D3;
+	margin: 0 auto;
+	padding-top: 0.3rem;
+}
+/*信息展示*/
+.userMsgContent{
+	width: 5.73rem;
+	font-size: 0.24rem;
+	margin:  0 auto;
+}
+.nameAndPhone{
+	justify-content: space-between;
+}
+.nameAndPhone span{
+	font-size:0.24rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.33rem;
+}
+/*地址*/
+.userMsgContent p{
+	width:5.63rem;
+	height:0.66rem;
+	font-size:0.24rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.33rem;
+	margin-top: 0.1rem;
+	margin-bottom: 0.31rem;
+}
+/*定位地址详情*/
+.location{
+	width: 0.27rem;
+	height: 0.34rem;
+	position: absolute;
+	left: 0.4rem;
+	top: 1.7rem;
+}
+.addressDetails{
+	width: 0.15rem;
+	height: 0.26rem;
+	position: absolute;
+	right: 0.39rem;
+	top: 1.78rem;
+}
+.location img,.addressDetails img{
+	width: 100%;
+	height: 100%;
+}
+/*购买信息*/
+.buyCard{
+	width: 6.9rem;
+	margin: 0 auto;
+	margin-top: 0.3rem;
+	background: #FFFFFF;
+	box-shadow:0px 4px 8px 0px rgba(0,0,0,0.08);
+}
+/*图片名字和价钱*/
+.foodMore{
+	width: 6.5rem;
+	height: 2.09rem;
+	border-bottom: 0.01rem solid #D3D3D3;
+	margin:  0 auto;
+	padding-top: 0.3rem;
+	justify-content: space-between;
+}
+.bMsg{
+	width: 5.02rem;
+	margin-left: 0.2rem;
+}
+.foodImg{
+	width: 1.48rem;
+	height: 1.48rem;
+	margin-left: 0.2rem;
+}
+.foodImg img{
+	width: 100%;
+	height: 100%;
+}
+.foodName{
+	width:4.32rem;
+	height:0.33rem;
+	font-size:0.24rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.33rem;
+	overflow: hidden;
+	margin-top: 0.06rem;
+}
+.moneyAndNum{
+	width: 4.5rem;
+	height: 0.52rem;
+	margin-top: 0.57rem;
+	justify-content: space-between;
+}
+.moneyAndNum span{
+	width:0.78rem;
+	height:0.4rem;
+	font-size:0.2rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(250,89,108,1);
+	line-height:0.28rem;
+}
+.num{
+	margin-top: 0.22rem;
+	text-align: center;
+	line-height: 0.34rem;
+	width: 1.02rem;
+	height: 0.34rem;
+}
+.num span {
+	width: 0.34rem;
+	height: 0.34rem;
+	margin: 0;
+	color: #4D565C;
+}
+.jia,.jian{
+	width: 0.34rem;
+	height: 0.3rem;
+}
+.jia img,.jian img{
+	width: 100%;
+	height: 100%;
+}
+/*配送*/
+.peison,.xiaoji{
+	width: 6.1rem;
+	height: 0.6rem;
+	margin:  0 auto;
+	font-size: 0.2rem;
+	justify-content: space-between;
+}
+.peison{
+	border-bottom: 0.01rem dashed #D3D3D3;
+}
+.peison span,.xiaoji span{
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height: 0.63rem;
+}
+/*更多*/
+.more{
+	height: 3.11rem;
+	width: 6.9rem;
+	font-size: 0.24rem;
+	color: #1F2266;
+	margin:  0 auto;
+	padding-top: 0.61rem;
+}
+.time,.fapiao,.message{
+	width: 100%;
+	height: 0.62rem;
+	border-bottom: 0.02rem solid #D3D3D3;
+}
+.time span:first-child,.fapiao span:first-child,.message span:first-child{
+	margin-left: 0.2rem;
+}
+.time span:last-child{
+	margin-left: 4.16rem;
+}
+.fapiao span:last-child{
+	margin-left: 4.83rem;
+}
+.fapiao,.message{
+	height: 0.92rem;
+	line-height: 0.92rem;
+}
+.message input{
+	width: 5rem;
+	background: none;
+	border: none;
+	outline: none;
+	font-size: 0.24rem;
+	color: #1F2266;
+}
+/*提交订单*/
+.buy{
+	width: 100%;
+	/*height: 0.88rem;*/
+	background: white;
+	justify-content: flex-end;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+.buyOrder{
+	width: 2.08rem;
+	height: 0.88rem;
+	background:linear-gradient(360deg,rgba(110,75,239,1) 0%,rgba(173,94,253,1) 100%);
+	font-size:0.32rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(255,255,255,1);
+	line-height:0.45rem;
+	text-align: center;
+	line-height: 0.88rem;
+}
+.hejiMoney{
+	width: 1.82rem;
+	height: 0.4rem;
+	position: absolute;
+	right: 2.48rem;
+	bottom: 0.24rem;
+	font-size:0.2rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(77,86,92,1);
+	
+	text-align: center;
+}
+.hejiMoney span{
+	line-height:0.5rem;
+}
+.hejiMoney span:last-child{
+	margin-left: 0.1rem;
+	color: red;
+}

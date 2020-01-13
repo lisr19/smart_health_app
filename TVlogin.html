@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>电视端登录页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					电视端登录
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;" id="yaopinList-from">
+			<div class="mui-scroll">
+				<!--主内容区-->
+
+				<div class="tvimg" >
+					<img src="img/tvlogin.png" />
+				</div>
+				<div class="tvmiaoshu">
+					电视端登录确认
+				</div>
+
+				<div class="tvlogin">
+					<button id="tv-sub">下一步</button>
+				</div>
+
+				<!--主内容区结束-->
+				<div style="width: 7.5rem;height: 1.6rem;"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: '#yaopinList-from',
+				data: {
+
+				}
+			})
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+
+				//tv端登录功能
+				document.getElementById('tv-sub').addEventListener('tap', function() {
+                    var self = plus.webview.currentWebview();
+					var uuid = self.uuid;
+					var code = self.code;
+                    
+                    mui.openWindow({
+                    	url:'TVfamilySelect.html',
+                    	id:'TVfamilySelect',
+                    	extras:{
+                    		uuid:uuid,
+                    		code:code
+                    	}
+                    })
+                    
+                    
+					
+//					var phone = localStorage.getItem('phone');
+//					var token = localStorage.getItem("token");
+//					
+					//alert('uuid='+uuid+'code='+code);
+
+//					mui.ajax(baseUrl + '/user/qrCodeLogin', {
+//						headers: {
+//							'Authorization': token,
+//							phone: phone
+//						},
+//						data: {
+//							uuid: uuid,
+//							code: code,
+//							groupId:13
+//						},
+//						dataType: 'json', //服务器返回json格式数据
+//						type: 'post', //HTTP请求类型
+//						timeout: 10000, //超时时间设置为10秒；
+//						success: function(data) {
+//                          //alert(JSON.stringify(data));
+//							if(data.code != '0') {
+//								mui.toast(data.msg);
+//							} else {
+//								mui.openWindow({
+//									url: 'index.html',
+//									id: 'index'
+//								})
+//							}
+//
+//						},
+//						error: function(xhr, type, errorThrown) {
+//
+//						}
+//					});
+
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧商城</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+		.doctor-status{
+			float: left;
+			font-size: 0.28rem;
+			font-weight: 100;
+			color:#19be6b;
+		}
+		.doctor-message{
+			width: 5.2rem;
+			height: 0.45rem;
+			color:#9B9B9B;
+			font-size: 0.24rem;
+			/*margin-top: 0.1rem;*/
+		}
+		</style>
+	</head>
+
+	<body>
+			<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+				<div class="baike-header">
+					<div class="baike-header-left" id="back">
+						<img src="img/return.png" />
+					</div>
+					<div class="baike-header-right">
+						智慧商城
+					</div>
+				</div>
+			</div>
+				
+		<div class="mui-scroll-wrapper" style="margin-top: 1.5rem;" id="business-list">
+			<div class="mui-scroll">		
+				<!--主功能区-->
+                <div class="doctor-list">
+                	<!--单个商铺-->
+                	<div class="doctor-one" v-for="item in businessList"
+                		:name='item.name' :address='item.address' :phone='item.phone'
+                		:desc='item.description' :scope='item.businessScope' :imgUrl='item.imgUrl'
+                		>
+                		<!--商家图片-->
+                		<div class="doctor-one-left">
+                			<img :src="item.imgUrl" />
+                		</div>
+                		<div class="doctor-one-right">
+                			<!--商家名称-->
+                			<div class="doctor-name">
+                				{{item.name}}
+                			</div>
+                			<div class="doctor-message">
+                				{{item.businessScope}}
+                			</div>
+                			<div class="doctor-status">
+                					{{item.address}}
+            				</div>
+                			<!--<div class="doctor-hos">
+                				儿科  
+                				<span>中山附属第一医院</span>
+                			</div>-->
+                			<!--<div class="doctor-pinjia">
+                				<img src="img/Star.png" />
+                				 5.0
+                				<span>65个回答</span>
+                			</div>-->
+                		</div>
+                	</div>
+                	
+                </div> 
+			    <div style="width: 7.5rem;height: 0.4rem;"></div>
+				<div class="fool" v-if="businessList.length%10 == 0" onclick="readmore();getBusinessList();"><span>点击查看更多</span></div>
+				<div style="width: 7.5rem;height: 0.6rem;"></div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<!--<script type="text/javascript" src="js/menu.js"></script>-->
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: "#business-list",
+				data: {
+					businessList: '',
+					limit: 10,
+				},
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+				//返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+				
+				//监听专家详情
+//				document.getElementById('quanbu').addEventListener('tap', function() {
+//					mui.openWindow({
+//						url: 'consultOne.html',
+//						id: 'consultOne'
+//					})
+//				});
+//				
+				//获取商家列表数据
+				getBusinessList();
+				
+				
+				mui('.doctor-list').on('tap', '.doctor-one', function() {
+					var thisBusiness = this;
+					var businessName = thisBusiness.getAttribute('name');
+					var businessAddress = thisBusiness.getAttribute('address');
+					var businessDesc = thisBusiness.getAttribute('desc');
+					var businessScope = thisBusiness.getAttribute('scope');
+					var businessPhone = thisBusiness.getAttribute('phone');
+					var businessImgUrl = thisBusiness.getAttribute('imgUrl');
+					console.log(businessPhone); 
+					mui.openWindow({
+						url: 'businessOne.html',
+						id: 'businessOne',
+						extras:{
+							businessName : businessName,
+							businessAddress : businessAddress,
+							businessDesc : businessDesc,
+							businessScope : businessScope,
+							businessPhone : businessPhone,
+							businessImgUrl : businessImgUrl
+						}
+					})
+				});	
+				
+		}); 
+			 
+			//获取商家列表数据
+			function getBusinessList(){
+				var params = {
+					page: 1,
+					limit: vm.limit,
+				}
+				doGet('/seller/findList', params, function(data) {
+					if(data.code != '0') {
+						console.log('链接失败，请检查网络');
+					} else {
+						var dataJson = data.data;
+						vm.businessList = dataJson;
+						console.log(JSON.stringify(data.data))
+					}
+				})
+			}
+			
+			//查看更多
+			function readmore() {
+				vm.limit = vm.limit + 10;
+			}
+		</script>
+	</body>
+
+</html>

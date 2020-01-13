@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>百科西药页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-input">
+					<input type="text" id="searchValue" placeholder="请输入药品/健康知识/疾病 进行查询"
+						onfocus="this.placeholder=''"
+						 onblur="this.placeholder='请输入药品/健康知识/疾病 进行查询'" />
+				</div>
+				<div class="baike-search-img" id="search"/>
+				   <img  src="img/Shape.png" />
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;" id="yaopin-from">
+			<div class="mui-scroll">
+				<!--主内容区-->
+				<div class="baikelist">
+					<div class="baikelist-title">
+						中成药
+						
+					</div>
+					<!--单个药品-->
+					<div  v-for="(item,index) in zhongchengyaoList"  :yaopinInfo='index'  class="baikelist-option">
+						<div class="baikelist-option-left">
+							<img v-if="item.imageUrl != 'http://img.39.net/ypk/images/nopic.gif'" :src="item.imageUrl" />
+							<img v-if="item.imageUrl == 'http://img.39.net/ypk/images/nopic.gif'" src="img/yaocai.jpg" />
+						</div>
+						<div class="baikelist-option-right">
+							<div class="baikelist-option-right-title">
+								{{item.name}}
+								<button>查看</button>
+							</div>
+							<p>
+								{{item.functionalManage}}
+							</p>
+
+						</div>
+					</div>
+				
+				</div>
+				
+				<!--主内容区结束-->
+                      <div style="width: 7.5rem;height: 0.3rem;"></div>
+             <div class="fool" onclick="readmore();"><span>点击查看更多</span></div>
+             <div style="width: 7.5rem;height: 0.8rem;"></div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js" ></script>
+		<script>
+			mui.init(
+//				{
+//				pullRefresh: {
+//					container: "#yaopin-from", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+//					up: {
+//						style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+//						auto: true, //可选,默认false.首次加载自动上拉刷新一次
+//						contentrefresh: "正在加载...", // 可选，正在加载状态时，上拉加载控件上显示的标题内容
+//						callback: loadYaopinResult
+//					}
+//				}
+//			}
+				);
+			var vm = new Vue({
+				el:'#yaopin-from',
+				data:{
+					zhongchengyaoList:'',
+                    limit:8,
+					
+				}
+			})
+			
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});	
+				
+				//查询结果
+				document.getElementById('search').addEventListener('tap', function() {
+					
+					var searchValue = document.getElementById('searchValue').value;
+					mui.openWindow({
+						url:'healthyEncyclopediaResult.html',
+						id:'healthyEncyclopediaResult',
+						extras:{
+							searchValue:searchValue
+						}
+					})
+					
+				});
+				
+				//查询结果
+				document.getElementById('searchValue').addEventListener('keypress', function(event) {
+					
+					
+					 if(event.keyCode == "13") {
+                      document.activeElement.blur();//收起虚拟键盘
+                      var searchValue = document.getElementById('searchValue').value;
+					mui.openWindow({
+						url:'healthyEncyclopediaResult.html',
+						id:'healthyEncyclopediaResult',
+						extras:{
+							searchValue:searchValue
+						}
+					})
+                   }
+					
+					
+					
+				});
+				
+				
+				
+				
+				
+						//查看药品详情
+				mui(".baikelist").on('tap', '.baikelist-option', function() {  
+				   
+				   var thisYaopin = this;
+				   
+				   var yaopinInfo = thisYaopin.getAttribute('yaopinInfo');
+				   				   				   
+				   localStorage.setItem('yaopinInfo',JSON.stringify(vm.zhongchengyaoList[yaopinInfo]));
+				   				   
+				   mui.openWindow({
+				   	url:'healthOne.html',
+				   	id:'healthOne',
+//				   	extras:{
+//				   		yaopinInfo:yaopinInfo
+//				   	}
+				   })
+				   
+				
+				});
+				
+				
+				
+				loadYaopinResult();
+				
+
+			});
+			
+			function readmore(){
+				
+				vm.limit = vm.limit + 8;
+				
+				loadYaopinResult();
+				
+			}
+			
+			//  默认页数为0
+//			var limit = 8;
+			
+			//查询结果
+			function loadYaopinResult(){
+//				setTimeout(function() {
+//				limit += 8;
+//				
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+				var self = plus.webview.currentWebview();
+				var YPtype = self.yaopinType;
+				
+				mui.ajax(baseUrl+'/drug/findList',{
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data:{
+						page:1,
+						limit:vm.limit,
+						category:1,//1为中成药
+						type:YPtype
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+//						if(data.data.data == '') {
+//							mui.toast('没有更多数据了');
+//							mui('#yaopin-from').pullRefresh().endPullupToRefresh(true);
+//							return;
+//						} else {
+						var dataJson = data.data.data;
+						vm.zhongchengyaoList = dataJson;
+						//vm.zhongchengyaoList = vm.zhongchengyaoList.assign(dataJson);
+//						}
+						
+					},
+					error:function(xhr,type,errorThrown){
+						
+					}
+				});
+				
+//				 mui('#yaopin-from').pullRefresh().endPullupToRefresh(false);
+//				}, 500)
+				
+			}
+				
+		</script>
+	</body>
+
+</html>

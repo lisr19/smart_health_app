@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>健康智慧移动终端</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<link rel="stylesheet" href="css/mui.picker.min.css" />
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div id="history-list">
+			<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+				<!--<div class="baike-header">
+					<div class="baike-header-left" id="back">
+						<img src="img/return.png" />
+					</div>
+					<div class="baike-input1">
+						<input type="text" readonly="readonly" id="startDate" placeholder="起始日期" :value="bdyear+' -'+bdmonth+' -'+bdday" />至
+						<input type="text" readonly="readonly" id="stopDate" placeholder="结束日期" :value="year+' -'+month+' -'+day" />
+					</div>
+					<div class="baike-search-img" id="search" />
+					<img src="img/Shape.png" />
+				</div>
+			</div>-->
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					最近30天数据
+				</div>
+			</div>
+		</div>
+		<!--历史数据-->
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;">
+				<div class="mui-scroll">
+					<div class="history-option" v-for="item in historyList">
+						<div class="history-option-left">
+							<img src="img/activity.png" />
+						</div>
+						<div class="history-option-center">
+							<span>{{item.content}}</span>
+							<span v-if="item.deviceTypeId=='33'"> kg/m²</span>
+							<span v-if="item.deviceTypeId=='15'"> %</span>
+							<span v-if="item.deviceTypeId=='16'"> %</span>
+							<span v-if="item.deviceTypeId=='17'"></span>
+							<span v-if="item.deviceTypeId=='18'"> %</span>
+							<span v-if="item.deviceTypeId=='20'"></span>
+							<span v-if="item.deviceTypeId=='21'"> mmol/L</span>
+							<span v-if="item.deviceTypeId=='22'"> mmol/L</span>
+							<span v-if="item.deviceTypeId=='23'"> mmol/L</span>
+							<span v-if="item.deviceTypeId=='24'"> ℃</span>
+							<span v-if="item.deviceTypeId=='26'"></span>
+							<span v-if="item.deviceTypeId=='27'"></span>
+							<span v-if="item.deviceTypeId=='28'"> mmHg</span>
+							<span v-if="item.deviceTypeId=='29'"> mmHg</span>
+							<span v-if="item.deviceTypeId=='30'"> 次/分</span>
+						</div>
+						<div class="historyoption-right">
+							<span v-text='cutTime(item.createTime)'></span>
+						</div>
+					</div>
+
+					<!--<div class="history-option">
+				<div class="history-option-left">
+					<img src="img/activity.png" />
+				</div>
+				<div class="history-option-center">
+					 <span>170</span> cm
+				</div>
+				<div class="historyoption-right">
+					2018-9-25 12:10
+				</div>
+			</div>-->
+				</div>
+			</div>
+
+		</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: '#history-list',
+				data: {
+
+					historyList: '',
+					bdyear: '',
+					bdmonth: '',
+					bdday: '',
+					year:'',
+					month:'',
+					day:''
+
+				},
+				methods: {
+					cutTime: function(times) {
+						var asd = times;
+						var timesCut = asd.slice(0, -3);
+						return timesCut;
+
+					}
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//默认获取最近30天的数据
+				var thisdate = new Date();
+				var thisYear = thisdate.getFullYear();
+				var thisMonth = thisdate.getMonth() + 1;
+				var thisDay = thisdate.getDate();
+				//上一个月的日期
+				var startYear = thisdate.getFullYear();
+				var startMonth = thisdate.getMonth();
+				var startDay = thisdate.getDate();
+				if(startMonth === "0") {
+					startYear = startYear - 1;
+					startMonth = '12';
+				}
+				vm.bdyear = startYear;
+				vm.bdmonth = startMonth;
+				vm.bdday = startDay;
+				
+				vm.year = thisYear;
+				vm.month = thisMonth;
+				vm.day = thisDay;
+
+				loadHistory();
+
+				//日期选择器
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth();
+				var day = date.getDate();
+				var dtPicker = new mui.DtPicker({
+					"type": "date",
+					beginDate: new Date(2000, 01, 01),
+					endDate: new Date(year, month, day),
+				});
+
+				//选起始日期
+//				document.getElementById('startDate').addEventListener('tap', function() {
+//					dtPicker.show(function(selectItems) {
+//						vm.bdyear = selectItems.y.value;
+//						vm.bdmonth = selectItems.m.value;
+//						vm.bdday = selectItems.d.value;
+//					})
+//					console.log('选择起始日期')
+//					loadHistory();
+//					
+//				})
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+
+			//获取历史数据
+			function loadHistory() {
+				var self = plus.webview.currentWebview();
+				var deviceType = self.deviceType;
+				var userId = localStorage.getItem('userid');
+				var params = {
+
+					userId: userId,
+					deviceType: deviceType,
+					year: vm.year,
+					month: vm.month,
+					day: vm.day,
+//					startYear: vm.bdyear,
+					startMonth: vm.bdmonth,
+//					startDay: vm.bdday,
+//                  year: 2018,
+//					month: 11,
+//					day: 16,
+//					startYear: 2018,
+//					startMonth: 11,
+//					startDay: 16,
+
+				}
+
+				var data = doGet('/data/findHistory', params, function(data) {
+
+					//var dataJson = data.data;
+
+					console.log('-------------' + JSON.stringify(data));
+
+					if(data.code == '0') {
+						var dataJson = data.data;
+						vm.historyList = dataJson;
+
+					} else {
+
+						mui.toast('请检查网络');
+					}
+
+				})
+
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的设置页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			body{
+				background: #EEEEEE;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					设置
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="myself-form">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="config-content">
+					<div class="config-myself" id="edit">
+						<div class="config-myself-left">
+							<img v-if="touxiangimg == 1" src="img/woman.png" />
+                    		<img v-if="touxiangimg == 2" src="img/mans.png" />
+                    		
+                    		<img v-if="touxiangimg == 3" src="img/girls.png" />
+                    		<img v-if="touxiangimg == 4" src="img/boys.png" />
+						</div>
+						<div class="config-myself-center">
+							<div class="config-myself-title">
+								<div id="phone">123456</div>
+								<span id="name">姓名：测试智</span>
+							</div>
+						</div>
+						<div class="config-myself-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+					<div class="config-one" id="qrcode-img">
+						<div class="config-one-left">
+							我的二维码
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+					<div class="config-one" id="chart-show">
+						<div class="config-one-left">
+							我的画像
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+					<div class="config-one" id="message-tip">
+						<div class="config-one-left">
+							我的消息
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+					<!--<div class="config-one" id="adress">
+						<div class="config-one-left">
+							我的收货地址
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>-->
+				</div>
+				<div class="fenjiekuai"></div>
+				<div class="config-content">
+					<div class="config-one" id="editpassword">
+						<div class="config-one-left">
+							修改密码
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>			
+				</div>
+				<!--<div class="fenjiekuai"></div>-->
+				<div class="config-content">
+					<!--<div class="config-one">
+						<div class="config-one-left">
+							地区设置
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>-->
+					<!--<div class="config-one">
+						<div class="config-one-left">
+							隐私
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+					<div class="config-one">
+						<div class="config-one-left">
+							通用
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>-->
+					<div class="config-one" id="liuyan">
+						<div class="config-one-left">
+							反馈
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+					<div class="config-one" id="telephone">
+						<div class="config-one-left">
+							联系客服
+						</div>
+						<div class="config-one-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+					
+				</div>
+				<div class="fenjiekuai" style="width: 7.5rem;height: 0.6rem;"></div>
+				<div class="config-content" id="tuichu">
+					<div class="config-one" style="text-align: center;color: #FF7171;line-height: 180%;font-size: 0.32rem;">
+						退出当前账户
+					</div>
+					
+				</div>
+				<!--<div class="fenjiekuai" style="height: 6.2rem;"></div>-->
+				<!--主要内容结束-->
+
+				
+			</div>
+		</div>
+		<!--<div class="tuichu" id="tuichu">
+					<span>退出当前账户</span> 
+		</div>-->
+				
+		<div class="health-main-menu">
+			<div class="main-page" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-zhuye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-jiating"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="meals-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>订餐</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>发现</span>
+			</div>
+			
+			<div class="my-page  icon-active" id="my-page">
+				<svg class="icon-menu icon-active" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/menu.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el:'#myself-form',
+				data:{
+				  touxiangimg:''
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+			});
+			
+			window.addEventListener('clearMyInfo', function(evt) {
+				location.reload();
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				var opener = plus.webview.getWebviewById("myself");
+				mui.fire(opener, 'clearMyInfoAll');
+				mui.back();
+			});
+			
+			
+			 document.getElementById("telephone").addEventListener('tap',function(){
+            var btnArray=['拨打','取消'];
+
+            var phone="18098258257";
+            mui.confirm('是否拨打客服电话   '+phone+'?','提示',btnArray,function(e){
+                if(e.index == 0){
+                    plus.device.dial(phone,false);
+                }
+            });
+        });
+
+			
+			//收货地址
+//			document.getElementById('adress').addEventListener('tap', function() {
+//				mui.openWindow({
+//					url:'adressList.html',
+//					id:'adressList'
+//				})
+//				
+//			});
+			
+			getTouxiang();
+			
+			var username = localStorage.getItem('name');
+			document.getElementById('name').innerHTML = username;
+			
+			var phone = localStorage.getItem('phone');
+			document.getElementById('phone').innerHTML = phone;
+			
+			
+			//监听编辑
+				document.getElementById('edit').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'myinformation.html',
+						id: 'myinformation'
+					})
+				});
+			
+			
+			//监听修改密码
+				document.getElementById('editpassword').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'passwordEdit.html',
+						id: 'passwordEdit'
+					})
+				});
+			
+			//画像
+				document.getElementById('chart-show').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'chartShow.html',
+						id: 'chartShow'
+					})
+				});	
+			
+			//消息 
+				document.getElementById('message-tip').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'messageTip.html',
+						id: 'messageTip'
+					})
+				});	
+			
+		    //二维码
+				document.getElementById('qrcode-img').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'myselfCode.html',
+						id: 'myselfCode'
+					})
+				});	
+				
+			//留言反馈
+				document.getElementById('liuyan').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'leftMessage.html',
+						id: 'leftMessage'
+					})
+				});	
+				
+				
+			
+			document.getElementById('tuichu').addEventListener('tap', function() {
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: [{
+								title: "注销当前账号"
+							}, {
+								title: "直接关闭应用"
+							}]
+						}, function(e) {
+							var index = e.index;
+							switch(index) { //case 0: 取消
+								case 1: //
+									localStorage.clear();
+									plus.runtime.restart();
+									break;
+								case 2: //
+									plus.runtime.quit();
+									break;
+							}
+						});
+					});
+					
+					
+					 //根据年龄性别判断头像
+		   function getTouxiang(){
+             var myDate = new Date();
+			 var thisYear = myDate.getFullYear();
+			 var year = localStorage.getItem('year');
+			 var sex = localStorage.getItem('sex');
+			 var nianlin = thisYear-year;
+			 if(nianlin > 18 && sex == 3){//女人
+			     vm.touxiangimg = 1;
+			 }
+			 if(nianlin > 18 && sex != 3){//男人
+			 	vm.touxiangimg = 2;
+			 }
+			 if(nianlin < 18 && sex == 3){//小女孩
+			 	vm.touxiangimg = 3;
+			 }
+			 if(nianlin < 18 && sex != 3){//小男孩
+			 	vm.touxiangimg = 4;
+			 }
+			 
+            } 
+		</script>
+	</body>
+
+</html>

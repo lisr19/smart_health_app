@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>溯源信息扫描页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+
+		<style type="text/css">
+			body {
+				background-color: #393F4D;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--标题栏-->
+		<header class="mui-bar mui-bar-nav" style="background-color: #303030;box-shadow: none;padding-top: 0.4rem;height: 1.32rem;">
+			<div class="saomiao-left" id="back">
+				<img src="img/return2.png" />
+			</div>
+			<div class="saomiao-title">
+				二维码扫描登录
+			</div>
+		</header>
+
+		<div id="saomiao-lecode-bcid" class="bcid">
+			<!--盛放扫描控件的div-->
+		</div>
+
+		<!--底部按钮-->
+		<div class="bcid-ftb">
+			<div class="saoma-button" id="suyuan-light">
+				<img src="img/light.png" />
+			</div>
+			
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			scan = null; //扫描对象
+
+			mui.init()
+
+			mui.plusReady(function() {
+				setTimeout(function() {
+					startRecognize();
+				}, 500);
+
+				//返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+				//重启摄像仪
+					window.addEventListener('shuaxinMainsaomiao', function(evt) {
+					   scan.start();
+					});
+
+				
+			});
+
+			function startRecognize() {
+				var filter = [plus.barcode.QR];
+				//自定义的扫描控件样式 
+				var styles = {
+					frameColor: "#5D8AFE",
+					scanbarColor: "#5D8AFE",
+					background: ""
+				}
+				//扫描控件构造   
+				scan = new plus.barcode.Barcode('saomiao-lecode-bcid', filter, styles);
+
+				//开启扫描 
+				try {
+					scan.onmarked = onmarked;
+					scan.onerror = onerror; //扫描错误 
+					scan.start();
+
+					//打开关闭闪光灯处理   
+					var flag = false;
+					document.getElementById("suyuan-light").addEventListener('tap', function() {
+						if(flag == false) {
+							scan.setFlash(true);
+							flag = true;
+						} else {
+							scan.setFlash(false);
+							flag = false;
+						}
+					});
+				} catch(e) {
+					alert("出现错误啦:\n" + e);
+				}
+			};
+
+			function onerror(e) { //错误弹框 
+				alert(e);
+			};
+
+			function onmarked(type, result) { //这个是扫描二维码的回调函数，type是扫描二维码回调的类型 
+				var lecodeid = result;
+				
+				if(lecodeid != null && lecodeid.indexOf('tvlogin') != -1 ) {
+					
+					var arryIds = lecodeid.split("=");
+					var uuid = arryIds[1];
+					var logoCode = arryIds[2];
+					//mui.toast('uuid='+uuid+'————————code='+logoCode);
+					
+					
+					mui.openWindow({
+						url: 'TVlogin.html',
+						id: 'TVlogin',
+						extras: {
+							uuid: uuid,
+							code:logoCode
+						}
+					});
+					
+					console.log('电视端')
+				
+				}
+				console.log(lecodeid);
+				if(lecodeid != null && lecodeid.indexOf('userCheck') != -1){
+                    
+                    
+                    var arryIds = lecodeid.split("=");
+					var uuid = arryIds[1];
+					var name = arryIds[2];
+					
+					mui.openWindow({
+						url: 'healthCheckShare.html',
+						id: 'healthCheckShare',
+						extras: {
+							userid: uuid,
+							name:name
+						}
+					});
+					
+                    console.log(lecodeid);
+                    
+					
+				}
+				
+				if(lecodeid.indexOf('userCheck') == -1 && lecodeid.indexOf('tvlogin') == -1 ){
+					
+					//截取等号后面的标识码
+					//var uuid = lecodeid.split("=")[lecodeid.split("=").length - 1];
+					//mui.toast(uuid);
+						var btnArray = ['重新扫描'];
+					mui.confirm('请确认扫描的二维码为本app生成的二维码', '二维码错误', btnArray, function(e) {
+						if(e.index == 0) {
+							setTimeout(function() {
+								scan.start();
+							}, 2000);
+						}
+					})
+					
+					console.log('出错')
+				}
+			};
+		</script>
+	</body>
+
+</html>

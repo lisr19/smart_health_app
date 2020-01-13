@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>组名编辑页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link href="css/mui.picker.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					编辑组名
+				</div>
+				<div class="baike-header-top-right" id="subName">
+					确认
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="group-from">
+			<div class="mui-scroll">
+				<div class="groupName">
+					<span>家庭组名:</span>
+					<input id="groupName" placeholder="请输入家庭组名称" />
+				</div>
+				
+
+			
+
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#group-from",
+				data: {
+					
+				},
+				
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+               
+               
+               //获取上一级页面数据
+               var self = plus.webview.currentWebview();
+			   var groupName = localStorage.getItem('groupName');
+			   var groupid = self.groupid;
+			   document.getElementById('groupName').value = groupName;
+              
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+            
+            
+            //确认修改组名
+			document.getElementById('subName').addEventListener('tap', function() {
+				 var self = plus.webview.currentWebview();
+			      var groupid = self.groupid;
+				console.log('hh')
+				var phone = localStorage.getItem('phone');
+				var token = localStorage.getItem("token");
+				var groupName1 = document.getElementById('groupName').value;
+				console.log(groupid);
+				console.log(groupName1);
+				console.log(phone);
+				console.log(token)
+				mui.ajax(baseUrl+'/group/updateGroup',{
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data:{
+					  id:groupid,
+					  name:groupName1,
+					  typeId:1,
+					  pid:2
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						
+						console.log('修改组名'+JSON.stringify(data));
+						localStorage.setItem('groupName',groupName1);
+						mui.toast('修改成功！');
+						var opener = plus.webview.getWebviewById("familyEdit");
+			        	mui.fire(opener, 'clearData-edit');
+			        	var opener1 = plus.webview.getWebviewById("familyHealthGroup");
+			        	mui.fire(opener1, 'clearData-group');
+				        mui.back();
+						
+						
+					},
+					error:function(xhr,type,errorThrown){
+						
+					}
+				});
+				
+				
+				
+			});
+            
+            
+		</script>
+	</body>
+
+</html>

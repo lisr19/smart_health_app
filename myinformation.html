@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>个人信息编辑页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link href="css/mui.picker.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					个人信息编辑
+				</div>
+				<div class="baike-header-top-right" id="editSub">
+					确认
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="my-form">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="config-content">
+					<div class="config-myself">
+						<div class="config-myself-left">
+							<img v-if="touxiangimg == 1" src="img/woman.png" />
+							<img v-if="touxiangimg == 2" src="img/mans.png" />
+							<img v-if="touxiangimg == 3" src="img/girls.png" />
+							<img v-if="touxiangimg == 4" src="img/boys.png" />
+						</div>
+						<div class="config-myself-center">
+							<div class="config-myself-title">
+								<div style="width: 3rem;height: 0.2rem;"></div>
+								<span>头像</span>
+							</div>
+						</div>
+						<div class="config-myself-right">
+							<img src="img/right-tip.png" />
+						</div>
+					</div>
+				</div>
+				<div class="fenjiekuai"></div>
+				<div class="myinfo-one">
+					<div class="myinfo-one-left">
+						名字
+					</div>
+					<div class="myinfo-one-right">
+						<input id="name" placeholder="未添加" type="text" />
+					</div>
+
+				</div>
+				<div class="fenjiekuai"></div>
+				<div class="myinfo-one">
+					<div class="myinfo-one-left" style="width: 2.5rem;">
+						身份证(选填)
+					</div>
+					<div class="myinfo-one-right" style="width: 4rem;">
+						<input id="idNumber" style="width: 3.8rem;margin-right: 0.1rem;" type="text" />
+
+					</div>
+
+				</div>
+				
+
+				<div class="fenjiekuai"></div>
+				<div class="myinfo-one">
+					<div class="myinfo-one-left">
+						身高
+					</div>
+					<div class="myinfo-one-right">
+						<span style="float: right;">cm</span>
+						<input id="height" style="width: 3.1rem;" type="text" />
+
+					</div>
+
+				</div>
+				<div class="fenjiekuai"></div>
+				<div class="myinfo-one">
+					<div class="myinfo-one-left">
+						体重
+					</div>
+					<div class="myinfo-one-right">
+						<span style="float: right;">kg</span>
+						<input id="weight" style="width: 3.1rem;margin-right: 0.1rem;" type="text" />
+
+					</div>
+
+				</div>
+				<div class="fenjiekuai"></div>
+				<div class="myinfo-one" id="sex">
+					<div class="myinfo-one-left">
+						性别
+					</div>
+					<div class="myinfo-one-right">
+						<span v-if="sex == 1 ">无</span>
+						<span v-if="sex == 2 ">男</span>
+						<span v-if="sex == 3 ">女</span>
+					</div>
+
+				</div>
+
+				<!--<div class="fenjiekuai"></div>
+				<div class="myinfo-one">
+					<div class="myinfo-one-left">
+						邮箱
+					</div>
+					<div class="myinfo-one-right">
+						<input id="email" type="text" />
+					</div>
+
+				</div>-->
+				
+				
+				<div class="fenjiekuai"></div>
+				<div class="myinfo-one" id="brithday">
+					<div class="myinfo-one-left">
+						生日
+					</div>
+					<div class="myinfo-one-right">
+                         <span>{{bdyear}}年{{bdmonth}}月{{bdday}}日</span>
+					</div>
+
+				</div>
+				
+				
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#my-form",
+				data: {
+					sex: '',
+					touxiangimg: '',
+					bdyear: '',
+					bdmonth: '',
+					bdday: '',
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+			});
+
+			//选择器
+			var picker = new mui.PopPicker();
+
+			//日期选择器
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth();
+			var day = date.getDay();
+			var dtPicker = new mui.DtPicker({
+				"type": "date",
+				beginDate: new Date(1900, 01, 01),
+				endDate: new Date(year, month, day),
+			});
+
+			picker.setData([{
+					value: '1',
+					text: '无'
+				},
+				{
+					value: '2',
+					text: '男'
+				},
+				{
+					value: '3',
+					text: '女'
+				}
+			]);
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+
+			var username = localStorage.getItem('name');
+			if(username.value != '' || username.value != null) {
+				document.getElementById('name').value = username;
+			}
+            
+            
+            //获取本地以保存数据
+			var sex = localStorage.getItem('sex');
+			vm.sex = sex;
+
+//			var email = localStorage.getItem('email');
+//			document.getElementById('email').value = email;
+
+			var height = localStorage.getItem('height');
+			document.getElementById('height').value = height;
+			
+
+			var weight = localStorage.getItem('weight');
+			document.getElementById('weight').value = weight;
+			
+			var idNumber = localStorage.getItem('idNumber');
+			if(idNumber != '0'){
+			 var idNumber_jiami = idNumber
+			 //.slice(0,-4)+'****';
+			 document.getElementById('idNumber').value = idNumber_jiami;
+			}else{
+			 document.getElementById('idNumber').value = '暂无信息';
+			}
+			
+			
+			vm.bdyear = localStorage.getItem('year');
+			vm.bdmonth = localStorage.getItem('month');
+			vm.bdday = localStorage.getItem('day');
+
+			getTouxiang();
+
+			//选择性别
+			document.getElementById('sex').addEventListener('tap', function() {
+
+				picker.show(function(items) {
+					vm.sex = items[0].value;
+				})
+
+			})
+
+			//选择生日
+			document.getElementById('brithday').addEventListener('tap', function() {
+
+				dtPicker.show(function(selectItems) {
+					vm.bdyear = selectItems.y.value;
+					vm.bdmonth = selectItems.m.value;
+					vm.bdday = selectItems.d.value;
+
+				})
+
+			})
+
+			//修改确认
+			document.getElementById('editSub').addEventListener('tap', function() {
+				var name = document.getElementById('name').value;
+				var sex = vm.sex;
+//				var email = document.getElementById('email').value;
+//				var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+//				if(!reg.test(email)){
+//					mui.toast('请输入正确的邮箱');
+//					return;
+//				}
+				var height = document.getElementById('height').value;
+				var heightreg = /^[1-9][0-9]+([.]{1}[0-9]{1,2})?$/;;
+				if(height == ''){
+					mui.toast('身高不能为空');
+					return;
+				}
+				if(!heightreg.test(height)){
+					
+					mui.toast('请输入正确的身高');
+					return;
+				}
+				
+				var weight = document.getElementById('weight').value;
+				var weightreg = /^[0-9]+(.[0-9]{1,3})?$/;
+				if(weight == ''){
+					mui.toast('体重不能为空');
+					return;
+				}
+				if(!weightreg.test(weight)){
+					
+					mui.toast('请输入正确的体重');
+					return;
+				}
+				
+				
+				var idNumber = document.getElementById('idNumber').value;
+				console.log('身份证'+idNumber);
+				if(idNumber != ''){
+					var idNumberreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+                    if(!idNumberreg.test(idNumber))  
+                     {  
+                       mui.toast("身份证输入不合法");  
+                         return;  
+                      }
+					
+				}
+				
+				
+				var phone = localStorage.getItem('phone');
+				var userid = localStorage.getItem('userid');
+				var year1 = vm.bdyear;
+				var month1 = vm.bdmonth;
+				var day1 = vm.bdday;
+				if(year1 == '0'){
+					mui.toast('请选择出生日期');
+					return;
+				}
+				console.log(year1);
+				console.log(month1);
+				console.log(day1);
+				
+				
+				
+
+				var token = localStorage.getItem("token");
+                plus.nativeUI.showWaiting( "等待中..." );
+				mui.ajax(baseUrl + '/user/updateUser', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data:{
+						name: name,
+						sex: sex,
+//						email: email,
+						height: height,
+						weight: weight,
+						phone: phone,
+						id: userid,
+						year:year1,
+						month:month1,
+						day:day1,
+						idNumber:idNumber
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+							mui.toast(data.msg);
+							plus.nativeUI.closeWaiting();
+							return;
+						} else {
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year1);
+							localStorage.setItem("month", month1);
+							localStorage.setItem("day", day1);
+							localStorage.setItem("idNumber", idNumber);
+							mui.toast('修改成功！');
+                            plus.nativeUI.closeWaiting();
+							var opener = plus.webview.getWebviewById("myself-config");
+							mui.fire(opener, 'clearMyInfo');
+
+							mui.back();
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+                          
+                          plus.nativeUI.closeWaiting();
+					}
+				});
+
+			})
+
+			//根据年龄性别判断头像
+			function getTouxiang() {
+				var myDate = new Date();
+				var thisYear = myDate.getFullYear();
+				var year = localStorage.getItem('year');
+				var sex = localStorage.getItem('sex');
+				var nianlin = thisYear - year;
+				if(nianlin > 18 && sex == 3) { //女人
+					vm.touxiangimg = 1;
+				}
+				if(nianlin > 18 && sex != 3) { //男人
+					vm.touxiangimg = 2;
+				}
+				if(nianlin < 18 && sex == 3) { //小女孩
+					vm.touxiangimg = 3;
+				}
+				if(nianlin < 18 && sex != 3) { //小男孩
+					vm.touxiangimg = 4;
+				}
+
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<!--本页面停用-->
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧健康app</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body> 
+
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-input">
+					<input id="phone-search" type="text" placeholder="请输入手机号进行查询" />
+				</div>
+				<div class="baike-search-img">
+					<img  src="img/Shape.png" />
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;">
+			<div class="mui-scroll">
+				<!--主内容区-->
+				
+				<div class="user-list">
+					
+					<div style="width: 6.9rem;border-top: 1px solid #F0F0F0;"></div>
+					<div class="user-list-option">
+						<div class="user-list-left">
+							<img src="img/family1.png" />
+						</div>
+						<div class="user-list-right">
+							<div class="user-title">
+								智力
+							</div>
+							<div class="user-phone">
+								电话号:13428583888
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+				
+				
+				<!--主内容区结束-->
+
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script>
+			mui.init();
+			
+			
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听药品百科
+				//				document.getElementById('quanbu').addEventListener('tap', function() {
+				//					mui.openWindow({
+				//						url: 'healthOne.html',
+				//						id: 'healthOne'
+				//					})
+				//				});
+
+			
+
+//				setFocus();
+
+			});
+
+//			function setFocus() {
+//				var asd = document.getElementById('yaopin-search');
+//				asd.focus();
+//
+//			}
+		
+		</script>
+	</body>
+
+</html>

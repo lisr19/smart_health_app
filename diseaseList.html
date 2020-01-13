@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧健康app</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+         <div id="diseaseList-from">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					{{departname}}
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.5rem;" >
+			<div class="mui-scroll">
+				<!--主内容区-->
+				
+				<div v-for="(item,index) in diseaseList" :diseaseInfo='index'  class="disease-item">
+					<div class="disease-title">{{item.name}}</div>
+					<div class="disease-comment">{{item.introduction}}</div>
+					<div class="disease-more">查看详细内容></div>
+				</div>
+				
+				<!--主内容区结束-->
+				<div style="width: 7.5rem;height: 0.6rem;"></div>
+				 <div class="fool"><span onclick="readMore();loadDiseaseList();" >点击查看更多</span></div>
+				 <div style="width: 7.5rem;height: 0.8rem;"></div>
+			</div>
+		</div>
+		</div>
+		<!--<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>-->
+		
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<!--<script type="text/javascript" src="js/menu.js"></script>-->
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: '#diseaseList-from',
+				data: {
+					
+					diseaseList:'',
+                    departname:'',
+                    limit:8,
+				}
+			})
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+					
+				//监听返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+				
+				//查看疾病详情
+				mui(".mui-scroll").on('tap', '.disease-item', function() {  
+				   
+				   var thisDisease = this;
+				   
+				   var diseaseInfo = thisDisease.getAttribute('diseaseInfo');
+				   				   				   
+				   localStorage.setItem('diseaseInfo',JSON.stringify(vm.diseaseList[diseaseInfo]));
+				   				   
+				   mui.openWindow({
+				   	url:'diseaseMessage.html',
+				   	id:'diseaseMessage',
+				   })
+				   
+				
+				});
+				
+				
+				//读取疾病列表
+				loadDiseaseList();
+				
+
+			});
+			
+			  //读取疾病列表
+			  function loadDiseaseList(){
+			  	
+			  	var self = plus.webview.currentWebview();
+			  	var department = self.department;
+			  	var departname = self.despartname;
+			  	vm.departname = departname;
+			  	var token = localStorage.getItem('token');
+			  	var phone = localStorage.getItem('phone');
+			  	
+			  	mui.ajax(baseUrl+'/disease/findList',{
+			  		headers: {
+						'Authorization': token,
+						phone: phone
+					},
+			  		data:{
+			  		    page:1,
+			  		    limit:vm.limit,
+			  		    department:department
+			  			
+			  		},
+			  		dataType:'json',//服务器返回json格式数据
+			  		type:'post',//HTTP请求类型
+			  		timeout:10000,//超时时间设置为10秒；
+			  		success:function(data){
+			  			
+			  			var dataJson = data.data.data;
+			  			vm.diseaseList = dataJson;
+			  		},
+			  		error:function(xhr,type,errorThrown){
+			  			
+			  		}
+			  	});
+			  	
+			  	
+			  }
+			  
+			  //查看更多疾病
+			  function readMore(){
+			  	
+			  	vm.limit = vm.limit + 8;
+			  	
+			  }
+			
+			
+		</script>
+	</body>
+
+</html>

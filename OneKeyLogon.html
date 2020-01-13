@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登录界面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+	</head>
+
+	<body>
+		<div class="login-title">
+			手机一键登录
+		</div>
+		<div class="login-form" id="login-form">
+			<div class="login-username">
+				<div class="login-username-icon">
+					<img src="img/username.png" />
+				</div>
+				<input v-model="phone" id="phone" placeholder="输入本机号码" />
+			</div>
+
+		</div>
+		<div class="login-submit">
+			<button type="button" id="submit-button" class="mui-btn login-button">手机一键登录</button>
+
+		</div>
+		<div class="login-zhuce" ><span id="register-button">密码登录</span> | <span id="check-button">验证码登录</span></div>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var vm = new Vue({
+				el: "#login-form",
+				data: {
+					phone: '',
+				}
+			})
+			//监听内容变化，有内容变色
+			vm.$watch('phone', function() {
+				if(vm.phone == null || vm.phone == '') {
+					document.getElementById("submit-button").className = "mui-btn login-button";
+
+				} else {
+					document.getElementById("submit-button").className = "mui-btn-blue login-button-active";
+
+				}
+			});
+			mui.plusReady(
+				function() {
+					
+
+					//登录功能
+					document.getElementById('submit-button').addEventListener('tap', function() {
+						oneKey();
+					});
+
+					//密码登录
+					document.getElementById('register-button').addEventListener('tap', function() {
+						mui.openWindow({
+							url: 'login.html',
+							id: 'login'
+						})
+
+					});
+					
+					//验证码登录
+					document.getElementById('check-button').addEventListener('tap', function() {
+						mui.openWindow({
+							url: 'phoneLogin.html',
+							id: 'phoneLogin'
+						})
+
+					});
+
+				})
+			  
+			    //一键登录
+			    function oneKey(){
+			    	
+			    	
+			    	
+			    	
+			    }
+			 
+			
+			
+		</script>
+	</body>
+
+</html>

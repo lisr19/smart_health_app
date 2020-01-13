@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>健康智慧移动终端</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link href="css/mui.picker.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					反馈与帮助
+				</div>
+				<div class="baike-header-top-right" id="addMessage">
+					提交
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="leftMessage-from">
+			<div class="mui-scroll">
+				
+				<!--主要内容-->
+					<div class="fenjiekuai"></div>
+				<div class="myinfo-one" id="babel">
+					<div class="myinfo-one-left">
+						标签
+					</div>
+					<div class="myinfo-one-right">
+						<span v-if="babel == 0 ">请选择标签</span>
+						<span v-if="babel == 1 ">bug反馈</span>
+						<span v-if="babel == 2 ">建议</span>
+						<span v-if="babel == 3 ">其他</span>
+					</div>
+
+				</div>
+				   <div class="fenjiekuai"></div>
+				<div class="leftMessage-content">
+					<textarea rows='5' cols="20" v-model="contents" placeholder="请留下您宝贵的意见..."></textarea>
+				</div>
+
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js" ></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		    mui.init();
+		    var vm = new Vue({
+				el: "#leftMessage-from",
+				data: {
+					babel: '0',
+					contents: '',
+					
+				}
+			})
+		    
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+				
+				//选择器
+			var picker = new mui.PopPicker();
+			
+			picker.setData([{
+					value: '1',
+					text: 'bug反馈'
+				},
+				{
+					value: '2',
+					text: '建议'
+				},
+				{
+					value: '3',
+					text: '其他'
+				}
+			]);
+			
+			//选择标签
+			document.getElementById('babel').addEventListener('tap', function() {
+
+				picker.show(function(items) {
+					vm.babel = items[0].value;
+				})
+
+			})
+
+			});
+			
+			
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			
+			//提交意见
+			document.getElementById('addMessage').addEventListener('tap', function() {
+				
+				var userid = localStorage.getItem('userid');
+				if(vm.contents == ''){
+					mui.toast('请输入内容');
+					return;
+				}
+				var params = {
+					type:vm.babel,
+					content:vm.contents,
+					userId:userid
+				}
+				if(vm.babel != 0){
+				  
+				  var data = doPost('/leftMessage/add',params,function(data){
+					
+					console.log('提交留言'+JSON.stringify(data));
+					if(data.code != '0'){
+						mui.toast('提交失败，请检查网络');
+					}else{
+						mui.toast('提交成功！');
+					    mui.back();
+					}
+					
+					
+					
+				})
+					
+				}else{
+					
+					mui.toast('请选择标签！谢谢');
+				}
+				
+				
+			});
+
+			
+		</script>
+	</body>
+
+</html>

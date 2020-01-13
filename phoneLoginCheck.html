@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登录界面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+	</head>
+
+	<body>
+		<div class="login-title">
+			输入验证码
+		</div>
+		<div class="login-form" id="login-form">
+			<div class="login-username">
+				<div class="login-username-icon">
+					<img src="img/username.png" />
+				</div>
+				<input v-model="username" style="width: 1.98rem;"  maxlength="6" id="username" placeholder="请输入验证码" />
+                <button class="get-check" onclick="time();getCode();" id="getCheck">重新获取</button>
+			</div>
+	
+		</div>
+		<div class="login-submit">
+			<button type="button" id="submit-button" class="mui-btn login-button">登录</button>
+
+		</div>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var vm = new Vue({
+				el: "#login-form",
+				data: {
+					username: '',
+				}
+			})
+			//监听内容变化，有内容变色
+			vm.$watch('username', function() {
+				if(vm.username == null || vm.username == '') {
+					document.getElementById("submit-button").className = "mui-btn login-button";
+
+				} else {
+					document.getElementById("submit-button").className = "mui-btn-blue login-button-active";
+
+				}
+			});
+			mui.plusReady(
+				function() {
+                    
+                    time();
+				
+
+					//登录功能
+					document.getElementById('submit-button').addEventListener('tap', function() {
+						login();
+					});
+					
+					
+					
+
+				})
+			
+			
+			
+	    //登录功能
+		function login(){
+			
+			var code = vm.username;
+			
+			mui.ajax(baseUrl+'/user/codeLogin',{
+				data:{
+					code:code
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					console.log(JSON.stringify(data));
+					if(data.code != "0") { //非0则失败
+							//异常处理；
+							mui.toast('登陆失败，请重新获取验证码!', {
+								duration: 'long',
+								type: 'div'
+							});
+						} else {
+							
+							
+							if(data.data.userInfo.name == '' ||data.data.userInfo.name == null ){
+							 
+							 var token = data.data.token;
+                            
+                            var name = data.data.userInfo.name;
+                            var sex  = data.data.userInfo.sex;
+                            var userid = data.data.userInfo.id;
+//                          var email = data.data.userInfo.email;
+                            var phone = data.data.userInfo.phone;
+                            var weight = data.data.userInfo.weight;
+                            var height = data.data.userInfo.height;
+                            var year = data.data.userInfo.year;
+                            var month = data.data.userInfo.month;
+                            var day = data.data.userInfo.day;
+                            var idNumber = data.data.userInfo.idNumber;
+                            var token2 = data.data.token2;
+                               
+							localStorage.setItem("token", token);
+							localStorage.setItem("token2", token2);
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year);
+							localStorage.setItem("month", month);
+							localStorage.setItem("day", day);
+							localStorage.setItem("idNumber", idNumber);
+							
+							
+							 mui.toast('您是初次注册用户，请先完善个人信息');
+							    mui.openWindow({
+								url: 'myinformationFirst.html',
+								id: 'myinformationFirst'
+							})
+								
+								
+								
+							}else{
+							var token = data.data.token;
+                            
+                            var name = data.data.userInfo.name;
+                            var sex  = data.data.userInfo.sex;
+                            var userid = data.data.userInfo.id;
+//                          var email = data.data.userInfo.email;
+                            var phone = data.data.userInfo.phone;
+                            var weight = data.data.userInfo.weight;
+                            var height = data.data.userInfo.height;
+                            var year = data.data.userInfo.year;
+                            var month = data.data.userInfo.month;
+                            var day = data.data.userInfo.day;
+                            var idNumber = data.data.userInfo.idNumber;
+                            var token2 = data.data.token2;
+                               
+							localStorage.setItem("token", token);
+							localStorage.setItem("token2", token2);
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year);
+							localStorage.setItem("month", month);
+							localStorage.setItem("day", day);
+							localStorage.setItem("idNumber", idNumber);
+							
+							
+							mui.openWindow({
+								url: 'index.html',
+								id: 'index'
+							})
+							
+							}
+							
+							
+						}
+					
+					
+				},
+				error:function(xhr,type,errorThrown){
+					
+				}
+			});
+			
+			
+			
+			
+			
+			
+		}
+		
+		
+		//验证码倒计时
+        var wait = 60; 
+        function time() { 
+        	var btn = document.getElementById('getCheck');
+            if (wait == 0) {
+                btn.disabled = false ;
+                btn.innerText = "重新获取"
+                wait = 60;     
+                return;
+            } else {
+                btn.disabled = true ;
+                btn.innerText = "重新获取("+wait+"s)";
+                wait--;
+                setTimeout(function () {
+                    time();
+                },
+                1000)
+            }
+        }
+        
+        
+        //重新获取验证码
+        function getCode(){
+        	
+        	var self = plus.webview.currentWebview();
+        	var phone = self.phone;
+        	
+        	mui.ajax(baseUrl+'/SMS/sendCode',{
+			   		data:{
+			   		  phone:phone	
+			   		},
+			   		dataType:'json',//服务器返回json格式数据
+			   		type:'get',//HTTP请求类型
+			   		timeout:10000,//超时时间设置为10秒；
+			   		success:function(data){
+			   			console.log(data);
+			   			mui.toast('发送成功！');
+			   		
+			   		},
+			   		error:function(xhr,type,errorThrown){
+			   			
+			   		}
+			   	});
+        	
+        	
+        }
+
+			
+		</script>
+	</body>
+
+</html>

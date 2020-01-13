@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>专家列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+			<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+				<div class="baike-header">
+					<div class="baike-header-left" id="back">
+						<img src="img/return.png" />
+					</div>
+					<div class="baike-header-right">
+						家庭医生
+					</div>
+				</div>
+			</div>
+				
+		<div class="mui-scroll-wrapper" style="margin-top: 1.5rem;" id="doctor-list">
+			<div class="mui-scroll">		
+				<!--主功能区-->
+                <div class="doctor-list">
+                	<!--单个医生-->
+                	<div class="doctor-one" v-for="item in doctorList">
+                		<div class="doctor-one-left" :name='item.name' :hospital='item.hospital' 
+                			:physicianship='item.physicianship':department='item.department' 
+                			:desc='item.description' :avatarUrl='item.avatarUrl' 
+                			:id='item.userId'> 
+                			<img :src="item.avatarUrl" />
+                		</div>
+                		<div class="doctor-one-right" :name='item.name' :doctorId='item.userId'
+                			:avatarUrl='item.avatarUrl' :id='item.userId'>
+                			<div class="doctor-name">
+                				{{item.name}}
+                				<div class="doctor-status">
+                					{{item.hospital}}
+                				</div>
+                			</div>
+                			<div class="doctor-message">
+                				{{item.department}}
+                				&nbsp;&nbsp;&nbsp;
+                				{{item.physicianship}}
+                				<br>
+                				<p style="color:#A94442">{{item.status}}</p>
+                			</div>
+                		</div>
+                	</div>
+                </div> 
+			    <!--<div style="width: 7.5rem;height: 0.4rem;margin-top: 0.1rem;"></div>
+				<div class="fool" onclick="readmore();getDoctorList();"><span>点击查看更多</span></div>
+				<div style="width: 7.5rem;height: 0.6rem;"></div>-->
+			    
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: "#doctor-list",
+				data: {
+					doctorList: '',
+					limit: 10,
+				},
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+				
+				//监听专家详情
+//				document.getElementById('quanbu').addEventListener('tap', function() {
+//					mui.openWindow({
+//						url: 'consultOne.html',
+//						id: 'consultOne'
+//					})
+//				});
+
+				var userId = localStorage.getItem('userid');
+				
+				var websocket = null;
+					websocket = new WebSocket(chatBaseUrl+userId);
+				
+				//socket连接失败
+				websocket.onerror = function(){
+					mui.toast('网络连接失败！');
+				}
+				//连接成功建立的回调方法
+			    websocket.onopen = function() {
+			        console.log("WebSocket连接成功");
+			    }
+			    
+		    	//接收到消息的回调方法
+			    websocket.onmessage = function(event) {
+			   		if(event.data.senderUserId != userId){
+					 	var chatMsg = event.data;
+//					 	console.log(event.data);
+						var list = vm.doctorList;
+						if(chatMsg.search('receiverUserId')){
+							var isJson = isJSON(chatMsg);
+							if(isJson){
+								for(var i = 0;i<list.length;i++){
+							 		if(list[i].userId == JSON.parse(chatMsg).senderUserId){
+							 			list[i].status = '有新消息'
+							 		}
+					 			} 
+							}
+						}
+					 	vm.chatList = list
+		    		}
+			    }
+
+				//获取医生列表数据
+				getDoctorList();
+
+				//发送体检数据
+				sendHealthData()
+
+				//返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+				mui('.doctor-list').on('tap', '.doctor-one-left', function() {
+					var thisDoctor = this;
+					var doctorName = thisDoctor.getAttribute('name'),
+						doctorHospital = thisDoctor.getAttribute('hospital'),
+						doctorPhysicianship = thisDoctor.getAttribute('physicianship'),
+						doctorDepartment = thisDoctor.getAttribute('department'),
+						doctorDesc = thisDoctor.getAttribute('desc'),
+						doctorAvatarUrl = thisDoctor.getAttribute('avatarUrl');
+					mui.openWindow({
+						url: 'consultOne.html',
+						id: 'consultOne',
+						extras:{
+							doctorName:doctorName,
+							doctorHospital:doctorHospital,
+							doctorPhysicianship:doctorPhysicianship,
+							doctorDepartment:doctorDepartment,
+							doctorDesc:doctorDesc,
+							doctorAvatarUrl:doctorAvatarUrl
+						}
+					})
+				});	
+				mui('.doctor-list').on('tap', '.doctor-one-right', function() {
+					var thisDoctor = this;
+					var doctorName = thisDoctor.getAttribute('name'),
+						doctorId = thisDoctor.getAttribute('doctorId'),
+						doctorAvatarUrl = thisDoctor.getAttribute('avatarUrl');
+						vm.doctorList.forEach(function(item){
+							if(item.userId = thisDoctor.getAttribute('id')){
+								item.status = '';
+							}
+						})
+					mui.openWindow({
+						url: 'chat.html',
+						id: 'chat',
+						extras:{
+							doctorName:doctorName,
+							doctorId:doctorId,
+							doctorAvatarUrl:doctorAvatarUrl
+						}
+					})
+				});	
+			});
+			
+			//发送体检社区数据
+			function sendHealthData(){
+				var userId = localStorage.getItem('userid');
+
+				var params = {
+					userId: userId,
+				}
+				var strByFamily = '家庭设备体检数据： ';
+				var strByHealth = '社区设备体检数据： '
+				
+				//获取最新的备胎数据
+				var data2 = doGet('/data/findLastData4Beitai', params, function(data) {
+//					console.log('倍泰设备' + JSON.stringify(data));
+					if(data.code != '0') {
+						console.log('链接失败，请检查网络');
+					} else {
+						var dataJson = data.data;
+						if(dataJson != '') {
+							console.log(JSON.stringify(dataJson));
+							dataJson.forEach(function(item){
+								if(item.deviceTypeId == 1 && item.content.split(',')[1] != null){//bmi
+									strByFamily = strByFamily+'BMI:'+item.content.split(',')[1]+",   "
+								}else if(item.deviceTypeId == 2 && item.content != null){//体温
+									strByFamily = strByFamily+'体温:'+item.content+",   "
+								}else if(item.deviceTypeId == 3 && item.content.split(',')[0] != null){//体脂率
+									strByFamily = strByFamily+'体脂率:'+item.content.split(',')[0]+",   "
+								}else if(item.deviceTypeId == 4){//血糖
+									strByFamily = strByFamily+'血糖:'+item.content.split(',')[0]+",   "
+								}else if(item.deviceTypeId == 5){//血压
+									strByFamily = strByFamily+'收缩压:'+item.content.split(',')[0]+",   "
+									strByFamily = strByFamily+'舒张压:'+item.content.split(',')[1]+",   "
+								}
+							})
+						}else{
+							strByFamily = strByFamily + '无';
+						}
+						localStorage.setItem('strByFamily',strByFamily)
+					}
+				})
+				
+				//获取最新的徕康数据
+				var data = doGet('/data/findLKLastData', params, function(data) {
+//					console.log('徕康设备' + JSON.stringify(data));
+					if(data.code == '0') {
+						var dataList = data.data;
+						if(dataList != '') {
+							strByHealth = strByHealth + '脂肪率： '+dataList.fat+",   ";
+							strByHealth = strByHealth + 'BMI： '+dataList.bmi+",   ";
+							strByHealth = strByHealth + '收缩压： '+dataList.Highpressure+",   ";
+							strByHealth = strByHealth + '舒张压： '+dataList.Lowpressure+",   ";
+							strByHealth = strByHealth + '血糖： '+dataList.glu+",   ";
+							strByHealth = strByHealth + '水分含量： '+dataList.water+",   ";
+							strByHealth = strByHealth + '基础代谢： '+dataList.bmr+",   ";
+							strByHealth = strByHealth + '腰臀比： '+dataList.whr+",   ";
+							strByHealth = strByHealth + '尿酸： '+dataList.ua+",   ";
+							strByHealth = strByHealth + '胆固醇： '+dataList.chol+",  ";
+						}else{
+							strByHealth = strByHealth + '无';
+						}
+						localStorage.setItem('strByHealth',strByHealth)
+					}
+				})
+			}
+			
+			//获取医生列表数据
+			function getDoctorList(){
+					var params = {
+						page: 1,
+						limit: vm.limit,
+					}
+					doGet('/doctor/findList', params, function(data) {
+						if(data.code != '0') {
+							console.log('链接失败，请检查网络');
+						} else {
+							var dataJson = data.data;
+							dataJson.forEach(function(item,index){
+								item.status = '';
+							})
+							vm.doctorList = dataJson;
+//							console.log('data '+JSON.stringify(dataJson));
+						}
+					})
+				}
+			
+//			判断一个字符串是否未JSON数据
+			function isJSON(str) {
+			    if (typeof str == 'string') {
+			        try {
+			            JSON.parse(str);
+			            return true;
+			        } catch(e) {
+			            return false;
+			        }
+			    }
+			}
+				
+			//查看更多
+			function readmore() {
+				vm.limit = vm.limit + 10;
+			}
+		</script>
+	</body>
+
+</html>

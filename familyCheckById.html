@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>家庭体检</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					家庭体检
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="health-check">
+			<div class="mui-scroll">
+				<!--体检建议按钮-->
+					<div class="advice-modal-show" id="shequ-check">
+	          			<span>点击查看家人的社区体检数据</span>
+	        		</div>
+				<!--主要内容-->
+				<div class="noMessage-content" v-if="noData == 1">
+                    	<img src="img/nomessage2.png" />
+                    	<span>暂无体检数据..</span>
+                    </div>
+					
+				<div class="small-check-content" v-for="item in dataList">
+					
+					<div class="small-check-one" v-if="item.deviceTypeId == 1">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								体重
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[0]'></span> kg
+							</div>
+						</div>  
+						<div class="small-check-one-right">
+							<img v-if="weightData(item.content.split(',')[0]) == 0" src="img/down.png" />
+							<img v-if="weightData(item.content.split(',')[0]) == 1" src="img/ok.png" />
+							<img v-if="weightData(item.content.split(',')[0]) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 1">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								BMI
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[1]'></span> kg/m²
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="BMIData(item.content.split(',')[1]) == 0" src="img/down.png" />
+							<img v-if="BMIData(item.content.split(',')[1]) == 1" src="img/ok.png" />
+							<img v-if="BMIData(item.content.split(',')[1]) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 5">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								收缩压
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[0]'></span> mmHg
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="souData(item.content.split(',')[0]) == 0" src="img/down.png" />
+							<img v-if="souData(item.content.split(',')[0]) == 1" src="img/ok.png" />
+							<img v-if="souData(item.content.split(',')[0]) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 5">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								舒张压
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[1]'></span> mmHg
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="shuData(item.content.split(',')[1]) == 0" src="img/down.png" />
+							<img v-if="shuData(item.content.split(',')[1]) == 1" src="img/ok.png" />
+							<img v-if="shuData(item.content.split(',')[1]) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 5">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								脉搏
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[2]'></span> 次/分
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="maiData(item.content.split(',')[2]) == 0" src="img/down.png" />
+							<img v-if="maiData(item.content.split(',')[2]) == 1" src="img/ok.png" />
+							<img v-if="maiData(item.content.split(',')[2]) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 2">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								体温
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content'></span> ℃
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="TTData(item.content) == 0" src="img/down.png" />
+							<img v-if="TTData(item.content) == 1" src="img/ok.png" />
+							<img v-if="TTData(item.content) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 4">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								血糖(餐前)
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-if="item.content.substr(0,1)=='-'" v-text=' "- -" '></span>
+								<span v-if="item.content.substr(0,1)=='+'" v-text='item.content.substr(1)'></span> mmol/L
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="xtqData(item.content.substr(1)) == 0" src="img/down.png" />
+							<img v-if="xtqData(item.content.substr(1)) == 1" src="img/ok.png" />
+							<img v-if="xtqData(item.content.substr(1)) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 4">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								血糖(餐后)
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-if="item.content.substr(0,1)=='+'" v-text=' "- -" '></span>
+								<span v-if="item.content.substr(0,1)=='-'" v-text='item.content.substr(1)'></span> mmol/L
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="xthData(item.content.substr(1)) == 0" src="img/down.png" />
+							<img v-if="xthData(item.content.substr(1)) == 1" src="img/ok.png" />
+							<img v-if="xthData(item.content.substr(1)) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 3">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								脂肪率
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[0]'></span> %
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="zfData(item.content.split(',')[0]) == 0" src="img/down.png" />
+							<img v-if="zfData(item.content.split(',')[0]) == 1" src="img/ok.png" />
+							<img v-if="zfData(item.content.split(',')[0]) == 2" src="img/up.png" />
+							<img v-if="zfData(item.content.split(',')[0]) == 3" src="img/vup.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 3">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								水分率
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[1]'></span> %
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<img v-if="waterData(item.content.split(',')[1]) == 0" src="img/down.png" />
+							<img v-if="waterData(item.content.split(',')[1]) == 1" src="img/ok.png" />
+							<img v-if="waterData(item.content.split(',')[1]) == 2" src="img/up.png" />
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 3">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								内脏脂肪等级
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[2]'></span>
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<!--<img src="img/ok.png" />-->
+						</div>
+					</div>
+
+					<div class="small-check-one" v-if="item.deviceTypeId == 3">
+						<div class="small-check-one-left">
+							<div class="small-check-one-left-top">
+								肌肉量
+							</div>
+							<div class="small-check-one-left-bottom">
+								<span v-text='item.content.split(",")[3]'></span> kg
+							</div>
+						</div>
+						<div class="small-check-one-right">
+							<!--<img src="img/ok.png" />-->
+						</div>
+					</div>
+
+				</div>
+				<!--主要内容结束-->
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/standard.js"></script>
+		<script type="text/javascript" src="js/standardCheck.js"></script>
+		<script type="text/javascript" src="js/health_advice.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: '#health-check',
+				data: {
+					dataList: '',
+					standard: '',
+					noData:'0',
+					adviceArray: [],  //健康建议数组
+					labelArray:'',//用户标签数组
+					labelList:'',//标签数组
+				},
+				methods: {
+					 weightData: function (weight) { //判断体重是否超标
+				        var res = healthStandard.waterData(weight);
+				        return res;
+				      },
+					BMIData: function (bmi) { //判断BMI是否超标
+				        var res = healthStandard.BMIData(bmi);
+				        return res;
+				      },
+					souData: function (sou) { //判断收缩压
+				        var res = healthStandard.souData(sou);
+				        return res;
+				      },
+				      shuData: function (shu) { //判断舒张压
+				        var res = healthStandard.shuData(shu);
+				        return res;
+				      },
+				      maiData: function (mai) { //判断脉搏
+				        var res = healthStandard.maiData(mai);
+				        return res;
+				      },
+				      TTData: function (tt) { //判断体温
+				        var res = healthStandard.TTData(tt);
+				        return res;
+				      },
+					xtqData: function(xt) { //判断空腹血糖
+						if(xt < standard.glu.first[0]) {
+							return 0;
+						}
+						if(xt > standard.glu.first[0] && xt < standard.glu.first[1]) {
+							return 1;
+						}
+						if(xt > standard.glu.first[1]) {
+							return 2;
+						}
+
+					},
+					xthData: function(xt) { //判断餐后血糖
+						if(xt < standard.glu.second[0]) {
+							return 0;
+						}
+						if(xt > standard.glu.second[0] && xt < standard.glu.second[1]) {
+							return 1;
+						}
+						if(xt > standard.glu.second[1]) {
+							return 2;
+						}
+
+					},
+					zfData: function (zf) { //判断脂肪率
+				        var res = healthStandard.zfData(zf);
+				        return res;
+				      },
+					waterData: function (water) { //判断水分率
+				        var res = healthStandard.waterData(water);
+				        return res;
+				      },
+				},
+			})
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				vm.standard = standard;
+				
+//				var self = plus.webview.currentWebview();
+//				id = self.user;
+				
+				//获取最新的徕康数据
+				loadLKdata();
+				
+
+			});
+
+
+			//获取最新的徕康数据
+			function loadLKdata() {
+				var userId = localStorage.getItem('otherUserId');
+				console.log(userId);
+				var params = {
+					userId: userId,
+				}
+ 
+				var data = doGet('/data/findLastData4Beitai', params, function(data) {
+//					console.log('倍泰设备' + JSON.stringify(data));
+					if(data.code != '0') {
+						console.log('链接失败，请检查网络');
+					} else {
+
+						var dataJson = data.data;
+
+						if(dataJson == '') {
+                           
+                           vm.noData = '1';
+                           mui.toast('暂无体检数据');
+                          
+						} else {
+							//为null则自动转换为“--”
+							for(attr in dataJson) {
+								if(dataJson[attr] === null) {
+
+									dataJson[attr] = '- -'; 
+								}
+							}
+							vm.dataList = dataJson;
+//							console.log(JSON.stringify(dataJson));
+						}
+
+					}
+
+				})
+			}
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			
+			//查看社区体检
+			document.getElementById('shequ-check').addEventListener('click',function(){
+				mui.openWindow({
+						url: 'healthCheckById.html',
+						id: 'healthCheckById',
+					})
+			})
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>智慧健康app</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<style>
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					我的画像
+				</div>
+				<div class="baike-header-top-right">
+
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="body-data">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="data-chart" id="chart">
+
+				</div>
+				<div class="fenjiekuai"></div>
+				<!--健康建议-->
+				<div class="data-advice">
+					<div class="advice-icon">
+						<img src="img/advice.png" />
+					</div> 
+					<div class="advice-title">健康警告</div>
+					<div class="advice-list">
+						<div v-for="item in adviceList" class="advice">
+							<img src="img/warning.png" /> {{item.content}}
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" src="js/standard.js"></script>
+		<script type="text/javascript" src="js/standardCheck.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#body-data",
+				data: {
+					sex: '',
+					chartArray:'',
+					adviceList:'',
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				loadData();//获取数据
+				
+				
+			});
+
+			function loadChart(array) {
+				var myChart = echarts.init(document.getElementById('chart'));
+
+				option = {
+
+					tooltip: {
+						trigger: 'axis'
+					},
+					//					legend: {
+					//						x: 'center',
+					//						data: ['某软件', '某主食手机', '某水果手机', '降水量', '蒸发量']
+					//					},
+					radar: [{
+						indicator: [{
+								text: '血压',
+								max: 280
+							},
+							{
+								text: 'BMI',
+								max: 40
+							},
+							{
+								text: '体脂率',
+								max: 50
+							},
+							{
+								text: '体温',
+								max: 75
+							},
+							{
+								text: '血糖',
+								max: 15
+							}
+						],
+						radius: 80,
+						center: ['50%', '60%'],
+					}],
+					series: [{
+							type: 'radar',
+							tooltip: {
+								trigger: 'item'
+							},
+							itemStyle: {
+								normal: {
+									areaStyle: {
+										type: 'default'
+									}
+								}
+							},
+							data: [{
+								value: array,
+								name: '身体数值'
+							}]
+						},
+
+					]
+				};
+
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+
+			}
+
+			//获取数据
+			function loadData() {
+
+				var userId = localStorage.getItem('userid');
+ 
+				var params = {
+					userId: userId,
+				}
+				var result = [0,0,0,0,0];//位置：血压，bmi，体脂率，体温，血糖
+				var adviceList = [];//健康建议
+				
+				//获取最新的备胎数据
+				doGet('/data/findLastData4Beitai', params, function(data) {
+					console.log('倍泰设备' + JSON.stringify(data));
+					if(data.code != '0') {
+						console.log('链接失败，请检查网络');
+					} else {
+						var dataJson = data.data;
+							console.log(JSON.stringify(dataJson))
+						if(dataJson.length != 0) {
+							dataJson.forEach(function(item){
+								if(item.deviceTypeId == 1 && item.content.split(',')[1] != null){//bmi
+									result.splice(1,1,parseInt(item.content.split(',')[1]));
+									var bmi = healthStandard.BMIData(item.content.split(',')[1])
+					        		if (bmi === 0) {//偏低
+							          adviceList.push({
+							          	content:'BMI偏低'
+							          })
+							        } else if (bmi === 2) {//偏高
+							          adviceList.push({
+							          	content:'BMI偏高'
+							          })
+							        }
+								}else if(item.deviceTypeId == 2 && item.content != null){//体温
+									result.splice(3,1,parseInt(item.content));
+								}else if(item.deviceTypeId == 3 && item.content.split(',')[0] != null){//体脂率
+									result.splice(2,1,parseInt(item.content.split(',')[0]));
+									var zf = healthStandard.zfData(item.content.split(',')[0])
+					        		 if (zf === 0) {//偏低
+							          adviceList.push({
+							          	content:'体脂率偏低'
+							          })
+							        } else if (zf === 2 || zf === 3) {//偏高
+							          adviceList.push({
+							          	content:'体脂率偏高'
+							          })
+							        }
+								}else if(item.deviceTypeId == 4){//血糖
+									if(item.content.split(',')[0] != null){//餐前血糖数据不为空
+										result.splice(4,1,parseInt(item.content.split(',')[0]));
+										var xtq = xtqData(item.content.substr(1))
+						        		var xth = xthData(item.content.substr(1))
+						        		if(xtq == 0 || xth == 0){
+						        			 adviceList.push({
+									          	content:'血糖偏低'
+									          })
+						        		}else if(xtq ==2 || xth ==2){
+						        			 adviceList.push({
+									          	content:'血糖偏高'
+									          })
+						        		}
+									}
+									function xtqData(xt){
+											if(xt < standard.glu.first[0]) {
+												return 0;
+											}
+											if(xt > standard.glu.first[0] && xt < standard.glu.first[1]) {
+												return 1;
+											}
+											if(xt > standard.glu.first[1]) {
+												return 2;
+											}
+										};
+									function xthData(xt){
+					        			if(xt < standard.glu.second[0]) {
+											return 0;
+										}
+										if(xt > standard.glu.second[0] && xt < standard.glu.second[1]) {
+											return 1;
+										}
+										if(xt > standard.glu.second[1]) {
+											return 2;
+										}
+					        		};
+								}else if(item.deviceTypeId == 5){//血压
+									var sou = healthStandard.souData(item.content.split(',')[0])
+					        		var shu = healthStandard.shuData(item.content.split(',')[1])
+									if(sou != null && shu != null){
+										result.splice(0,1,parseInt(item.content.split(',')[0]));
+										if(sou == 0 || sou == 2){
+											result.splice(0,1,parseInt(item.content.split(',')[0]));
+										}else if(shu == 0 || shu == 2){
+											result.splice(0,1,parseInt(item.content.split(',')[1]));
+										}else{
+											result.splice(0,1,parseInt(item.content.split(',')[0]));
+										}
+									}
+									if (sou === 0 || shu === 0) {//偏低
+							          	adviceList.push({
+									          	content:'血压偏低'
+									          })
+							        } else if (sou === 2 || shu === 2) {//偏高
+							          	adviceList.push({
+									          	content:'血压偏高'
+									          })
+							        }
+								}
+							})
+						}
+						//获取最新的徕康数据
+				doGet('/data/findLKLastData', params, function(data) {
+					console.log('徕康设备' + JSON.stringify(data));
+					if(data.code == '0') {
+						var dataJson = data.data;
+//						console.log('111 '+JSON.stringify(dataJson));
+						result.forEach(function(item,index){
+							if(item == 0){
+								if(index == 0){//血压
+									if(dataJson.Highpressure != null && dataJson.Lowpressure != null){
+										var sou = healthStandard.souData(dataJson.Highpressure);
+						        		var shu = healthStandard.shuData(dataJson.Lowpressure);
+					        			result.splice(0,1,parseInt(dataJson.Highpressure));
+										if(sou != null && shu != null){
+											if(sou == 0 || sou == 2){
+												result.splice(0,1,parseInt(dataJson.Highpressure));
+											}else if(shu == 0 || shu == 2){
+												result.splice(0,1,parseInt(dataJson.Lowpressure));
+											}else{
+												result.splice(0,1,parseInt(dataJson.Highpressure));
+											}
+										}
+										if (sou === 0 || shu === 0) {//偏低
+								          adviceList.push({
+									          	content:'血压偏低'
+									          })
+								        } else if (sou === 2 || shu === 2) {//偏高
+								          adviceList.push({
+									          	content:'血压偏高'
+									          })
+								        }
+									}
+								}else if(index == 1){//bmi
+									if(dataJson.bmi != null){
+										result.splice(1,1,parseInt(dataJson.bmi));
+										var bmi = healthStandard.BMIData(dataJson.bmi);
+								        if (bmi === 0) {//偏低
+								          adviceList.push({
+										          	content:'BMI偏低'
+										          })
+								        } else if (bmi === 2) {//偏高
+								          adviceList.push({
+										          	content:'BMI偏高'
+										          })
+								        }
+									}
+								
+								}else if(index == 2){//体脂率
+									if(dataJson.fat != null){
+										result.splice(2,1,parseInt(dataJson.fat));
+										var zf = healthStandard.zfData(dataJson.fat);
+								        if (zf === 0) {//偏低
+								          adviceList.push({
+										          	content:'体脂率偏低'
+										          })
+								        } else if (zf === 2 || zf === 3) {//偏高
+								          adviceList.push({
+										          	content:'体脂率偏高'
+										          })
+								        }
+									}
+								}else if(index == 3){//体温
+									if(dataJson.TT != null){
+										result.splice(3,1,parseInt(dataJson.TT));
+									}
+								}else if(index == 4){//血糖
+									if(dataJson.glu !=null){
+										result.splice(4,1,parseInt(dataJson.glu));
+										var xt = healthStandard.xtData(dataJson.glu, dataJson.hoursAfterMeal);
+								        if (xt === 0) {//偏低
+								          tadviceList.push({
+										          	content:'血糖偏低'
+										          })
+								        } else if (xt === 2) {//偏高
+								          adviceList.push({
+										          	content:'血糖偏高'
+										          })
+								        }
+									} 
+								}
+							}
+						})
+					}
+					loadChart(result); //生成雷达图
+					vm.chartArray = result;
+					vm.adviceList = adviceList;
+				})
+				 
+//						localStorage.setItem('chartArray',JSON.stringify(chartArray));
+					}
+				})
+			}
+
+
+			//健康警告
+			function advice(array){
+				var adviceList = [];
+				array.forEach(function(item,index){
+					if(item != 0){
+						if(index == 0){//血压
+							if(dataJson.Highpressure != '' && dataJson.Lowpressure != ''){
+								var sou = healthStandard.souData(dataJson.Highpressure);
+				        		var shu = healthStandard.shuData(dataJson.Lowpressure);
+								if(sou != null && shu != null){
+									if(sou == 0 || sou == 2){
+										result.splice(0,1,parseInt(dataJson.Highpressure));
+									}else if(shu == 0 || shu == 2){
+										result.splice(0,1,parseInt(dataJson.Lowpressure));
+									}else{
+										result.splice(0,1,parseInt(dataJson.Highpressure));
+									}
+								}
+							}
+						}else if(index == 1){//bmi
+							result.splice(1,1,parseInt(dataJson.bmi));
+						}else if(index == 2){//体脂率
+							result.splice(2,1,parseInt(dataJson.fat));
+						}else if(index == 3){//体温
+							result.splice(3,1,parseInt(dataJson.TT));
+						}else if(index == 4){//血糖
+							result.splice(4,1,parseInt(dataJson.glu));
+						}
+					}
+				})
+			}
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+		</script>
+	</body>
+
+</html>

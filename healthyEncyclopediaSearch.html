@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>药品分类页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			.mui-table-view-cell,.mui-navigate-right{
+				min-height: 0.8rem;
+				line-height: 200%;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					全部分类
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;" id="yaopinList-from">
+			<div class="mui-scroll">
+				<!--主内容区-->
+				
+				<!--中西药品-->
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">中成药品</a>
+						<div class="mui-collapse-content">
+							<div class="yaopin-fenlei-content-zhongxi">
+								
+								<button type="button" :YPtype='31'  class="mui-button">感冒药</button>
+								<button type="button" :YPtype='28' class="mui-button">皮肤药</button>
+								<button type="button" :YPtype='29' class="mui-button">抗菌消炎药</button>
+								<button type="button" :YPtype='30' class="mui-button">心脑血管药</button>
+								<button type="button" :YPtype='27' class="mui-button">滋补药</button>
+								<button type="button" :YPtype='32' class="mui-button">口腔咽喉药</button>
+								<button type="button" :YPtype='33' class="mui-button">止咳化痰药</button>
+								<button type="button" :YPtype='34' class="mui-button">风湿骨痛药</button>
+								<button type="button" :YPtype='35' class="mui-button">儿科药</button>
+								<button type="button" :YPtype='36' class="mui-button">维矿物质</button>
+								<button type="button" :YPtype='37' class="mui-button">肠胃疾病药</button>
+								<button type="button" :YPtype='38' class="mui-button">妇科药</button>
+								<button type="button" :YPtype='39' class="mui-button">安眠药</button>
+								<button type="button" :YPtype='40' class="mui-button">男科药</button>
+								<button type="button" :YPtype='41' class="mui-button">贫血药</button>
+								<button type="button" :YPtype='42' class="mui-button">神经系统药</button>
+								<button type="button" :YPtype='43' class="mui-button">清热解毒药</button>
+								<button type="button" :YPtype='44' class="mui-button">肝药</button>
+								<button type="button" :YPtype='49' class="mui-button">痔疮药</button>
+								<button type="button" :YPtype='51' class="mui-button">铁打损伤药</button>
+								<button type="button" :YPtype='52' class="mui-button">耳鼻科药</button>
+								<button type="button" :YPtype='53' class="mui-button">癌症药</button>
+								<button type="button" :YPtype='54' class="mui-button">糖尿病药</button>
+								<button type="button" :YPtype='56' class="mui-button">高血压药</button>
+								<button type="button" :YPtype='59' class="mui-button">心理疾病药</button>
+								<button type="button" :YPtype='65' class="mui-button">肾病药</button>
+								
+							</div>
+						</div>
+					</li>
+				</ul>
+				
+				<!--中药材-->
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">中药材</a>
+						<div class="mui-collapse-content">
+							<div class="yaopin-fenlei-content">
+								<button type="button" :YPtype='0' class="mui-button">清热药</button>
+								<button type="button" :YPtype='1' class="mui-button">活血化瘀药</button>
+								<button type="button" :YPtype='2' class="mui-button">利水渗湿药</button>
+								<button type="button" :YPtype='3' class="mui-button">芳香化湿药</button>
+								<button type="button" :YPtype='4' class="mui-button">祛风湿药</button>
+								<button type="button" :YPtype='5' class="mui-button">解毒杀虫药</button>
+								<button type="button" :YPtype='7' class="mui-button">平肝息风药</button>
+								<button type="button" :YPtype='8' class="mui-button">高血脂药</button>
+								<button type="button" :YPtype='9' class="mui-button">眼科药</button>
+								<button type="button" :YPtype='10' class="mui-button">拔毒生肌药</button>
+								<button type="button" :YPtype='11' class="mui-button">收涩药</button>
+								<button type="button" :YPtype='12' class="mui-button">理气药</button>
+								<button type="button" :YPtype='13' class="mui-button">补虚药</button>
+								<button type="button" :YPtype='14' class="mui-button">平喘药</button>
+								<button type="button" :YPtype='15' class="mui-button">止血药</button>
+								<button type="button" :YPtype='16' class="mui-button">温里药</button>
+								<button type="button" :YPtype='17' class="mui-button">消食药</button>
+								<button type="button" :YPtype='18' class="mui-button">驱虫药</button>
+								<button type="button" :YPtype='19' class="mui-button">解表药</button>
+								<button type="button" :YPtype='20' class="mui-button">止咳化痰药</button>
+								<button type="button" :YPtype='21' class="mui-button">泻下药</button>
+								<button type="button" :YPtype='22' class="mui-button">燥湿止痒药</button>
+								<button type="button" :YPtype='24' class="mui-button">涌吐药</button>
+								<button type="button" :YPtype='25' class="mui-button">开窍药</button>
+								
+							</div>
+						</div>
+					</li>
+				</ul>
+				
+				<!--营养保健品-->
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-collapse">
+						<a class="mui-navigate-right" href="#">营养保健</a>
+						<div class="mui-collapse-content">
+							<div class="yaopin-fenlei-content-baojian">
+								<button type="button" :YPtype='60' class="mui-button">身体护理</button>
+								<button type="button" :YPtype='61' class="mui-button">日常护理</button>
+								<button type="button" :YPtype='62' class="mui-button">中老年保健</button>
+								<button type="button" :YPtype='63' class="mui-button">补营养</button>
+								<button type="button" :YPtype='45' class="mui-button">女性保健</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+				
+				
+				<!--主内容区结束-->
+				<div style="width: 7.5rem;height: 1.6rem;"></div>
+			</div>
+		</div>
+	
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: '#yaopinList-from',
+				data: {
+					
+
+				}
+			})
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听选择中西药品类型
+				mui(".yaopin-fenlei-content-zhongxi").on('tap', '.mui-button', function() {  
+				     var thisYao = this;
+				     var yaopinType = thisYao.getAttribute('YPtype');				     
+				     console.log(yaopinType);
+				     mui.openWindow({
+				     	url:'healthyEncyclopediaXi.html',
+				     	id:'healthyEncyclopediaXi',
+				     	extras:{
+				     		yaopinType:yaopinType
+				     	}
+				     })
+				
+				});
+				
+				//监听选择中药材类型
+				mui(".yaopin-fenlei-content").on('tap', '.mui-button', function() {  
+				     var thisYao = this;
+				     var yaopinType = thisYao.getAttribute('YPtype');				     
+				     console.log(yaopinType);
+				     mui.openWindow({
+				     	url:'healthyEncyclopediaZ.html',
+				     	id:'healthyEncyclopediaZ',
+				     	extras:{
+				     		yaopinType:yaopinType
+				     	}
+				     })
+				
+				});
+				
+				
+				//监听选择保健品类型
+				mui(".yaopin-fenlei-content-baojian").on('tap', '.mui-button', function() {  
+				     var thisYao = this;
+				     var yaopinType = thisYao.getAttribute('YPtype');				     
+				     console.log(yaopinType);
+				     mui.openWindow({
+				     	url:'healthyEncyclopediaBJ.html',
+				     	id:'healthyEncyclopediaBJ',
+				     	extras:{
+				     		yaopinType:yaopinType
+				     	}
+				     })
+				
+				});
+				
+				//监听返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+
+			});
+		</script>
+	</body>
+
+</html>

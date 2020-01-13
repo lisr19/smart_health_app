@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧健康app</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			html,
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px;
+				overflow: hidden;
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+			}
+			footer {
+				position: fixed;
+				width: 100%;
+				height: 8%;
+				min-height: 50px;
+				border-top: solid 1px #bbb;
+				left: 0px;
+				bottom: 0px;
+				overflow: hidden;
+				padding: 0px 50px;
+				background-color: #fafafa;
+			}
+			.footer-left {
+				position: absolute;
+				width: 50px;
+				height: 50px;
+				left: 0px;
+				bottom: 0px;
+				text-align: center;
+				vertical-align: middle;
+				line-height: 100%;
+				padding: 12px 4px;
+			}
+			.footer-right {
+				position: absolute;
+				width: 50px;
+				height: 50px;
+				right: 0px;
+				bottom: 0px;
+				text-align: center;
+				vertical-align: middle;
+				line-height: 100%;
+				padding: 12px 5px;
+				display: inline-block;
+			}
+			.footer-center {
+				height: 100%;
+				padding: 5px 0px;
+			}
+			.footer-center [class*=input] {
+				width: 100%;
+				height: 100%;
+				border-radius: 5px;
+			}
+			.footer-center .input-text {
+				background: #fff;
+				border: solid 1px #ddd;
+				padding: 10px !important;
+				font-size: 16px !important;
+				line-height: 18px !important;
+				font-family: verdana !important;
+				overflow: hidden;
+			}
+			.footer-center .input-sound {
+				background-color: #eee;
+			}
+			.mui-content {
+				width: 100%;
+				height: 84%;
+				padding: 0px 0px 50px 0px;
+				overflow: auto;
+				background-color: #eaeaea;
+			}
+			#msg-list {
+				height: 100%;
+				overflow: auto;
+				-webkit-overflow-scrolling: touch;
+			}
+			.msg-item {
+				padding: 8px;
+				clear: both;
+			}
+			.msg-item .mui-item-clear {
+				clear: both;
+			}
+			.msg-item .msg-user {
+				width: 38px;
+				height: 38px;
+				border: solid 1px #d3d3d3;
+				display: inline-block;
+				background: #fff;
+				border-radius: 3px;
+				vertical-align: top;
+				text-align: center;
+				float: left;
+				padding: 3px;
+				color: #ddd;
+			}
+			
+			.msg-item .msg-user-img{
+				width: 38px;
+				height: 38px;
+				display: inline-block;
+				border-radius: 3px;
+				vertical-align: top;
+				text-align: center;
+				float: left;
+				color: #ddd;
+			}
+			
+			.msg-item .msg-content {
+				display: inline-block;
+				border-radius: 5px;
+				border: solid 1px #d3d3d3;
+				background-color: #FFFFFF;
+				color: #333;
+				padding: 8px;
+				vertical-align: top;
+				font-size: 15px;
+				position: relative;
+				margin: 0px 8px;
+				max-width: 75%;
+				min-width: 35px;
+				float: left;
+			}
+			.msg-item .msg-content .msg-content-inner {
+				overflow-x: hidden;
+			}
+			.msg-item .msg-content .msg-content-arrow {
+				position: absolute;
+				border: solid 1px #d3d3d3;
+				border-right: none;
+				border-top: none;
+				background-color: #FFFFFF;
+				width: 10px;
+				height: 10px;
+				left: -5px;
+				top: 12px;
+				-webkit-transform: rotateZ(45deg);
+				transform: rotateZ(45deg);
+			}
+			.msg-item-self .msg-user,
+			.msg-item-self .msg-content {
+				float: right;
+			}
+			.msg-item-self .msg-content .msg-content-arrow {
+				left: auto;
+				right: -5px;
+				-webkit-transform: rotateZ(225deg);
+				transform: rotateZ(225deg);
+			}
+			.msg-item-self .msg-content,
+			.msg-item-self .msg-content .msg-content-arrow {
+				background-color: #4CD964;
+				color: #fff;
+				border-color: #2AC845;
+			}
+			footer .mui-icon {
+				color: #000;
+			}
+			footer .mui-icon:active {
+				color: #007AFF !important;
+			}
+			footer .mui-icon-paperplane:before {
+				content: "发送";
+			}
+			footer .mui-icon-paperplane {
+				/*-webkit-transform: rotateZ(45deg);
+				transform: rotateZ(45deg);*/
+				
+				font-size: 16px;
+				word-break: keep-all;
+				line-height: 100%;
+				padding-top: 6px;
+				color: rgba(0, 135, 250, 1);
+			}
+			#msg-sound {
+				-webkit-user-select: none !important;
+				user-select: none !important;
+			}
+			.rprogress {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				width: 140px;
+				height: 140px;
+				margin-left: -70px;
+				margin-top: -70px;
+				background-image: url(../images/arecord.png);
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: 30px 30px;
+				background-color: rgba(0, 0, 0, 0.7);
+				border-radius: 5px;
+				display: none;
+				-webkit-transition: .15s;
+			}
+			.rschedule {
+				background-color: rgba(0, 0, 0, 0);
+				border: 5px solid rgba(0, 183, 229, 0.9);
+				opacity: .9;
+				border-left: 5px solid rgba(0, 0, 0, 0);
+				border-right: 5px solid rgba(0, 0, 0, 0);
+				border-radius: 50px;
+				box-shadow: 0 0 15px #2187e7;
+				width: 46px;
+				height: 46px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -23px;
+				margin-top: -23px;
+				-webkit-animation: spin 1s infinite linear;
+				animation: spin 1s infinite linear;
+			}
+			.r-sigh{
+				display: none;
+				border-radius: 50px;
+				box-shadow: 0 0 15px #2187e7;
+				width: 46px;
+				height: 46px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -23px;
+				margin-top: -23px;
+				text-align: center;
+				line-height: 46px;
+				font-size: 40px;
+				font-weight: bold;
+				color: #2187e7;
+			}
+			.rprogress-sigh{
+				background-image: none !important;
+			}
+			.rprogress-sigh .rschedule{
+				display: none !important;
+			}
+			.rprogress-sigh .r-sigh{
+				display: block !important;
+			}
+			.rsalert {
+				font-size: 12px;
+				color: #bbb;
+				text-align: center;
+				position: absolute;
+				border-radius: 5px;
+				width: 130px;
+				margin: 5px 5px;
+				padding: 5px;
+				left: 0px;
+				bottom: 0px;
+			}
+			@-webkit-keyframes spin {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+			#h {
+				background: #fff;
+				/*border: solid 1px #ddd;*/
+				/*padding: 10px !important;*/
+				font-size: 16px !important;
+				font-family: verdana !important;
+				line-height: 18px !important;
+				overflow: visible;
+				position: absolute;
+				left: -1000px;
+				right: 0px;
+				word-break: break-all;
+				word-wrap: break-word;
+			}
+			.cancel {
+				background-color: darkred;
+			}
+			
+			.chat-header{
+				height: 1rem;
+				margin-top: 0.15rem;
+			}
+			
+			.chat-header-left{
+				float: left;
+				width: 0.78rem;
+				height: 0.88rem;
+			}
+			
+			.chat-header-left img {
+				width: 0.18rem;
+				height: 0.36rem;
+				margin-left: 0.3rem;
+				margin-top: 0.28rem;
+			}
+			
+			.chat-header-center {
+				width: 5.54rem;
+				height: 0.8rem;
+				text-align: center;
+				color: white;
+				padding-top: 0.28rem;
+				padding-left: 0.4rem;
+				float: left;
+				font-size: 0.32rem;
+			}
+			.mui-bar{
+				padding-top: 0.3rem;
+				height: 1.4rem;
+				padding-right: 0;
+				padding-left: 0;
+			}
+			.photo-show-modal-body {
+				/*width: 7rem;*/
+				/*max-height: 8rem;*/
+				padding: 0.1rem;
+				left: 50%;
+				margin-left: -3.75rem;
+				margin-top: 0.5rem;
+				position: absolute;
+				/*background: #FFFFFF;*/
+				border-radius:0.1rem;
+				z-index: 999;
+			}
+			.photo-show-modal-body img{
+				width: 100%;
+				height: auto;
+			}
+			.tip {
+				width: 7.5rem;
+				text-align: center;
+				margin-top: 0.1rem;
+				font-size: 0.2rem;
+				color: #808080;
+			}
+		</style>
+	</head>
+	<body contextmenu="return false;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="chat-header">
+				<div class="chat-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="chat-header-center" id="person-name">
+					聊天人
+				</div>
+			</div>
+		</div>
+		<!--信息聊天部分-->
+		<pre id='h'></pre>
+		<script id='msg-template' type="text/template">
+			<div class='tip'>现在您正与家庭医生聊天当中</div>
+			<% for(var i in record){ var item=record[i]; %>
+				<div class="msg-item <%= (item.sender=='self'?' msg-item-self':'') %>" msg-type='<%=(item.type)%>' msg-content='<%=(item.content)%>'>
+					<% if(item.sender=='self' ) { %>
+						<img class="msg-user" src='<%=(item.avatarUrl)%>'/>
+					<% } else { %>
+						<img class="msg-user-img" src="<%=(item.avatarUrl)%>" alt="" />
+					<% } %>
+					<div class="msg-content">
+						<div class="msg-content-inner">
+							<% if(item.type=='text' ) { %>
+								<%=( item.content|| '&nbsp;&nbsp;') %>
+							<% } else if(item.type=='image' ) { %>
+								<img class="msg-content-image" src="<%=(item.content)%>" onclick="" style="max-width: 100px;" />
+							<% } %>
+						</div>
+						<div class="msg-content-arrow"></div>
+					</div>
+					<div class="mui-item-clear"></div>
+				</div>
+			<% } %>
+		</script>
+		<!--图片展示-->
+		<div>
+			<!--遮盖层-->
+<!--    		<div class="mui-backdrop" id="modal-bg" style="display: none;"></div>-->
+    		<!--图片-->
+    		<!--<div class="photo-show-modal-body" id="modal-show" style="display: none;">-->
+				<!--<img src="img/999pipa.jpg" id="phont-show"/>-->
+    		<!--</div>-->
+		</div>
+		<!--聊天内容-->
+		<div class="mui-content">
+			<div id='msg-list'>
+			</div>
+		</div>
+		<!--输入脚-->
+		<footer>
+			<div class="footer-left">
+				<i id='msg-image' class="mui-icon mui-icon-camera" style="font-size: 28px;"></i>
+			</div>
+			<div class="footer-center">
+				<textarea id='msg-text' type="text" class='input-text'></textarea>
+			</div>
+			<label for="" class="footer-right">
+				<i id='msg-type' class="mui-icon mui-icon-upload"></i>
+			</label>
+		</footer>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.imageViewer.js"></script>
+		<script src="js/arttmpl.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" charset="utf-8">
+//			mui.init();
+//			mui.plusReady(function() {
+//
+//				//滚动
+//				mui('.mui-scroll-wrapper').scroll({
+//					scrollY: true,
+//					deceleration: 0.0003,
+//					indicators: false
+//				});
+//			});
+			(function($,doc){
+				var MIN_SOUND_TIME = 800;//语音最少时间
+				$.init({
+					gestureConfig: {
+						tap: true, //默认为true
+						doubletap: true, //默认为false 
+						longtap: true, //默认为false
+						swipe: true, //默认为true
+						drag: true, //默认为true
+						hold: true, //默认为false，不监听
+						release: true //默认为false，不监听
+					}
+				});
+			template.config('escape',false);
+			$.plusReady(function(){
+				//获取参数由上一页面传来的参数
+				var self = plus.webview.currentWebview();
+				var doctorName = self.doctorName,
+					doctorId = self.doctorId,
+					doctorAvatarUrl = self.doctorAvatarUrl;
+				var myAvatarUrl = 'img/boys.png';
+				//设置聊天对象名字和头像
+				document.getElementById('person-name').innerHTML= doctorName;
+				var userId = localStorage.getItem('userid')
+				 
+				var websocket = null;
+					websocket = new WebSocket(chatBaseUrl+userId);
+				//socket连接失败
+				websocket.onerror = function(){
+					mui.toast('网络连接失败！');
+				}
+			    //连接成功建立的回调方法
+			    websocket.onopen = function() {
+			        console.log("WebSocket连接成功");
+			        var date = new Date();
+			         var seperator1 = "-";
+				    var seperator2 = ":";
+				    var month = date.getMonth() + 1;
+				    var strDate = date.getDate();
+				    if (month >= 1 && month <= 9) {
+				        month = "0" + month;
+				    }
+				    if (strDate >= 0 && strDate <= 9) {
+				        strDate = "0" + strDate;
+				    }
+				    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+				            + " " + date.getHours() + seperator2 + date.getMinutes()
+				            + seperator2 + date.getSeconds();
+			        send({
+			        	sender: 'self',
+						type: 'text',
+						avatarUrl:myAvatarUrl,
+						content: '提示信息： 我在'+currentdate+' 进入聊天空间'
+       				 },4)
+			    }
+				
+				
+				self.setStyle({
+					softinputMode:"adjustResize"
+				})
+				//强制弹出键盘
+				var showKeyboard = function(){
+					if ($.os.ios) {
+						var webView = self.nativeInstanceObject();
+						webView.plusCallMethod({
+							"setKeyboardDisplayRequiresUserAction": false
+						});
+					} else {
+						var Context = plus.android.importClass("android.content.Context");
+						var InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+						var main = plus.android.runtimeMainActivity();
+						var imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+						//var view = ((ViewGroup)main.findViewById(android.R.id.content)).getChildAt(0);
+						imm.showSoftInput(main.getWindow().getDecorView(), InputMethodManager.SHOW_IMPLICIT);
+						//alert("ll");
+					}
+				}
+				//聊天内容数组
+				var record = [];
+				var ui = {
+					body: doc.querySelector('body'),
+					footer: doc.querySelector('footer'),
+					footerRight: doc.querySelector('.footer-right'),
+					footerLeft: doc.querySelector('.footer-left'),
+					btnMsgType: doc.querySelector('#msg-type'),
+					boxMsgText: doc.querySelector('#msg-text'),
+					boxMsgSound: doc.querySelector('#msg-sound'),
+					btnMsgImage: doc.querySelector('#msg-image'),
+					areaMsgList: doc.querySelector('#msg-list'),
+					boxSoundAlert: doc.querySelector('#sound-alert'),
+					h: doc.querySelector('#h'),
+					content: doc.querySelector('.mui-content')
+				}
+				//将文本框宽度赋值给h
+				ui.h.style.width = ui.boxMsgText.offsetWidth + 'px';
+				//让文本框居中
+				var footerPadding = ui.footer.offsetHeight - ui.boxMsgText.offsetHeight;
+				//语音输入相关操作
+				var msgItemTap = function(msgItem, event) {
+						var msgType = msgItem.getAttribute('msg-type');
+						var msgContent = msgItem.getAttribute('msg-content')
+						if (msgType == 'sound') {
+							player = plus.audio.createPlayer(msgContent);
+							var playState = msgItem.querySelector('.play-state');
+							playState.innerText = '正在播放...';
+							player.play(function() {
+								playState.innerText = '点击播放';
+							}, function(e) {
+								playState.innerText = '点击播放';
+							});
+						}
+				};
+				//图片浏览组件
+				var imageViewer = new $.ImageViewer('.msg-content-image', {
+						dbl: false
+				});
+				
+				//绑定消息节点
+				var bindMsgList = function(){
+					//绑定数据:
+					/*tp.bind({
+						template: 'msg-template',
+						element: 'msg-list',
+						model: record
+					});*/
+					//将数据绑定搞到界面上
+					ui.areaMsgList.innerHTML = template('msg-template', {
+						"record": record
+					});
+					//拿到所有的聊天节点
+					var msgItems = ui.areaMsgList.querySelectorAll('.msg-item');
+					/*因为document.querySelectorAll()返回的并不是我们想当然的数组，
+						而是NodeList，对NodeList，它里面没有.forEach方法，
+						我们使用了这样的方法进行循环：*/
+        			//通过call将this绑定到msgItems（以[]下标的方式去遍历msgItems）
+					[].forEach.call(msgItems, function(item, index) {
+						item.addEventListener('tap', function(event) {
+							//处理语音消息播放
+							msgItemTap(item, event);
+						}, false);
+					});
+					//查找所有符合条件的图片
+					imageViewer.findAllImage();
+					//聊天界面的高度修改
+					ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
+				};
+				bindMsgList();
+				//平滑高度过渡
+				window.addEventListener('resize',function(){
+					ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
+				},false);
+				//发送对象声明
+				var send = function(msg,params) {
+					if(params != 4){//不在系统提示消息
+						//将消息内容体push进record
+						record.push(msg);
+						var type = 1;//消息类型 默认为文字
+						if(msg.type == 'image'){
+							type = 2
+						}
+						//websocket发送信息
+						var message = {
+							senderUserId:userId,
+							receiverUserId:doctorId,
+							content:msg.content,
+							type:type,
+						}
+						 websocket.send(JSON.stringify(message));
+						//绑定消息节点
+						bindMsgList();
+					}else{
+						//websocket发送信息
+						var message = {
+							senderUserId:userId,
+							receiverUserId:doctorId,
+							content:msg.content,
+							type:params,
+						}
+						 websocket.send(JSON.stringify(message));
+					}
+						
+					//接收到消息的回调方法
+				    websocket.onmessage = function(event) {
+				    	var isJson = isJSON(event.data)
+				    	if(isJson){
+//				    		console.log(event.data)
+				    		if(JSON.parse(event.data).senderUserId != userId){
+					    		var type = '';
+					    		if(JSON.parse(event.data).type != 4){//不为系统消息内容
+						    		if(JSON.parse(event.data).type == 1){
+						    			type = 'text';
+						    		}else if(JSON.parse(event.data).type == 2){
+						    			type = 'image';
+						    		}
+							    	record.push({
+										sender: 'zs',
+										type: type,
+										avatarUrl:doctorAvatarUrl,
+										content: JSON.parse(event.data).content
+									});
+									bindMsgList(); 
+					    		}
+				    		}
+				    	}
+			    		
+				    };
+				};
+				
+				//获取聊天历史
+				getHistoryByIds(doctorId);
+				//根据双方userId查询历史消息列表
+				function getHistoryByIds(otherId){
+					var params = {
+						myId: userId,
+						otherId: otherId,
+						page: 1,
+						limit: 50,
+					}
+					doGet('/message/findListByMyIdAndOtherId', params, function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+							console.log('链接失败，请检查网络');
+						} else {
+							historyData = data.data.reverse();
+							var historyChat = setHistoryChat(historyData,userId,otherId,doctorAvatarUrl,myAvatarUrl);
+							if(historyChat !== '' && historyChat != null){
+								historyChat.forEach(function(item){
+									record.push(item);
+									//绑定消息节点
+									bindMsgList();
+								})
+							}
+//							console.log('聊天 '+JSON.stringify(record));
+						}
+					})
+				}
+
+				
+				
+				//机器人回复
+				var toRobot = function(info) {
+					var apiUrl = 'http://www.tuling123.com/openapi/api';
+					$.getJSON(apiUrl, {
+						"key": 'acfbca724ea1b5db96d2eef88ce677dc',
+						"info": info,
+						"userid": plus.device.uuid
+					}, function(data) {
+						//alert(JSON.stringify(data));
+						record.push({
+							sender: 'zs',
+							type: 'text',
+							avatarUrl:doctorAvatarUrl,
+							content: data.text
+						});
+						bindMsgList();
+					});
+				};
+
+				//让输入框获取焦点
+				function msgTextFocus() {
+					ui.boxMsgText.focus();
+					setTimeout(function() {
+						ui.boxMsgText.focus();
+					}, 150);
+				}
+				//点击右边按钮控制
+				ui.footerRight.addEventListener('release', function(event) {
+					//当是文字时（判断文字样式mui-icon-paperplane）
+					if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
+						//showKeyboard();
+						//让输入框获取焦点
+						ui.boxMsgText.focus();
+						setTimeout(function() {
+							ui.boxMsgText.focus();
+						}, 150);
+						//							event.detail.gesture.preventDefault();
+						send({
+							sender: 'self',
+							type: 'text',
+							avatarUrl:myAvatarUrl,
+							content: ui.boxMsgText.value.replace(new RegExp('\n', 'gm'), '<br/>')
+						});
+						//输入框内容清空
+						ui.boxMsgText.value = '';
+						$.trigger(ui.boxMsgText, 'input', null);
+					}else if(ui.btnMsgType.classList.contains('mui-icon-upload')){
+						var _date = new Date();
+    					var age = _date.getFullYear() - localStorage.getItem('year');
+						var str = '性别：'+localStorage.getItem('sex')+',   '
+								+'年龄：'+age+',   '
+								+localStorage.getItem('strByFamily')+'   '
+								+localStorage.getItem('strByHealth')
+//						console.log(str);
+						var btnArray = ['否', '是'];
+						mui.confirm('您要发送您的体检数据吗？', '智慧健康APP', btnArray, function(e) {
+							if (e.index == 1) {
+								send({
+											sender: 'self',
+											type: 'text',
+											avatarUrl:myAvatarUrl,
+											content: str
+										});
+							} else {
+							  info.innerText = '取消发送';
+							}
+						})
+						ui.content.style.paddingBottom = (ui.h.offsetHeight + footerPadding) + 'px';
+					}else{
+						ui.content.style.paddingBottom = (ui.h.offsetHeight + footerPadding) + 'px';
+					}
+				}, false);
+				
+				//点击左边按钮时
+				ui.footerLeft.addEventListener('tap', function(event) {
+					var btnArray = [{
+						title: "拍照"
+					}, {
+						title: "从相册选择"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "选择照片",
+						cancel: "取消",
+						buttons: btnArray
+					}, function(e) {
+						var index = e.index;
+						switch (index) {
+							case 0:
+								break;
+							case 1:
+								var cmr = plus.camera.getCamera();//调用手机摄像头
+									cmr.captureImage(function(path) {
+										path = "file://" + plus.io.convertLocalFileSystemURL(path)
+										var task = plus.uploader.createUpload( baseUrl + '/upload/img', {
+											method:'POST',
+										}, function ( t, status ) {
+											// 上传完成
+											if ( status == 200 ) { 
+												mui.toast('发送成功！');
+//												console.log( "Upload success: " + JSON.parse(t.responseText).data.url);
+												send({
+													sender: 'self',
+													type: 'image',
+													avatarUrl:myAvatarUrl,
+													content: JSON.parse(t.responseText).data.url
+												});	
+											} else {
+												mui.toast('发送失败！');
+												console.log( "Upload failed: " + status );
+											}
+										});
+											task.addFile(path, {key:'imgFile'} );
+		//									task.addData( "string_key", "string_value" );
+//											task.addEventListener( "statechanged", onStateChanged, false );
+											task.setRequestHeader('Authorization', localStorage.getItem('token'));
+											task.setRequestHeader('phone',localStorage.getItem('phone'));
+											task.start();
+									}, function(err) {});
+										break;
+										case 2:
+										plus.gallery.pick(function(path) {
+											var task = plus.uploader.createUpload( baseUrl + '/upload/img', {
+												method:'POST',
+											}, function ( t, status ) {
+												// 上传完成
+												if ( status == 200 ) {
+													mui.toast('发送成功！');
+		//											console.log( "Upload success: " + JSON.parse(t.responseText).data.url);
+													send({
+														sender: 'self',
+														type: 'image',
+														avatarUrl:myAvatarUrl,
+														content: JSON.parse(t.responseText).data.url
+													});
+												} else {
+													mui.toast('发送失败！');
+													console.log( "Upload failed: " + status );
+												}
+											});
+											task.addFile(path, {key:'imgFile'} );
+		//									task.addData( "string_key", "string_value" );
+//											task.addEventListener( "statechanged", onStateChanged, false );
+											task.setRequestHeader('Authorization', localStorage.getItem('token'));
+											task.setRequestHeader('phone',localStorage.getItem('phone'));
+											task.start();
+										}, function(err) {}, null);
+										break;
+						}
+					});
+				}, false); 
+				var recordCancel = false;
+				var recorder = null;
+				var audio_tips = document.getElementById("audio_tips");
+				var startTimestamp = null;
+				var stopTimestamp = null;
+				var stopTimer = null;
+				
+				//监听用户点击输入框展开时触发
+				ui.boxMsgText.addEventListener('click',function(event){
+					//调整显示信息高度
+					ui.content.style.paddingBottom = (ui.h.offsetHeight + footerPadding +50) + 'px';
+				},false)
+				
+				//监听用户输入时触发
+				ui.boxMsgText.addEventListener('input', function(event) {
+					//当输入为空时去掉发送文字，当不为空时，显示发送文字
+					ui.btnMsgType.classList[ui.boxMsgText.value == '' ? 'remove' : 'add']('mui-icon-paperplane');
+					//当用户输入值不为空时，设置自定义属性for，赋值msg-text
+					ui.btnMsgType.setAttribute("for", ui.boxMsgText.value == '' ? '' : 'msg-text');
+					//替换与正则表达式相匹配的值（转义）
+					ui.h.innerText = ui.boxMsgText.value.replace(new RegExp('\n', 'gm'), '\n-') || '-';
+					//动态调整输入框高度
+					ui.footer.style.height = (ui.h.offsetHeight + footerPadding) + 'px';
+					//调整显示信息高度
+					var paddingBottomHeight = (ui.h.offsetHeight + footerPadding + 50) + 'px';
+					//ui.content.style.paddingBottom = ui.footer.style.height;
+					ui.content.style.paddingBottom = paddingBottomHeight;
+				});
+				var focus = false;
+				//监听用户点击发送时触发
+				ui.boxMsgText.addEventListener('tap', function(event) {
+					//得到焦点
+					ui.boxMsgText.focus();
+					setTimeout(function() {
+						ui.boxMsgText.focus();
+					}, 0);
+					focus = true;
+					setTimeout(function () {
+						focus = false;
+					},1000);
+					 //阻止iOS2.0中的手势事件：gesture事件
+//					event.detail.gesture.preventDefault();
+				}, false);
+				//点击消息列表，关闭键盘
+				ui.areaMsgList.addEventListener('click',function (event) {
+					if(!focus){
+						//调整显示信息高度
+						ui.content.style.paddingBottom = (ui.h.offsetHeight + footerPadding) + 'px';
+						ui.boxMsgText.blur();
+					}
+				})
+			});
+		}(mui, document));
+			
+			
+			//历史消息整合
+			function setHistoryChat(dataJson,userId,otherId,doctorAvatarUrl,myAvatarUrl){
+				var record = [];
+				if(dataJson != '' && dataJson != null){
+					dataJson.forEach(function(item,index,array){
+						if(item.senderUserId == userId){//自己发的消息
+							var type = ''
+							if(item.type != 4){//不为系统消息内容
+								if(item.type == 1){//文字内容
+									type = 'text';
+								}else if(item.type == 2){//图片内容
+									type = 'image';
+								}
+								record.push({
+										sender: 'self',
+										type: type,
+										avatarUrl:myAvatarUrl,
+										content: item.content
+									})
+							}
+							}else if(item.senderUserId == otherId){//对方发的消息
+							var type = ''
+							if(item.type != 4){//不为系统消息内容
+								if(item.type == 1){//文字内容
+									type = 'text';
+								}else if(item.type == 2){//图片内容
+									type = 'image';
+								}
+								record.push({
+									sender: 'zs',
+									type: type,
+									avatarUrl:doctorAvatarUrl,
+									content: item.content
+								})
+							}
+						}
+					})
+				}
+				return record;
+			}
+//			判断一个字符串是否未JSON数据
+			function isJSON(str) {
+			    if (typeof str == 'string') {
+			        try {
+			            JSON.parse(str);
+			            return true;
+			        } catch(e) {
+			            return false;
+			        }
+			    }
+			}
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>家庭组列表页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					选择家庭组
+				</div>
+				<div class="baike-header-top-right">
+
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;" id="health-form">
+			<div class="mui-scroll">
+
+				<!--家庭组卡片-->
+				<div v-for="(items,index) in groupList" class="family-group" style="min-height: 1.2rem;">
+					<!--<div class="family-group-one" v-for="item in items.userList">
+						<img v-if="guolv(item.sex,item.year) == 1" src="img/woman.png" />
+						<img v-if="guolv(item.sex,item.year) == 2" src="img/mans.png" />
+                         
+						<img v-if="guolv(item.sex,item.year) == 3" src="img/girls.png" />
+						<img v-if="guolv(item.sex,item.year) == 4" src="img/boys.png" /> {{item.name}}
+					</div>-->
+					<!--<div style="clear: both;"></div>
+					<div class="family-group-name">
+						组名：{{items.groupInfo.name}}
+						<button class="family-group-more">详情</button>
+					</div>-->
+					<div class="family-group-left">
+						<img src="img/luyouqi.png" />
+					</div>
+					<div class="family-group-center" @click="checkmore(items.groupInfo.id,items.groupInfo.name)">
+						<span>{{items.groupInfo.name}}</span>
+					</div>
+					<div class="family-group-right" @click="changeMC(items.groupInfo.id)">
+						<button>更换设备</button>
+					</div>
+				</div>
+				<div style="width: 7.5rem;height: 1.3rem;"></div>
+			</div>
+		</div>
+		<div class="health-main-menu">
+			<div class="main-page  icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page " id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#health-form",
+				data: {
+					groupList: '',
+				},
+				methods: {
+					checkmore: function(groupid, groupName) { //查看组详情
+						var thisid = groupid;
+						console.log('组id' + groupid);
+						localStorage.setItem('groupName', groupName);
+
+						var params = {
+
+							groupId: groupid,
+
+						}
+
+						var data = doGet('/airData/checkBingding', params, function(data) {
+
+							console.log('组空气质量' + JSON.stringify(data));
+							if(data.code != '0') {
+								mui.toast('查询失败！');
+								return;
+							} else {
+
+								if(data.data == '0') {
+									mui.confirm("该组未绑定设备，请先绑定设备？", "绑定设备", ['确定', '取消'], function(e) {
+										if(e.index == 0) //进入绑定页面
+											mui.openWindow({
+												url: 'airDataBinding.html',
+												id: 'airDataBinding',
+												extras: {
+													groupid: thisid,
+												}
+											})
+									})
+
+								} else {
+
+									mui.openWindow({
+										url: 'airData.html',
+										id: 'airData',
+										extras: {
+											groupid: thisid,
+										}
+									})
+								}
+
+							}
+
+						})
+
+					},
+					changeMC: function(groupid) {//更换设备
+
+						var thisid = groupid;
+						console.log('组id' + groupid);
+						mui.openWindow({
+							url: 'airDataUpdate.html',
+							id: 'airDataUpdate',
+							extras: {
+								groupid: thisid,
+							}
+						})
+
+					},
+					guolv: function(sex, year) { //根据条件改变头像
+						var year1 = year;
+						var myDate = new Date();
+						var thisYear = myDate.getFullYear();
+						var nianlin = thisYear - year;
+						if(nianlin > 18 && sex == 3) { //女人
+							return 1;
+						}
+						if(nianlin > 18 && sex != 3) { //男人			
+							return 2;
+						}
+						if(nianlin < 18 && sex == 3) { //小女孩
+							return 3;
+						}
+						if(nianlin < 18 && sex != 3) { //小男孩
+							return 4;
+						}
+
+					}
+
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				loadGroup();
+
+			});
+
+			//全局监听刷新页面
+			window.addEventListener('clearData-groupList', function(evt) {
+				loadGroup();
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				console.log('返回')
+				mui.back();
+			});
+
+			//获取家庭组列表数据
+			function loadGroup() {
+				var phone = localStorage.getItem('phone');
+				var userid = localStorage.getItem('userid');
+				var token = localStorage.getItem("token");
+
+				//				console.log(phone);
+				//				console.log(userid);
+				//				console.log(token);
+
+				var params = {
+
+					userId: userid,
+
+				}
+
+				var data = doGet('/group/findGroupByUser', params, function(data) {
+
+					console.log(JSON.stringify(data));
+					if(data.code != '0') {
+						mui.toast('查询失败！');
+						return;
+					} else {
+
+						var dataJson = data.data;
+						vm.groupList = dataJson;
+
+					}
+
+				})
+
+				//				mui.ajax(baseUrl + '/group/findGroupByUser', {
+				//					headers: {
+				//						'Authorization': token,
+				//						phone: phone
+				//					},
+				//					data: {
+				//
+				//						userId: userid,
+				//
+				//					},
+				//					dataType: 'json', //服务器返回json格式数据
+				//					type: 'get', //HTTP请求类型
+				//					timeout: 10000, //超时时间设置为10秒；
+				//					success: function(data) {
+				//						console.log(JSON.stringify(data));
+				//						if(data.code != '0') {
+				//							mui.toast('查询失败！');
+				//							return;
+				//						} else {
+				//
+				//							var dataJson = data.data;
+				//							vm.groupList = dataJson;
+				//							
+				//						}
+				//
+				//					},
+				//					error: function(xhr, type, errorThrown) {
+				//
+				//					}
+				//				});
+
+			}
+		</script>
+	</body>
+
+</html>

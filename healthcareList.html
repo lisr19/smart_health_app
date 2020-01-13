@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>健康百科药品页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			.mui-control-item{
+				line-height: 0.48rem!important;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-input">
+					<input type="text" id="searchValue" placeholder="请输入关键字 进行查询" 
+						onfocus="this.placeholder=''"
+						 onblur="this.placeholder='请输入关键字 进行查询'"/>
+				</div>
+				<div class="baike-search-img" id="search" />
+				<img src="img/Shape.png" />
+			</div>
+		</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.6rem;" id="healthcare-from">
+			<div class="mui-scroll">
+				<!--主内容区-->
+
+				<div class="mui-slider mui-fullscreen" style="height: 0.9rem;">
+					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" style="height: 0.8rem;">
+						<div class="mui-scroll">
+							<a class="mui-control-item mui-active" :wzType='0' imgType='img/bj'>
+								常见
+							</a>
+
+							<a class="mui-control-item" :wzType='2' imgType='img/eat'>
+								心理
+							</a>
+							<a class="mui-control-item" :wzType='3' imgType='img/jf'>
+								消化
+							</a>
+							<a class="mui-control-item" :wzType='4' imgType='img/js'>
+								药品
+							</a>
+							<a class="mui-control-item" :wzType='1' imgType='img/yp'>
+								男性
+							</a>
+							<a class="mui-control-item" :wzType='5' imgType='img/yr'>
+								女性
+							</a>
+							<a class="mui-control-item" :wzType='6' imgType='img/bj'>
+								心血管
+							</a>
+							<a class="mui-control-item" :wzType='7' imgType='img/eat'>
+								老人
+							</a>
+							<a class="mui-control-item" :wzType='9' imgType='img/jf'>
+								儿科
+							</a>
+							<a class="mui-control-item" :wzType='10' imgType='img/js'>
+								中医
+							</a>
+							<a class="mui-control-item" :wzType='13' imgType='img/yp'>
+								神经
+							</a>
+							<a class="mui-control-item" :wzType='15' imgType='img/yr'>
+								急救
+							</a>
+							<a class="mui-control-item" :wzType='17' imgType='img/bj'>
+								饮食
+							</a>
+							<a class="mui-control-item" :wzType='18' imgType='img/eat'>
+								糖尿病
+							</a>
+							<a class="mui-control-item" :wzType='19' imgType='img/jf'>
+								胃病
+							</a>
+							<a class="mui-control-item" :wzType='23' imgType='img/js'>
+								骨科
+							</a>
+							<a class="mui-control-item" :wzType='28' imgType='img/yp'>
+								减肥
+							</a>
+							<a class="mui-control-item" :wzType='29' imgType='img/yr'>
+								育儿
+							</a>
+							<a class="mui-control-item" :wzType='30' imgType='img/bj'>
+								皮肤
+							</a>
+							<a class="mui-control-item" :wzType='37' imgType='img/eat'>
+								健身
+							</a>
+							<a class="mui-control-item" :wzType='38' imgType='img/jf'>
+								风湿
+							</a>
+							<a class="mui-control-item" :wzType='40' imgType='img/js'>
+								产科
+							</a>
+							<a class="mui-control-item" :wzType='42' imgType='img/yp'>
+								艾滋病
+							</a>
+							<a class="mui-control-item" :wzType='45' imgType='img/yr'>
+								性病
+							</a>
+							<a class="mui-control-item" :wzType='50' imgType='img/bj'>
+								不孕不育
+							</a>
+
+						</div>
+					</div>
+				</div>
+
+				<!--文章区域-->
+				<div class="healthcare-list">
+
+					<div v-for="(item,index) in articleList" class="main-foot-one" :content='item.content' :title='item.title' :author='item.author'>
+						<div class="main-foot-one-left">
+							<div class="main-foot-one-title">
+								{{item.title}}..
+							</div>
+							<div class="main-foot-one-fuTitle">
+								{{item.author}}<span style="margin-left: 0.1rem;"><!--{{item.date}}--></span>
+							</div>
+						</div>
+						<div class="main-foot-one-right">
+							<img :src="imgRandom(index)"/>
+						</div>
+
+					</div>
+
+				</div>
+				<!--主内容区结束-->
+				<div style="width: 7.5rem;height: 0.3rem;"></div>
+				<div class="fool"><span onclick="readMore();">点击查看更多</span></div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: '#healthcare-from',
+				data: {
+					limit: 8,
+					articleList: '',
+					thistype: 0, 
+					imgType:'img/bj',
+				},
+				methods:{
+					imgRandom:function(index){
+//						var imgType = this.articleList[0].imgType;
+						var arr = [1,2,3,4,5,6];
+						//var index = Math.floor((Math.random()*arr.length));
+						var indexs = index%6;
+						return this.articleList[0].imgType+indexs+'.jpg';
+					},
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false,
+				});
+
+				//监听返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+
+				//监听搜索
+				document.getElementById('search').addEventListener('tap', function() {
+
+					var searchValue = document.getElementById('searchValue').value;
+					mui.openWindow({
+						url: 'healthcareResult.html',
+						id: 'healthcareResult',
+						extras: {
+							searchValue: searchValue
+						}
+					})
+
+				});
+				
+				//查询结果
+				document.getElementById('searchValue').addEventListener('keypress', function(event) {
+					
+					
+					 if(event.keyCode == "13") {
+                      document.activeElement.blur();//收起虚拟键盘
+                     var searchValue = document.getElementById('searchValue').value;
+					mui.openWindow({
+						url: 'healthcareResult.html',
+						id: 'healthcareResult',
+						extras: {
+							searchValue: searchValue
+						}
+					})
+                   }
+					
+					
+					
+				});
+				
+				
+
+				//监听文章分类
+				mui(".mui-slider").on('tap', '.mui-control-item', function() {
+
+					var thisTitle = this;
+
+					vm.thistype = thisTitle.getAttribute('wzType');
+					vm.imgType = thisTitle.getAttribute('imgType');
+					var thistype = vm.thistype;
+					var imgType = vm.imgType
+					loadDeafultArticle(thistype,imgType);
+
+				});
+
+				//监听文章
+
+				mui(".healthcare-list").on('tap', '.main-foot-one', function() {
+					var thisArt = this;
+					var Newstitle = thisArt.getAttribute('title');
+					var NewsAuthor = thisArt.getAttribute('author');
+					var NewsContent = thisArt.getAttribute('content');
+					mui.openWindow({
+						url: 'news2.html',
+						id: 'news2',
+						extras: {
+							Newstitle: Newstitle,
+							NewsAuthor: NewsAuthor,
+							NewsContent: NewsContent
+						}
+					})
+
+				});
+
+				//加载文章
+				loadDeafultArticle(0,'img/bj');
+
+			});
+            
+             
+            //查看更多数据
+			function readMore() {
+
+				vm.limit = vm.limit + 8;
+
+				var type = vm.thistype;
+				var imgType = vm.imgType
+				console.log(imgType);
+				loadDeafultArticle(type,imgType);
+			}
+
+			//加载文章
+			function loadDeafultArticle(thistype,imgType) {
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+				var atype = thistype;
+				mui.ajax(baseUrl + '/article/findList', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						page: 1,
+						limit: vm.limit,
+						type: atype,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						var dataJson = [];
+						data.data.data.forEach(function(item,index){
+							item.imgType = imgType;
+							dataJson.push(item)
+						})
+						vm.articleList = dataJson;
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+		</script>
+	</body>
+
+</html>

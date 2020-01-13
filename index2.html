@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧健康app</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="mui-scroll-wrapper" id="health-foot">
+			<div class="mui-scroll">
+				<div class="header" style="background-image: url(img/background.svg);background-size:cover;">
+					<div class="header-left" id="saomiao">
+						<img src="img/search.png" />
+					</div>
+					<div class="header-center">
+						<img src="img/Shape.png" />
+						<input class="header-input" disabled="disabled" type="text" placeholder="请输入 疾病/药品 进行搜索" />
+					</div>
+					<div class="header-right" id="newtip">
+						<img src="img/newtip.png" />
+					</div>
+
+				</div>
+
+				<!--轮播-->
+				<div class="swiper">
+					<div class="swiper-container">
+						<div class="swiper-wrapper" id="loopImg">
+							<!--<div  class="swiper-slide">
+								<div class="swiper-shadow"></div>
+								<img src="img/banner6.jpg" />
+
+							</div>
+							<div class="swiper-slide">
+								<div class="swiper-shadow"></div>
+								<img src="img/banner5.jpg" />
+							</div>
+							<div class="swiper-slide">
+								<div class="swiper-shadow"></div>
+								<img src="img/banner1.jpg" />
+							</div>-->
+						</div>
+					</div>
+				</div>
+				<!--轮播结束-->
+				<div class="main-mid">
+					<div class="main-mid-title">
+						<span id="data-title">今日数据</span>
+						<span id="data-title2">每天同步更新</span>
+					</div>
+					<div class="main-mid-con">
+						<span>空气质量</span>
+						<!--优-->
+								<span v-if="airMessage.PM25 <= 50"> 
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								</span>
+								<!--良-->
+								<span v-if="airMessage.PM25 > 50 && airMessage.PM25 < 100"> 
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								</span>
+								<!--轻度污染-->
+								<span v-if="airMessage.PM25 >= 100 && airMessage.PM25 < 150"> 
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								</span>
+								<!--中度污染-->
+								<span v-if="airMessage.PM25 >= 150 && airMessage.PM25 < 200"> 
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								</span>
+								<!--重度污染-->
+								<span v-if="airMessage.PM25 >= 200 && airMessage.PM25 < 300"> 
+								<img src="img/Star Copy 2.png" />
+								<img src="img/Star Copy 2.png" />
+								</span>
+								<!--严重污染-->
+								<span v-if="airMessage.PM25 >= 300"> 
+								<img src="img/Star Copy 2.png" />
+								</span>
+								<!--暂无数据，默认五星-->
+								<span v-if="airMessage.PM25 == ''"> 
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								<img src="img/Star.png" />
+								</span>
+
+						<button id="todayData">查看更多</button>
+					</div>
+
+				</div>
+				<!--功能区-->
+				<div class="main-selest">
+					<div class="main-select-one" id="healthEncyclopedia">
+						<img src="img/health.png" />
+						<span>健康百科</span>
+					</div>
+					<!--<div class="main-defult"></div>-->
+					<div class="main-select-one" id="healthcheck">
+						<img src="img/healthcheck.png" />
+						<span>健康体检</span>
+					</div>
+					<!--<div class="main-defult"></div>-->
+					<div class="main-select-one" id="consult">
+						<img src="img/prosess.png" />
+						<span>专家咨询</span>
+					</div>
+					<div class="main-select-one" id="guahao">
+						<img src="img/guahao.png" />
+						<span>预约挂号</span>
+					</div>
+					<!--<div class="main-defult"></div>-->
+					<div class="main-select-one" id="report">
+						<img src="img/report.png" />
+						<span>报告查询</span>
+					</div>
+					<!--<div class="main-defult"></div>-->
+					<div class="main-select-one" id="sport">
+						<img src="img/sport.png" />
+						<span>健康建议</span>
+					</div>
+					<div class="main-select-one" id="propertyTip">
+						<img src="img/wuye.png" />
+						<span>物业服务</span>
+					</div>
+					<div class="main-select-one" id="airData">
+						<img src="img/air.png" />
+						<span>空气质量</span>
+					</div>
+					<div class="main-select-one" id="onekey">
+						<img src="img/kaisuo.png" />
+						<span>一键开锁</span>
+					</div>
+					<div class="main-select-one" id="parking">
+						<img src="img/tingche.png" />
+						<span>智能停车</span>
+					</div>
+
+				</div>
+				
+				
+
+				<div style="width: 7.5rem;height: 0.8rem;"></div>
+			</div>
+		</div>
+		<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>发现</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+	    <script type="text/javascript" src="js/swiper.min.js" ></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script>
+			mui.init();
+			var msg_content = ''; //消息内容
+			var msg_topic = ''; //主题
+			var clientId = ''; //个推生成的客户端id
+
+			var vm = new Vue({
+				el: "#health-foot",
+				data: {
+					tizhi: '0',
+					baojian: '',
+					yinshi: '',
+					jianfei: '',
+					jianshen: '',
+					yaopin: '',
+					yuer: '',
+					limit: 5,
+					versionid: '',
+					vurl: '',
+					adverisement: '',
+					airMessage:''
+
+				},
+			});
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				var info = plus.push.getClientInfo(); // 获取推送客户端标识信息
+				var pushToken = info.token; //ios用的标识
+				var pushClientid = info.clientid; //android用的标识		
+				var cnt = 0;
+
+				//alert(JSON.stringify(info));
+
+				/**
+				 * 监听接受推送消息事件
+				 * 接收到推送消息后，创建本地通知栏消息
+				 */
+				plus.push.addEventListener("receive", function(msg) {
+					/**
+					 * 创建本地消息
+					 */
+					plus.push.createMessage(msg.content, msg.payload || '', msg);
+					plus.runtime.setBadgeNumber(++cnt);
+				}, false);
+
+				/**
+				 * 监听本地消息点击事件
+				 */
+				plus.push.addEventListener("click", function(msg) {
+					// 分析msg.payload处理业务逻辑 
+					alert(msg.content);
+					cnt = 0;
+					mui.openWindow({
+						url: 'messageTip.html',
+						id: 'messageTip'
+					})
+
+				}, false);
+
+				function randomString(length) {
+					var text = "";
+					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					for(var i = 0; i < length; i++)
+						text += possible.charAt(Math.floor(Math.random() * possible.length));
+					return text;
+
+				}
+
+                loadAirResult();
+               
+				bindGexin();
+				
+
+				//绑定推送
+				function bindGexin() {
+					//					var token = localStorage.getItem('token');
+					var phone = localStorage.getItem('phone');
+
+					var params = {
+						clientId: pushClientid,
+						userId: phone
+					}
+
+					var data = doPost('/message/getGexinBind', params, function(data) {
+						//console.log(data);
+						if(data.code != '0') {
+							//mui.toast('开启推送失败！');
+						} else {
+							console.log('成功开启推送')
+						}
+					});
+
+				}
+
+				//获取广告
+				function loadAdverisement() {
+
+					var params = {
+						limit: 6,
+						status: 1,
+					}
+
+					var data = doGet('/advertisement/findList', params, function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+
+							console.log('网络失败！');
+
+						} else {
+							//vm.adverisement = data.data.data;
+							//启动轮播图
+							var adverisment = data.data.data;
+							var loopImg = document.getElementById('loopImg');
+							var html = '';
+							for(var i =0;i<adverisment.length;i++){
+								
+								html += '<div  class="swiper-slide">'
+								+'<div class="swiper-shadow"></div>'
+								+'<img src="'+adverisment[i].imgUrl+'" data-url="'+adverisment[i].url+'" />'
+							    +'</div>'
+								
+								
+							}
+						
+							loopImg.innerHTML = html;
+							
+							var mySwiper = new Swiper('.swiper-container', {
+								direction: 'horizontal',
+								loop: true,
+								autoplay: 5000,
+								slidesPerView: "auto",
+								centeredSlides: true,
+								spaceBetween: 20,
+								initialSlide :0,
+                                observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                                 observeParents:true//修改swiper的父元素时，自动初始化swip
+
+							})
+							
+						}
+					});
+                  
+                  
+				}
+
+				//设置系统状态栏背景色
+				//plus.navigator.setStatusBarBackground('#f6f6f6');
+				//参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('light');
+
+				//首页返回键处理  
+				//处理逻辑：2秒内，连续两次按返回键，则退出应用  
+				var first = null;
+				mui.back = function() {
+					if(!first) {
+						first = new Date().getTime();
+						mui.toast('再按一次退出应用');
+						setTimeout(function() {
+							first = null;
+						}, 2000);
+					} else {
+						if(new Date().getTime() - first < 2000) {
+							plus.runtime.quit();
+						}
+					}
+				};
+
+				loadUserMesaagae();
+
+				//获取小鹿社区用户的基本信息
+				function loadUserMesaagae() {
+					var token2 = localStorage.getItem('token2');
+					mui.ajax('http://zhoushengli.s1.natapp.cc/sysBuyer/V1.0.0/getInfo', {
+						data: {
+							token: token2,
+
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+
+							console.log('获取小鹿社区用户信息' + JSON.stringify(data));
+							if(data.code == 0) {
+								//存储小区id							
+								var smallComId = data.data.smallCommunity[0].smallCommunityCode;
+								//console.log('-------------'+JSON.stringify(smallComId))
+								localStorage.setItem('smallComId', smallComId);
+
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+
+						}
+					});
+
+				}
+
+				findNewVersion();
+
+				loadAdverisement();
+
+				
+
+				//监听健康百科
+				document.getElementById('healthEncyclopedia').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'healthyEncyclopedia.html',
+						id: 'healthyEncyclopedia'
+					})
+				});
+
+				//监听智能停车
+				document.getElementById('parking').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'SmartPaking.html',
+						id: 'SmartPaking'
+					})
+
+				});
+
+				//监听物业通知
+				document.getElementById('propertyTip').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'propertyTip.html',
+						id: 'propertyTip'
+					})
+				});
+
+				//监听健康体检
+				document.getElementById('healthcheck').addEventListener('tap', function() {
+//					mui.openWindow({
+//						url: 'healthCheck.html',
+//						id: 'healthCheck'
+//					})
+					
+					mui.openWindow({
+						url: 'buildTip.html',
+						id: 'buildTip'
+					})
+				});
+
+				//监听空气质量
+				document.getElementById('airData').addEventListener('tap', function() {
+					mui.openWindow({
+//						url: 'airData.html',
+//						id: 'airData'
+                        url: 'airGroupSelect.html',
+						id: 'airGroupSelect'
+					})
+				});
+
+				//监听今天数据
+				document.getElementById('todayData').addEventListener('tap', function() {
+					mui.openWindow({
+						//						url: 'todayData.html',
+						//						id: 'todayData'
+						url: 'airData.html',
+						id: 'airData'
+					})
+				});
+
+				//监听专家咨询
+				document.getElementById('consult').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'consult.html',
+						id: 'consult'
+					})
+				});
+
+				//监听最新消息
+				document.getElementById('newtip').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'messageTip.html',
+						id: 'messageTip'
+					})
+				});
+
+				//				//监听新闻
+				//				document.getElementById('news').addEventListener('tap', function() {
+				//					mui.openWindow({
+				//						url: 'news.html',
+				//						id: 'news'
+				//					})
+				//				});
+
+				
+				
+				
+				//监听广告
+				mui(".swiper-wrapper").on('tap', '.swiper-slide img', function() {
+					var thisAdv = this;
+					var advUrl = thisAdv.getAttribute('data-url');
+					if(advUrl != ''){
+					mui.openWindow({
+						url:'adverisement.html',
+						id:'adverisement',
+						extras:{
+							advUrl:advUrl
+						}
+					})
+					}
+
+				});
+				
+				
+
+				//监听扫描界面
+				document.getElementById('saomiao').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'saomaLogin.html',
+						id: 'saomaLogin'
+					})
+				});
+
+				//点击打开搜索页
+				//				mui(".header").on('tap', '.header-center', function() {
+				//					//alert('点击了我');
+				//
+				//					mui.openWindow({
+				//						url: 'search.html',
+				//						id: 'search',
+				//						extras: {
+				//
+				//						}
+				//					})
+				//
+				//				})
+				
+				
+				
+				
+
+			});
+			
+					// 监听一键开锁
+				document.getElementById('onekey').addEventListener('tap', function() {
+					if(mui.os.android) {
+						// 获取主Activity对象的实例
+						var main = plus.android.runtimeMainActivity();
+						var Intent = plus.android.importClass("android.content.Intent");
+						var intent = new Intent(main.getIntent());
+						intent.setClassName(main, "com.sysu.Smart_health.OneKey.MainActivity");
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	
+						main.startActivity(intent);
+	
+					} else {
+						mui.alert('目前一键开锁功能仅支持安卓平台。', '提示', null);
+					}
+				});
+
+			//获取服务器版本号
+			function findNewVersion() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				mui.ajax(baseUrl + '/apkVersion/findLastVersion', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+                        type:1,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log('服务器版本'+JSON.stringify(data));
+						if(data.code != '0') {
+							//mui.toast('获取版本号失败');
+						} else {
+							
+							var versionJson = data.data;
+							vm.versionid = versionJson.version;
+							vm.vurl = versionJson.url;
+							//获取本地版本号---------------调试期间暂停更新
+							//onPlusReady();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+                          
+                          
+					}
+
+				});
+
+			}
+
+			//更新
+			function onPlusReady() {
+				//mui.toast('Application(apk/ipa) version：' + plus.runtime.version);
+				var versionid = plus.runtime.version;
+				if(!versionid) {
+					setTimeout(
+						function() {
+							versionid = plus.runtime.version;
+						}, 5000)
+				}
+
+				console.log('当前版本号：' + versionid);
+			    
+				console.log('服务器版本号' + vm.versionid);
+
+				if(vm.versionid != versionid) {
+
+					var btnArray = ['否', '是'];
+					mui.confirm('检查到最新版本，请更新，否则将影响您正常使用', '版本更新', btnArray, function(e) {
+						if(e.index == 1) {
+
+							alert('正在下载最新版本..');
+							//版本号不相同则更新
+							var versionUrl = vm.vurl;
+							console.log(versionUrl)
+							var url = versionUrl; // 下载文件地址
+							var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+								if(status == 200) { // 下载成功
+									var path = d.filename;
+									plus.runtime.install(path);
+								} else { //下载失败
+									alert("Download failed: " + status);
+								}
+							});
+							dtask.start();
+						} else {
+							return;
+						}
+					})
+
+				}
+			}
+
+			
+			//空气质量
+			function loadAirResult() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+				var userid = localStorage.getItem('userid');
+				
+				mui.ajax(baseUrl + '/data/findListByUserId', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						userId: userid,
+						deviceTypeId: 8, //空气质量
+						limit: 1
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+                    console.log('空气质量' + JSON.stringify(data));
+						if(data.code != '0') {
+							mui.toast('获取空气质量失败')
+						} else {
+						    
+						    
+						    if(data.data != ''){
+						    
+                            var airContent = data.data[0].content;
+                            
+                            var dataJson = JSON.parse(airContent);
+                            
+                            vm.airMessage = dataJson;
+                           } 
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+			
+			
+			   //监听预约挂号消息
+				document.getElementById('guahao').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'buildTip.html',
+						id: 'buildTip'
+					})
+				});
+			 
+			 
+			 //监听运动康复
+				document.getElementById('sport').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'buildTip.html',
+						id: 'buildTip'
+					})
+				});
+				
+			 //监听报告查询
+				document.getElementById('report').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'buildTip.html',
+						id: 'buildTip'
+					})
+				});	
+			
+			
+		</script>
+	</body>
+
+</html>

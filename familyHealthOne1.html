@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>家庭成员健康数据记录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+
+	</head>
+
+	<body>
+
+		<style>
+			.mui-control-content {
+				background-color: white;
+				min-height: 9.8rem;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+		</style>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.43rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center" id="usname">
+					用户名
+				</div>
+				
+			</div>
+		</div>
+		<div class="mui-content" id="health-card">
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" style="background: white;font-size: 13px;height: 0.8rem;padding-top: 0.1rem;" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">
+						体重
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						体脂
+					</a>
+					<a class="mui-control-item" href="#item3mobile">
+						血糖
+					</a>
+					<a class="mui-control-item" href="#item4mobile">
+						血压
+					</a>
+				</div>
+				<!--高亮导航栏-->
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-3">
+					<div style="width: 0.78rem;background: #EEEEEE;height: 0.04rem;float: left;"></div>
+					<div style="width: 0.4rem;background: #5D8AFE;height: 0.04rem;float: left;"></div>
+					<div style="width: 0.69rem;background:#EEEEEE;height: 0.04rem;float: left;"></div>
+					
+				</div>
+				<div class="mui-slider-group">
+					
+					<!--体重-->
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--单条数据-->
+								<div v-for="item in listWeight(dataList)"  class="result-jilu">
+									<div class="result-jilu-li">
+										<img src="img/yutip.png" />
+										<div class="result-jilu-li-right-xueya">
+											<div class="result-jilu-li-right-title-xueya">
+												<span>体重</span>
+												<span>身体质量指数(BMI)</span>
+												
+											</div>
+											<span v-text="guolv7(item.content)+' kg'" style="margin-right: 1.2rem;" ></span>
+											<span v-text="guolv8(item.content)+' kg/㎡'"></span>
+										</div>
+										<div class="result-jilu-li-right-span">{{item.createTime}}</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					
+					<!--体脂-->
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--<div v-if="waitLoad == '0'"  class="mui-loading">
+									<div class="mui-spinner">
+									</div>
+								</div>-->
+								<!--单条数据-->
+								<div v-for="item in listTizhi(dataList)"   v-if="tizhi == '1'" class="result-jilu">
+									<div class="result-jilu-li">
+										<img src="img/yutip.png" />
+										<div class="result-jilu-li-right-tizhi">
+											<div class="result-jilu-li-right-title">
+												<span>脂肪率</span>
+												<span>水分率</span>
+												<span>内脏脂肪等级</span>
+												<span>肌肉量</span>
+											</div>
+											<span v-text="guolv(item.content)+'%'" style="margin-right: 0.2rem;width: 0.8rem;" ></span>
+											<span v-text="guolv2(item.content)+'%'" style="margin-right: 0.4rem;width: 1rem;"></span>
+											<span v-text="guolv3(item.content)" style="margin-right: 0.3rem;width: 0.8rem;"></span>
+											<span v-text="guolv4(item.content)+'Kg'"></span>
+										</div>
+										<div class="result-jilu-li-right-span">{{item.createTime}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					
+					<!--血糖-->
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--单条数据-->
+								<div  v-for="item in listXuetang(dataList)" v-if="tizhi == '2'" class="result-jilu">
+									<div class="result-jilu-li">
+										<img src="img/yutip.png" />
+										<div class="result-jilu-li-right">
+										<div v-if="item.content.substr(0,1) == '+' " v-text="'餐前                                   '+item.content.substr(1)+'mmo/l'"></div>
+										<div v-if="item.content.substr(0,1) == '-' " v-text="'餐后                                   '+item.content.substr(1)+'mmo/l'"></div>	
+										</div>
+										<div class="result-jilu-li-right-span">{{item.createTime}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					
+					<!--血压-->
+					
+					<div id="item4mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll4" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--单条数据-->
+								<div v-for="item in listXueya(dataList)" v-if="tizhi == '3'" class="result-jilu">
+									<div class="result-jilu-li">
+										<img src="img/yutip.png" />
+										<div class="result-jilu-li-right-xueya">
+											<div class="result-jilu-li-right-title-xueya">
+												<span>收缩压/舒张压</span>
+												<span>脉搏</span>
+												
+											</div>
+											<span v-text="guolv5(item.content)+'mmHg'" style="margin-right: 0.8rem;" ></span>
+											<span v-text="guolv6(item.content)+'\/分'"></span>
+										</div>
+										<div class="result-jilu-li-right-span">{{item.createTime}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="health-main-menu">
+			<div class="main-page" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page  icon-active" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js" ></script>
+		<script>
+			mui.init(				{
+				pullRefresh: {
+					container: "#health-card", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						style: 'circle',
+						auto: true, //可选,默认false.首次加载自动上拉刷新一次
+						callback: loadUserData //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+
+				}
+			});
+				var vm = new Vue({
+				el: "#health-card",
+				data: {
+					tizhi: '0' ,
+					waitLoad:'0',
+					dataList:[]
+				},
+				methods:{
+					 listWeight:function(dataList){//判断是不是体重仪的数据
+                     return dataList.filter(function(item){
+                        return item.deviceTypeId == '1';
+                    })				
+				},
+				 listTizhi:function(dataList){//判断是不是体脂仪的数据
+                     return dataList.filter(function(item){
+                        return item.deviceTypeId == '3';
+                    })				
+				},
+				 listXuetang:function(dataList){//判断是不是血糖仪的数据
+                     return dataList.filter(function(item){
+                        return item.deviceTypeId == '4';
+                    })				
+				}, listXueya:function(dataList){//判断是不是血压仪的数据
+                     return dataList.filter(function(item){
+                        return item.deviceTypeId == '5';
+                    })				
+				}
+				, guolv:function(tizhi1){//脂肪率
+                    var tizhi = [];
+                    tizhi = tizhi1.split(',');
+                    return tizhi[0];
+				},
+				 guolv2:function(tizhi1){//水分率
+                    var tizhi = [];
+                    tizhi = tizhi1.split(',');
+                    return tizhi[1];
+				}, guolv3:function(tizhi1){//内脏脂肪率
+                    var tizhi = [];
+                    tizhi = tizhi1.split(',');
+                    return tizhi[2];
+				}, guolv4:function(tizhi1){//肌肉量
+                    var tizhi = [];
+                    tizhi = tizhi1.split(',');
+                    return tizhi[3];
+				}, guolv5:function(xueya1){//收缩压和舒张压
+                    var xueya = [];
+                    xueya = xueya1.split(',');
+                    return xueya[0]+'/'+xueya[1];
+				}, guolv6:function(xueya1){//脉搏
+                    var xueya = [];
+                    xueya = xueya1.split(',');
+                    return xueya[2];
+				}, guolv7:function(tizhong1){//体重
+                    var tizhong = [];
+                    tizhong = tizhong1.split(',');
+                    return tizhong[0];
+				}, guolv8:function(tizhong1){//体重
+                    var tizhong = [];
+                    tizhong = tizhong1.split(',');
+                    return tizhong[1];
+				}
+			  }
+			})
+				
+			mui.plusReady(function() {
+				
+				//参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('light');
+				
+				mui('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				
+				//监听页面翻转
+				var item2 = document.getElementById('item2mobile');
+				var item3 = document.getElementById('item3mobile');
+				var item4 = document.getElementById('item4mobile');
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					if(e.detail.slideNumber === 1) {
+//						    plus.nativeUI.showWaiting('加载中.');
+//							setTimeout(function() {
+//								vm.tizhi = '1';
+//							plus.nativeUI.closeWaiting();	
+//							}, 500);
+                        vm.tizhi = '1';
+											
+					} else if(e.detail.slideNumber === 2) {
+						
+						vm.tizhi = '2';
+						
+					}else if(e.detail.slideNumber === 3) {
+						
+						vm.tizhi = '3';
+						
+					}
+				});
+				
+				
+				//loadUserData();
+
+			});
+			
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				//参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('dark');
+				mui.back();
+			});
+			
+			
+			
+			
+			//获取最近数据
+			function loadUserData(){
+				var phone = localStorage.getItem('phone');
+				var token = localStorage.getItem("token");
+				var self = plus.webview.currentWebview();
+				var userid = self.userid;
+				var usname = self.usname;
+				document.getElementById('usname').innerHTML = usname;
+				//参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('light');
+				console.log('读取最近数据！');
+				mui.ajax(baseUrl+'/data/findDataByUser',{
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data:{
+						userId:userid,
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+							mui.toast('查询失败！');
+							return;
+						} else {
+						    
+						    vm.dataList = data.data;
+						   
+						}
+					},
+					error:function(xhr,type,errorThrown){
+						
+					}
+				});
+				
+				mui('#health-card').pullRefresh().endPulldown();
+				
+			}
+		
+			
+		</script>
+
+	</body>
+
+</html>

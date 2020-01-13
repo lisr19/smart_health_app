@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>空气检测仪绑定家庭组</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link href="css/mui.picker.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					空气检测仪绑定
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="my-form">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="fenjiekuai"></div>
+				<div class="myinfo-one">
+					<div class="myinfo-one-left">
+						UID
+					</div>
+					<div class="myinfo-one-right">
+						<input id="gwUuid" placeholder="请输入空气检测仪设备的UID" type="text" />
+					</div>
+
+				</div>
+				<div class="fenjiekuai"></div>
+				<!--<div class="myinfo-one">
+					<div class="myinfo-one-left">
+						识别码
+					</div>
+					<div class="myinfo-one-right">
+						<input id="code" placeholder="请输入机顶盒识别码" type="text" />
+					</div>
+				</div>-->
+				
+				<button class="submit-button-big" id="addGroup">完成绑定</button>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			
+			//绑定设备
+			document.getElementById('addGroup').addEventListener('tap', function() {
+				var gwUuid = document.getElementById('gwUuid').value;
+				var phone = localStorage.getItem('phone');
+				var token = localStorage.getItem("token");
+                var self = plus.webview.currentWebview();
+	            var groupId = self.groupid;
+				mui.ajax(baseUrl + '/airData/addGroupGwuuidRel', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+
+						gwUuid: gwUuid,
+						groupId: groupId
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+							mui.toast(data.msg);
+							return;
+						} else {
+
+							mui.toast('绑定成功！');
+							mui.back();
+//							mui.openWindow({
+//								url:'familyEdit.html',
+//								id:'familyEdit'
+//							})
+
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			});
+			
+		</script>
+	</body>
+
+</html>

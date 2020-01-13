@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>家庭组页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header" id="asdsa">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center" id="groupName">
+					我们这一家
+				</div>
+				<div class="baike-header-top-right" id="edit">
+					编辑
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.6rem;" id="family-from">
+			<div class="mui-scroll">
+
+				<!--家庭成员状态卡片-->
+				<div class="middle" v-for="(item,index) in userlist">
+					<div class="middle-card">
+						<!--阴影部分-->
+						<div class="shadow"></div>
+						<!--阴影部分结束-->
+						<div class="card-content">
+							<div class="card-content-one">
+								<div v-if="item.dataInfo['1'] == null && item.dataInfo['3'] == null && item.dataInfo['4'] == null && item.dataInfo['5'] == null">
+									<div class="card-option-no">
+										<img src="img/nomessage1.jpg" />
+									</div>
+								</div>
+								<!--单个模块-->
+								<div v-if="item.dataInfo['4']" class="card-content-option xuetang-color">
+									<div class="card-content-option-title">
+										血糖
+									</div>
+									<span>{{item.dataInfo['4'].createTime.slice(5,-3)}}</span>
+									<div class="card-option-data xuetang-font-color" v-text="item.dataInfo['4'].content.substr(1)"></div>
+									<div class="card-danwei xuetang-font-color">mmo/l</div>
+								</div>
+
+								<!--单个模块-->
+								<div v-if="item.dataInfo['5']" class="card-content-option xueya-color">
+									<div class="card-content-option-title">
+										血压
+									</div>
+									<span>{{item.dataInfo['5'].createTime.slice(5,-3)}}</span>
+									<div class="card-option-data xueya-font-color">{{item.dataInfo['5'].content.split(",")[0]}}/{{item.dataInfo['5'].content.split(",")[1]}}</div>
+									<div class="card-danwei xueya-font-color">mmHg</div>
+								</div>
+
+								<!--单个模块-->
+								<div v-if="item.dataInfo['3']" class="card-content-option tizi-color">
+									<div class="card-content-option-title">
+										体脂
+									</div>
+									<span>{{item.dataInfo['3'].createTime.slice(5,-3)}}</span>
+									<div class="card-option-data tizi-font-color">{{item.dataInfo['3'].content.split(",")[0]}}%</div>
+									<!--<div class="card-danwei tizi-font-color">%</div> -->
+								</div>
+
+								<!--单个模块-->
+								<div v-if="item.dataInfo['1']" class="card-content-option tizhong-color">
+									<div class="card-content-option-title">
+										体重
+									</div>
+									<span>{{item.dataInfo["1"].createTime.slice(5,-3)}}</span>
+									<div class="card-option-data tizhong-font-color">{{item.dataInfo["1"].content.split(",")[0]}}Kg</div>
+									<!--<div class="card-danwei xueya-font-color">Kg</div>-->
+								</div>
+								<!--单个模块-->
+								<!--<div class="card-content-option tiwen-color">
+									<div class="card-content-option-title">
+										体温
+									</div>
+									<span>07-27 14:02</span>
+								 <div class="card-option-data tiwen-font-color">36.6℃</div>	
+									<!--<div class="card-danwei xueya-font-color">mmo/l</div>
+								</div>-->
+
+								<!--单个模块-->
+								<!--<div class="card-content-option bushu-color">
+									<div class="card-content-option-title">
+										步数
+									</div>
+									<span>07-27 14:02</span>
+								 <div class="card-option-data bushu-font-color">12666 步</div>	
+									<!--<div class="card-danwei xueya-font-color">步</div>
+								</div>-->
+
+								<div style="clear: both;"></div>
+							</div>
+							<div class="card-line"></div>
+							<div class="card-label2">
+								<img v-if="guolv(item.sex,item.year) == 1" src="img/woman.png" />
+								<img v-if="guolv(item.sex,item.year) == 2" src="img/mans.png" />
+								<img v-if="guolv(item.sex,item.year) == 3" src="img/girls.png" />
+								<img v-if="guolv(item.sex,item.year) == 4" src="img/boys.png" />
+								<span id="span1">{{item.name}}</span>
+								<div class="card-button" @click="readmore(item.id,item.name)">详情</div>
+
+								<!--根据数值做预警-->
+								<span class="yujing">
+									<div v-if="item.dataInfo['1']">
+										<div v-if="item.dataInfo['1'].content.split(',')[0] >23.9">体重偏高！</div>
+										<div v-if="item.dataInfo['1'].content.split(',')[0] <18.5">体重偏瘦！</div>
+									</div>
+									<div v-if="item.dataInfo['4']">
+										<div v-if="item.dataInfo['4'].content.substr(1) >6.1 && item.dataInfo['4'].content.substr(0,1) == '+'">血糖偏高！</div>
+										<div v-if="item.dataInfo['4'].content.substr(1) >8.1 && item.dataInfo['4'].content.substr(0,1) == '-'">血糖偏高！</div>
+										<div v-if="item.dataInfo['4'].content.substr(1) <4.1">血糖偏低！</div>
+									</div>
+									<div v-if="item.dataInfo['3']">
+										<div v-if="item.dataInfo['3'].content.split(',')[0] > 19.9">体脂偏高！</div>
+										<div v-if="item.dataInfo['3'].content.split(',')[0] < 10">体脂偏低！</div>
+									</div>
+									<div v-if="item.dataInfo['5']">
+										<div v-if="item.dataInfo['5'].content.split(',')[0] > 140">收缩压偏高！</div>
+										<div v-if="item.dataInfo['5'].content.split(',')[1] > 90">舒张压偏高！</div>
+										<div v-if="item.dataInfo['5'].content.split(',')[0] < 90">收缩压偏低！</div>
+										<div v-if="item.dataInfo['5'].content.split(',')[1] < 60">舒张压偏低！</div>
+									</div>
+									
+								</span>
+							</div>
+						</div>
+					</div>
+					<!--<div class="middle-card">
+						<!--阴影部分
+						<div class="shadow"></div>
+						<!--阴影部分结束
+						<div class="card-content">
+							<div class="card-label" style="margin-top: 0px;">
+								<span id="span1">步数</span>
+								<div class="card-row1" style="width: 141px;"></div>
+								<span id="span2">步</span><span id="span3">6,333</span>
+							</div>
+
+							<div class="card-label">
+								<span id="span1">血压</span>
+								<div class="card-row2" style="width: 156px;"></div>
+								<span id="span2">mmHg</span><span id="span3">118/76</span>
+							</div>
+
+							<div class="card-label">
+								<span id="span1">血糖</span>
+								<div class="card-row1" style="width: 129px;"></div>
+								<span id="span2">mmo/l</span><span id="span3">6.1</span>
+							</div>
+							<div class="card-line"></div>
+							<div class="card-label2">
+								<img src="img/family1.png" />
+								<span id="span1">刘小云</span>
+								<a class="card-button">详情</a>
+								<span id="span2">今日身体健康，请继续保持！</span>
+							</div>
+						</div>
+					</div>-->
+
+				</div>
+
+				<!--主要内容结束-->
+				<div style="width: 7.5rem;height: 1.6rem;"></div>
+			</div>
+		</div>
+		<!--<div class="health-main-menu">
+			<div class="main-page" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page  icon-active" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>-->
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<!--<script type="text/javascript" src="js/menu.js"></script>-->
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init(
+//				{
+//				pullRefresh: {
+//					container: "#family-from", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+//					down: {
+//						style: 'circle',
+//						auto: true, //可选,默认false.首次加载自动上拉刷新一次
+//						callback: loadUserData //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+//					}
+//
+//				}
+//			}
+			);
+			var vm = new Vue({
+				el: "#family-from",
+				data: {
+					userlist: [],
+					editList: []
+
+				},
+				methods: {
+					readmore: function(userid, usname) {
+						mui.openWindow({
+							url: 'familyHealthChart.html',
+							id: 'familyHealthChart',
+							extras: {
+								userid: userid,
+								usname: usname
+							}
+						})
+
+					},
+					guolv: function(sex, year) { //根据条件改变头像
+						var year1 = year;
+						var myDate = new Date();
+						var thisYear = myDate.getFullYear();
+						var nianlin = thisYear - year;
+						if(nianlin > 18 && sex == 3) { //女人
+							return 1;
+						}
+						if(nianlin > 18 && sex != 3) { //男人			
+							return 2;
+						}
+						if(nianlin < 18 && sex == 3) { //小女孩
+							return 3;
+						}
+						if(nianlin < 18 && sex != 3) { //小男孩
+							return 4;
+						}
+
+					}
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.006,
+					indicators: false
+				});
+
+				//获取家庭成员数据
+				loadUserData();
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				var opener = plus.webview.getWebviewById("familyHealthGroup");
+				mui.fire(opener, 'clearData-groupList');
+
+				mui.back();
+			});
+
+			//			mui.back = function(){
+			//				
+			//			   var opener = plus.webview.getWebviewById("familyHealthGroup");
+			//				mui.fire(opener, 'clearData-groupList');	
+			//				
+			//			}
+
+			window.addEventListener('clearData-group', function(evt) {
+				location.reload();
+			});
+			
+			window.addEventListener('clearTitle', function(evt) {
+             plus.navigator.setStatusBarStyle('light');
+          	});
+
+			
+			//添加家庭成员
+			document.getElementById('edit').addEventListener('tap', function() {
+				var self = plus.webview.currentWebview();
+				var groupid = self.groupid;
+				
+				mui.openWindow({
+					url: 'familyEdit.html',
+					id: 'familyEdit',
+					extras: {
+						groupUserList: vm.editList,
+						groupid: groupid,
+						
+					}
+				})
+			});
+             
+             
+            //获取家庭组成员数据 
+			function loadUserData() {
+
+				var self = plus.webview.currentWebview();
+				var groupid = self.groupid;
+				var groupName = localStorage.getItem('groupName');
+				document.getElementById('groupName').innerHTML = groupName;
+				
+				console.log('组id' + groupid);
+
+				var phone = localStorage.getItem('phone');
+				var userid = localStorage.getItem('userid');
+
+				var token = localStorage.getItem("token");
+
+				mui.ajax(baseUrl + '/user/findListByGroup', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+
+						groupId: groupid
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+							mui.toast('查询失败！');
+							return;
+						} else {
+							vm.userlist = data.data;
+
+							vm.editList = data.data;
+                            
+                            //重组设备数据
+//							vm.userlist.forEach(v => {
+//								v.dataInfo = v.dataInfo.split('|');
+//								let obj = {
+//									weight: null,//体重
+//									tizhi: null,//体脂
+//									xueya: null,//血压
+//									xuetang: null//血糖
+//								};
+//								v.dataInfo.forEach((v1, index) => {
+//
+//									let array = v1.split('_');
+//									if(array == null || array == '') {
+//										return;
+//									} else {
+//
+//										array[3] = array[3].slice(5, -3);
+//										if(array[2] == '1') { //根据设备id进行数据遍历分类
+//											array[1] = array[1].split(',');
+//											obj.weight = array;
+//										} else if(array[2] == '3') {
+//											array[1] = array[1].split(',');
+//											obj.tizhi = array;
+//										} else if(array[2] == '4') {
+//											obj.xuetang = array;
+//										} else {
+//											array[1] = array[1].split(',');
+//											obj.xueya = array;
+//										}
+//
+//									}
+//
+//								})
+//								v.dataInfo = obj;
+//							})
+							console.log('userlist' + JSON.stringify(vm.userlist));
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+
+			}
+
+			
+		</script>
+	</body>
+
+</html>

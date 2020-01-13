@@ -1,0 +1,437 @@
+{
+  "index.html": {
+    "resources": [
+      "shop.html",
+      "familyHealth.html"
+    ],
+    "refer": [
+      "shop.html",
+      "familyHealth.html",
+      "healthyEncyclopedia.html",
+      "myself.html",
+      "healthCheck.html",
+      "todayData.html",
+      "messageTip.html",
+      "consult.html",
+      "news.html",
+      "search.html",
+      "propertyTip.html",
+      "airData.html",
+      "familyHealthGroup.html",
+      "saoma.html",
+      "saomaLogin.html",
+      "SmartPaking.html",
+      "adverisement.html",
+      "buildTip.html",
+      "airGroupSelect.html",
+      "discovery.html",
+      "healthService.html",
+      "myself-config.html",
+      "familyCheck.html",
+      "propertyService.html",
+      "bodyfatScale.html"
+    ]
+  },
+  "new_file.html": {
+    "resources": [
+      "index.html"
+    ],
+    "refer": [
+      "familyHealth.html",
+      "index.html",
+      "shop.html"
+    ]
+  },
+  "main.html": {
+    "resources": [
+      "index.html"
+    ],
+    "refer": [
+      "familyHealth.html",
+      "index.html",
+      "shop.html"
+    ]
+  },
+  "familyHealth.html": {
+    "refer": [
+      "shop.html",
+      "index.html",
+      "myself.html",
+      "familyHealthOne.html",
+      "familyEdit.html",
+      "familyHealthOne1.html",
+      "familyHealthChart.html"
+    ],
+    "resources": []
+  },
+  "shop.html": {
+    "refer": [
+      "familyHealth.html",
+      "myself.html",
+      "shopList.html",
+      "familyHealthGroup.html"
+    ],
+    "resources": []
+  },
+  "login.html": {
+    "refer": [
+      "index.html",
+      "register.html",
+      "phoneLogin.html",
+      "OneKeyLogon.html",
+      "myinformation.html",
+      "myinformationFirst.html"
+    ],
+    "resources": []
+  },
+  "healthyEncyclopedia.html": {
+    "refer": [
+      "healthyEncyclopediaList.html",
+      "shop.html",
+      "familyHealth.html",
+      "myself.html",
+      "familyHealthGroup.html",
+      "disease.html",
+      "HealthcareList.html",
+      "healthcareList.html",
+      "adverisement.html"
+    ],
+    "resources": []
+  },
+  "healthyEncyclopediaList.html": {
+    "refer": [
+      "myself.html",
+      "healthOne.html",
+      "healthyEncyclopediaSearch.html",
+      "shop.html",
+      "familyHealthGroup.html",
+      "healthyEncyclopediaResult.html"
+    ],
+    "resources": []
+  },
+  "myself.html": {
+    "refer": [
+      "shop.html",
+      "familyHealth.html",
+      "myself-config.html",
+      "familyHealthGroup.html",
+      "myselfCode.html",
+      "myinformation.html",
+      "buildTip.html",
+      "discovery.html"
+    ],
+    "resources": []
+  },
+  "healthCheck.html": {
+    "refer": [
+      "xueyaCheck.html",
+      "familyHealth.html",
+      "shop.html",
+      "healthCheckQR.html",
+      "familyCheckHistory.html",
+      "healthCheckHistory.html"
+    ],
+    "resources": []
+  },
+  "shopList.html": {
+    "refer": [
+      "healthOne.html",
+      "myself.html"
+    ],
+    "resources": []
+  },
+  "todayData.html": {
+    "refer": [
+      "shop.html",
+      "familyHealth.html",
+      "myself.html"
+    ],
+    "resources": []
+  },
+  "familyHealthOne.html": {
+    "refer": [
+      "familyHealthOneMore.html",
+      "shop.html",
+      "myself.html"
+    ],
+    "resources": []
+  },
+  "consult.html": {
+    "refer": [
+      "consultOne.html",
+      "myself.html",
+      "consultList.html",
+      "familyHealthGroup.html"
+    ],
+    "resources": []
+  },
+  "consultOne.html": {
+    "refer": [
+      "shop.html",
+      "myself.html"
+    ],
+    "resources": []
+  },
+  "myself-config.html": {
+    "refer": [
+      "myinformation.html",
+      "passwordEdit.html",
+      "adressList.html",
+      "discovery.html",
+      "myselfCode.html",
+      "familyHealthGroup.html",
+      "buildTip.html",
+      "leftMessage.html"
+    ],
+    "resources": []
+  },
+  "familyHealthGroup.html": {
+    "refer": [
+      "familyGroupAdd.html",
+      "familyHealth.html",
+      "myself.html",
+      "shop.html",
+      "discovery.html",
+      "myself-config.html",
+      "familyHealthChart.html",
+      "familyEdit.html"
+    ],
+    "resources": []
+  },
+  "familyGroupAdd.html": {
+    "refer": [
+      "familyEdit.html"
+    ],
+    "resources": []
+  },
+  "familyEdit.html": {
+    "refer": [
+      "familyOneAdd.html",
+      "saoma.html",
+      "familyGroupEditName.html"
+    ],
+    "resources": []
+  },
+  "familyHealthOne1.html": {
+    "refer": [
+      "shop.html",
+      "myself.html",
+      "familyHealthChart.html"
+    ],
+    "resources": []
+  },
+  "consultList.html": {
+    "refer": [
+      "consultOne.html"
+    ],
+    "resources": []
+  },
+  "saoma.html": {
+    "refer": [
+      "familyOneAdd.html"
+    ],
+    "resources": []
+  },
+  "healthyEncyclopediaSearch.html": {
+    "refer": [
+      "healthyEncyclopediaOption.html",
+      "healthyEncyclopediaXi.html",
+      "healthyEncyclopediaZ.html",
+      "healthyEncyclopediaBJ.html",
+      "familyHealthGroup.html",
+      "shop.html"
+    ],
+    "resources": []
+  },
+  "saomaLogin.html": {
+    "refer": [
+      "TVlogin.html",
+      "healthCheckShare.html"
+    ],
+    "resources": []
+  },
+  "healthyEncyclopediaXi.html": {
+    "refer": [
+      "healthOne.html",
+      "healthyEncyclopediaResult.html"
+    ],
+    "resources": []
+  },
+  "healthyEncyclopediaZ.html": {
+    "refer": [
+      "healthOne.html",
+      "healthyEncyclopediaResult.html"
+    ],
+    "resources": []
+  },
+  "healthyEncyclopediaBJ.html": {
+    "refer": [
+      "healthOne.html",
+      "healthyEncyclopediaResult.html"
+    ],
+    "resources": []
+  },
+  "disease.html": {
+    "refer": [
+      "familyHealthGroup.html",
+      "diseaseList.html",
+      "diseaseSearchResult.html"
+    ],
+    "resources": []
+  },
+  "diseaseList.html": {
+    "refer": [
+      "diseaseMessage.html"
+    ],
+    "resources": []
+  },
+  "HealthcareList.html": {
+    "refer": [
+      "news.html"
+    ],
+    "resources": []
+  },
+  "diseaseSearchResult.html": {
+    "refer": [
+      "healthOne.html",
+      "diseaseMessage.html"
+    ],
+    "resources": []
+  },
+  "healthcareList.html": {
+    "refer": [
+      "news.html",
+      "healthcareResult.html",
+      "healthcareResult1.html"
+    ],
+    "resources": []
+  },
+  "healthcareResult.html": {
+    "refer": [
+      "news.html"
+    ],
+    "resources": []
+  },
+  "healthyEncyclopediaResult.html": {
+    "refer": [
+      "healthOne.html"
+    ],
+    "resources": []
+  },
+  "phoneLogin.html": {
+    "refer": [
+      "phoneLoginCheck.html",
+      "register.html",
+      "index.html",
+      "login.html",
+      "OneKeyLogon.html",
+      "index1.html",
+      "lawTip.html"
+    ],
+    "resources": [
+      "js/vue.js",
+      "js/mui.min.js",
+      "img/username.png",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/configUrl.js",
+      "js/rem.js"
+    ]
+  },
+  "phoneLoginCheck.html": {
+    "refer": [
+      "index.html",
+      "myinformationFirst.html"
+    ],
+    "resources": []
+  },
+  "adressList.html": {
+    "refer": [
+      "adressAdd.html",
+      "adressEdit.html"
+    ],
+    "resources": []
+  },
+  "OneKeyLogon.html": {
+    "refer": [
+      "phoneLogin.html"
+    ],
+    "resources": []
+  },
+  "airData.html": {
+    "refer": [
+      "familyHealthGroup.html",
+      "shop.html"
+    ],
+    "resources": []
+  },
+  "familyHealthChart.html": {
+    "resources": [
+      "img/echart.jpg"
+    ],
+    "refer": [
+      "familyHealthOne1.html",
+      "shop.html",
+      "familyHealthOne.html"
+    ]
+  },
+  "propertyTip.html": {
+    "refer": [
+      "propertyRead.html"
+    ],
+    "resources": []
+  },
+  "airGroupSelect.html": {
+    "refer": [
+      "airData.html",
+      "airDataBinding.html",
+      "airDataUpdate.html"
+    ],
+    "resources": []
+  },
+  "TVlogin.html": {
+    "refer": [
+      "TVfamilySelect.html"
+    ],
+    "resources": []
+  },
+  "discovery.html": {
+    "refer": [
+      "myself.html",
+      "familyHealthGroup.html",
+      "news.html",
+      "myself-config.html"
+    ],
+    "resources": [
+      "img/yp5.jpg"
+    ]
+  },
+  "index1.html": {
+    "refer": [
+      "index.html"
+    ]
+  },
+  "myinformationFirst.html": {
+    "refer": [
+      "index.html"
+    ]
+  },
+  "loginSelect.html": {
+    "refer": [
+      "login.html",
+      "index.html",
+      "phoneLogin.html"
+    ]
+  },
+  "healthCheckShare.html": {
+    "refer": [
+      "healthCheckQR.html"
+    ]
+  },
+  "bodyfatScale.html": {
+    "refer": [
+      "familyCheck.html",
+      "lexinData.html"
+    ]
+  }
+}

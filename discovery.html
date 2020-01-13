@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧健康app</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: white;
+				/* 这里放你想要的颜色 */
+			}
+			/*.mui-control-content {
+				height: 11.2rem!important;
+			}*/
+			.mui-control-item{
+				line-height: 0.5rem!important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background1.png);height: 1.28rem;">
+			<div class="baike-header">
+			</div>
+		</div>
+		<!--文字区域-->
+		<!--<div class="mui-scroll-wrapper" style="margin-top: 0.5rem;">
+			<div class="mui-scroll">-->
+		
+		<div class="main-foot" id="health-foot" style="margin-top: -0.88rem;">
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="main-foot-title mui-slider-indicator mui-segmented-control mui-segmented-control-inverted " style="margin-top:0.25rem;width:6.9rem;height:0.4rem;margin-left:0.3rem;color: white;opacity: 0.7;">
+					<a class="main-foot-title-item mui-control-item" href="#item1mobile">
+						推荐
+					</a>
+					<a class="main-foot-title-item mui-control-item" href="#item2mobile">
+						饮食
+					</a>
+					<a class="main-foot-title-item mui-control-item" href="#item3mobile">
+						减肥
+					</a>
+					<a class="main-foot-title-item mui-control-item" href="#item4mobile">
+						健身
+					</a>
+					<a class="main-foot-title-item mui-control-item" href="#item5mobile">
+						药品
+					</a>
+					<a class="main-foot-title-item mui-control-item" href="#item6mobile">
+						育儿
+					</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar slider-wdith" style="background: white;opacity: 0.7;margin-left: 0.3rem;"></div>
+				<div class="mui-slider-group" style="margin-top: 0.05rem;">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active" style="border: none;">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								
+								<div style="background-image: url(img/background2.png);background-size:cover;height: 3rem;"></div>
+								<div class="discovery-title-one">最适合您的资讯都在这儿</div>
+								<!--轮播图-->
+								<div class="swiper" style="margin-top: -0.3rem;" >
+									<div class="swiper-container">
+										<div class="swiper-wrapper" style="margin-left: -30px;" id="loopImg">
+											<div class="swiper-slide">
+												<div class="swiper-shadow"></div>
+												<img src="img/banner6.jpg" />
+											</div>
+											<div class="swiper-slide">
+												<div class="swiper-shadow"></div>
+												<img src="img/banner5.jpg" />
+											</div>
+											<div class="swiper-slide">
+												<div class="swiper-shadow"></div>
+												<img src="img/banner1.jpg" />
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="discovery-title">热推资讯</div>
+								<div style="width: 6.9rem;height:1px;margin-left:0.3rem;background: #F0F0F0;"></div>
+								<!--推荐-->
+								<div v-for="(items,index) in tuijian" class="main-foot-one" :content='items.content' 
+									:title='items.title' :author='items.author':type="items.type">
+									<div class="main-foot-one-left">
+										<div class="main-foot-one-title">
+											{{items.title}}..
+										</div>
+										<div class="main-foot-one-fuTitle">
+											{{items.author}} <span style="margin-left: 0.1rem;"></span>
+										</div>
+									</div>
+									<div class="main-foot-one-right">
+										<img :src="imgSuijiOne(index)" />
+									</div>
+								</div>
+
+								<div style="width: 7.5rem;height: 0.4rem;"></div>
+								<div class="fool" onclick="loadArticle();" ><span id='tuijianMore'>点击查看更多</span></div>
+								<div style="width: 7.5rem;height: 1rem;"></div>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content" style="border: none;">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+
+								<!--饮食-->
+								<div v-for="(items,index) in yinshi" class="main-foot-one" v-if="tizhi == '2'" :content='items.content' :title='items.title' :author='items.author'>
+									<div class="main-foot-one-left">
+										<div class="main-foot-one-title">
+											{{items.title}}..
+										</div>
+										<div class="main-foot-one-fuTitle">
+											{{items.author}} <span style="margin-left: 0.1rem;"></span>
+										</div>
+									</div>
+									<div class="main-foot-one-right">
+										<img :src="imgSuijiTwo(index)" />
+									</div>
+
+								</div>
+								<div style="width: 7.5rem;height: 0.4rem;"></div>
+								<div class="fool" v-if="tizhi == '2'" onclick="readmore();loadEatArticle();"><span>点击查看更多</span></div>
+								<div style="width: 7.5rem;height: 0.6rem;"></div>
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content" style="border: none;">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--减肥-->
+								<div v-for="(items,index) in jianfei" class="main-foot-one" v-if="tizhi == '3'" :content='items.content' :title='items.title' :author='items.author'>
+									<div class="main-foot-one-left">
+										<div class="main-foot-one-title">
+											{{items.title}}..
+										</div>
+										<div class="main-foot-one-fuTitle">
+											{{items.author}}<span style="margin-left: 0.1rem;"></span>
+										</div>
+									</div>
+									<div class="main-foot-one-right">
+										<img :src="imgSuijiThird(index)" />
+									</div>
+
+								</div>
+
+								<div style="width: 7.5rem;height: 0.4rem;"></div>
+								<div class="fool" v-if="tizhi == '3'" onclick="readmore();loadJFArticle();"><span>点击查看更多</span></div>
+								<div style="width: 7.5rem;height: 0.6rem;"></div>
+							</div>
+						</div>
+					</div>
+
+					<div id="item4mobile" class="mui-slider-item mui-control-content" style="border: none;">
+						<div id="scroll4" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--健身-->
+								<div v-for="(items,index) in jianshen" class="main-foot-one" v-if="tizhi == '4'" :content='items.content' :title='items.title' :author='items.author'>
+									<div class="main-foot-one-left">
+										<div class="main-foot-one-title">
+											{{items.title}}..
+										</div>
+										<div class="main-foot-one-fuTitle">
+											{{items.author}} <span style="margin-left: 0.1rem;"></span>
+										</div>
+									</div>
+									<div class="main-foot-one-right">
+										<img :src="imgSuijiFourth(index)" />
+									</div>
+
+								</div>
+
+								<div style="width: 7.5rem;height: 0.4rem;"></div>
+								<div class="fool" v-if="tizhi == '4'" onclick="readmore();loadKeepfitArticle();"><span>点击查看更多</span></div>
+								<div style="width: 7.5rem;height: 0.6rem;"></div>
+							</div>
+						</div>
+					</div>
+
+					<div id="item5mobile" class="mui-slider-item mui-control-content" style="border: none;">
+						<div id="scroll5" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--药品-->
+								<div v-for="(items,index) in yaopin" class="main-foot-one" v-if="tizhi == '5'" :content='items.content' :title='items.title' :author='items.author'>
+									<div class="main-foot-one-left">
+										<div class="main-foot-one-title">
+											{{items.title}}..
+										</div>
+										<div class="main-foot-one-fuTitle">
+											{{items.author}} <span style="margin-left: 0.1rem;"></span>
+										</div>
+									</div>
+									<div class="main-foot-one-right">
+										<img :src="imgSuijiFifth(index)" />
+									</div>
+
+								</div>
+
+								<div style="width: 7.5rem;height: 0.4rem;"></div>
+								<div class="fool" v-if="tizhi == '5'" onclick="readmore();loadMRArticle();"><span>点击查看更多</span></div>
+								<div style="width: 7.5rem;height: 0.6rem;"></div>
+							</div>
+						</div>
+					</div>
+
+					<div id="item6mobile" class="mui-slider-item mui-control-content" style="border: none;">
+						<div id="scroll6" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--育儿-->
+								<div v-for="(items,index) in yuer" class="main-foot-one" v-if="tizhi == '6'" :content='items.content' :title='items.title' :author='items.author'>
+									<div class="main-foot-one-left">
+										<div class="main-foot-one-title">
+											{{items.title}}..
+										</div>
+										<div class="main-foot-one-fuTitle">
+											{{items.author}} <span style="margin-left: 0.1rem;"></span>
+										</div>
+									</div>
+									<div class="main-foot-one-right">
+										<img :src="imgSuijiSix(index)" />
+									</div>
+
+								</div>
+
+								<div style="width: 7.5rem;height: 0.4rem;"></div>
+								<div class="fool" v-if="tizhi == '6'" onclick="readmore();loadYRArticle();"><span>点击查看更多</span></div>
+								<div style="width: 7.5rem;height: 0.6rem;"></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!--</div>
+		</div>-->
+
+		<div class="health-main-menu">
+			<div class="main-page" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-zhuye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-jiating"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="meals-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>订餐</span>
+			</div>
+			<div class="shop-page icon-active" id="shop-page">
+				<svg class="icon-menu icon-active" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>发现</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script>
+			mui.init();
+
+			var vm = new Vue({
+				el: "#health-foot",
+				data: {
+					tizhi: '0',
+					tuijian: [],
+					yinshi: '',
+					jianfei: '',
+					jianshen: '',
+					yaopin: '',
+					yuer: '',
+					limit: 4,
+					labelArray:''
+				},
+				methods:{
+					imgSuijiOne:function(index){
+						var arr = [1,2,3,4,5,6];
+						//var index = Math.floor((Math.random()*arr.length));
+						var indexs = index%6;
+						return "img/bj"+indexs+'.jpg';
+					},
+					imgSuijiTwo:function(index){
+						var arr = [1,2,3,4,5,6];
+						//var index = Math.floor((Math.random()*arr.length));
+						var indexs = index%6;
+						return "img/eat"+indexs+'.jpg';
+					},
+					imgSuijiThird:function(index){
+						var arr = [1,2,3,4,5,6];
+						//var index = Math.floor((Math.random()*arr.length));
+						var indexs = index%6;
+						return "img/jf"+indexs+'.jpg';
+					},
+					imgSuijiFourth:function(index){
+						var arr = [1,2,3,4,5,6];
+						//var index = Math.floor((Math.random()*arr.length));
+						var indexs = index%6;
+						return "img/js"+indexs+'.jpg';
+					},
+					imgSuijiFifth:function(index){
+						var arr = [1,2,3,4,5,6];
+						//var index = Math.floor((Math.random()*arr.length));
+						var indexs = index%6;
+						return "img/yp"+indexs+'.jpg';
+					},
+					imgSuijiSix:function(index){
+						var arr = [1,2,3,4,5,6];
+						//var index = Math.floor((Math.random()*arr.length));
+						var indexs = index%6;
+						return "img/yr"+indexs+'.jpg';
+					}
+				}
+				
+			});
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				var label = JSON.parse(localStorage.getItem('label'));
+				console.log(JSON.stringify(label))
+				//默认文章标签
+				var testArray = [
+					{
+						id:9,
+					},
+					{
+						id:11
+					},
+					{
+						id:19
+					}
+				];
+				var labelArray = [];
+				var thatArray = [];
+				//JSON.parse(label)
+				if(label.length > 0){
+					label.forEach(function(v){
+						thatArray.push({
+							id:v.id
+						})
+					})
+					console.log('222'+thatArray)
+//					thatArray = JSON.parse(label);
+				}else{
+					thatArray = testArray;
+				}
+				thatArray.forEach(function(item,index){
+					if(index == 0){
+						labelArray.push({
+   							labelId:item.id,
+   							status:true, //标签状态，用于文章列表获取所用
+   							limit: 4, //根据标签获取的文章数量
+   							page: 0
+						})
+					}else{
+						labelArray.push({
+   							labelId:item.id,
+   							status:false,
+   							limit: 4 ,//根据标签获取的文章数量
+   							page: 0
+						})
+					}
+				});
+				vm.labelArray = labelArray
+ 				
+				//获取首页文章
+				loadArticle();
+
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					if(e.detail.slideNumber === 1) {
+
+						loadEatArticle();
+						vm.tizhi = '2';
+					}
+					if(e.detail.slideNumber === 2) {
+						loadJFArticle();
+						vm.tizhi = '3';
+					}
+					if(e.detail.slideNumber === 3) {
+						loadKeepfitArticle();
+						vm.tizhi = '4';
+					}
+					if(e.detail.slideNumber === 4) {
+						loadMRArticle();
+						vm.tizhi = '5';
+					}
+					if(e.detail.slideNumber === 5) {
+						loadYRArticle();
+						vm.tizhi = '6';
+					}
+				});
+
+				//监听文章
+				mui(".mui-slider-item").on('tap', '.main-foot-one', function() {
+					var thisArt = this;
+					var Newstitle = thisArt.getAttribute('title');
+					var NewsAuthor = thisArt.getAttribute('author');
+					var content = thisArt.getAttribute('content');
+					var NewsContent = content.split("\\").join(""); 
+					var type = thisArt.getAttribute('type'); 
+					console.log(type);
+					if(type != '' && type != null){
+						mui.openWindow({
+							url: 'news.html',
+							id: 'news',
+							extras: {
+								Newstitle: Newstitle,
+								NewsAuthor: NewsAuthor,
+								NewsContent: NewsContent
+							}
+						})
+					}else{
+						mui.openWindow({
+							url: 'news2.html',
+							id: 'news2',
+							extras: {
+								Newstitle: Newstitle,
+								NewsAuthor: NewsAuthor,
+								NewsContent: NewsContent
+							}
+						})
+					}
+					
+ 
+				});
+
+			});
+
+			//获取首页文章
+			function loadArticle() {
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+ 				var labelId = 10,
+ 					labelLimit = 4,
+ 					labelPage = 1;
+ 				if(vm.labelArray != '' && vm.labelArray != null){
+ 					for(var i=0;i<vm.labelArray.length;i++){
+ 						if(vm.labelArray[i].status){//判断文章获取状态
+	 						labelId = vm.labelArray[i].labelId;
+	 						labelLimit = vm.labelArray[i].limit;
+	 						vm.labelArray[i].status = !vm.labelArray[i].status;
+	 						vm.labelArray[i].page = vm.labelArray[i].page + 1;
+	 						labelPage = vm.labelArray[i].page;
+	 						if(i == vm.labelArray.length-1){//当前位置在数组末
+	 							vm.labelArray[0].status = true;
+	 						}else{//当前位置不在数组末，下一个位置的文章状态设置为true
+	 							vm.labelArray[i+1].status = true;
+	 						}
+	 						break
+	 					}
+ 					}
+ 				}
+ 				console.log(labelId)
+ 				console.log(labelPage)
+				mui.ajax(baseUrl + '/article/findListByLabel', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						page: labelPage,
+						limit: labelLimit,
+						labelId:labelId
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data, status, request) {
+						if(data.msg == 'token无效') {
+							mui.toast('验证过期，请重新登录');
+							localStorage.clear();
+							plus.runtime.restart();
+						} else {  
+							var dataJson = data.data; 
+							console.log(JSON.stringify(data.data)); 
+							if(dataJson.length > 0){
+								dataJson.forEach(function(item){
+//									console.log('作者 '+dataJson[0].author)
+									if(item.author == '' || item.author == null){
+										item.author = '佚名';
+									} 
+									vm.tuijian.push(item);//将内容push到tuijian数组中
+								})
+							}else{
+								document.getElementById('tuijianMore').innerHTML = '没有更多了'
+							}
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+ 
+			//获取饮食文章
+			function loadEatArticle() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				var params = {
+					page: 1,
+					limit: vm.limit,
+					type: 17,
+					title: '饮食'
+
+				}
+
+				var data = doGet('/article/findList', params, function(data) {
+					var dataJson = data.data.data;
+					vm.yinshi = dataJson;
+					//console.log(JSON.stringify(dataJson));
+				})
+
+			}
+
+			//获取减肥文章
+			function loadJFArticle() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				mui.ajax(baseUrl + '/article/findList', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						page: 1,
+						limit: vm.limit,
+						type: 28,
+						title: '减肥'
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+
+						var dataJson = data.data.data;
+						vm.jianfei = dataJson;
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+
+			//获取健身文章
+			function loadKeepfitArticle() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				mui.ajax(baseUrl + '/article/findList', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						page: 1,
+						limit: vm.limit,
+						type: 28,
+						title: ''
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+
+						var dataJson = data.data.data;
+						vm.jianshen = dataJson;
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+
+			//获取药品文章
+			function loadMRArticle() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				mui.ajax(baseUrl + '/article/findList', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						page: 1,
+						limit: vm.limit,
+						type: 4,
+						title: ''
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+
+						var dataJson = data.data.data;
+						vm.yaopin = dataJson;
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+
+			//获取育儿文章
+			function loadYRArticle() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				mui.ajax(baseUrl + '/article/findList', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						page: 1,
+						limit: vm.limit,
+						type: 29,
+						title: ''
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+
+						var dataJson = data.data.data;
+						vm.yuer = dataJson;
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+
+			//查看更多
+			function readmore() {
+//				mui.openWindow({
+//					url: 'messageTip.html',
+//					id: 'messageTip',
+//				})
+				vm.limit = vm.limit + 4;
+			}
+
+			//启动轮播页面
+			var mySwiper = new Swiper('.swiper-container', {
+				direction: 'horizontal',
+				loop: true,
+				autoplay: 5000,
+				slidesPerView: "auto",
+				centeredSlides: true,
+				spaceBetween: 20,
+			})
+		</script>
+	</body>
+
+</html>

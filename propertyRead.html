@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>文章详细页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body style="background: #FFFFFF;">
+
+		<div class="news-header">
+			<div class="news-header-left" id="back">
+				<img src="img/back.png" />
+			</div>
+			<div class="news-header-right">
+				<img src="img/options.png" />
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" id="news-from" style="margin-top: 1.48rem;">
+			<div class="mui-scroll">
+				<div class="news-content">
+					<div class="news-title">
+						{{newsTitle}}
+					</div>
+					<div class="news-author">
+						<img src="img/user.png" />
+						<span>{{newsAuthor}}</span>
+					</div>
+
+					<div class="news-p">
+						<p v-html="newsContent">
+							
+							
+							<!--<span v-if="item.tag == 'p'">
+							{{item.text}}-->
+						<!--</span>
+							<span v-if="item.tag == 'img'">
+							<img :src="item.text" />
+						</span>-->
+						</p>
+						<!--<p>
+						{{newsContent}}
+						</p>-->
+					</div>
+				</div>
+				<div style="width: 7.5rem;height: 2rem;"></div>
+			</div>
+		</div>
+
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: '#news-from',
+				data: {
+					newsTitle: '',
+					newsAuthor: '',
+					newsContent: ''
+				},
+				methods: {
+
+				}
+			})
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+                
+                //参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('dark');
+                
+				loadNews();
+				
+				//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				 //参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('light');
+				mui.back();
+			});
+			
+			//物理键返回也会执行
+			var old_back = mui.back;
+                mui.back = function() {
+                 //参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('light');
+                    // 执行关闭
+                   old_back();
+               };
+			
+			
+
+			});
+
+			function loadNews() {
+
+				var self = plus.webview.currentWebview();
+
+				vm.newsTitle = self.title;
+				vm.newsAuthor = self.time;
+				vm.newsContent = self.desc;
+
+			}
+		</script>
+	</body>
+
+</html>

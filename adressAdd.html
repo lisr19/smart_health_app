@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>地址信息修改页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<link rel="stylesheet" href="css/mui.picker.min.css" />
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					添加地址
+				</div>
+				<div class="baike-header-top-right" id="SaveAdress">保存</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="adress-from">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="adress-input">
+					<input id="name" placeholder="收货人" />
+					<img src="img/right-tip.png" />
+				</div>
+				<div class="adress-input">
+					<input id="phone" placeholder="手机号码" />
+					<img src="img/right-tip.png" />
+				</div>
+				<div class="adress-input" id="area">
+					<input placeholder="所在地区" id="areaValue" />
+					<img src="img/right-tip.png" />
+				</div>
+				<div class="adress-input-area">
+					<textarea id="detailAddress" placeholder="详细地址：如道路、小区、楼道号、单元号等">
+				</textarea>
+				</div>
+
+				<div class="fenjiekuai"></div>
+
+				<div class="adress-select" id="selectType">
+					<span>地址标签</span>
+					<img src="img/right-tip.png" />
+					<div class="adress-result" id="adressType">请选择</div>
+				</div>
+
+				<!--主要内容结束-->
+
+				<!--底部-->
+				<div class="footer">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="js/city.data-3.js"></script>
+		<script type="text/javascript" src="js/configUrl.js" ></script>
+		<script type="text/javascript" src="js/utils/http.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: '#adress-from',
+				data: {
+					propertyList: '',
+					adressArry:'',
+					adressType:''
+
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				var picker = new mui.PopPicker({
+					layer: 3
+				});
+				
+				var pickerType = new mui.PopPicker();
+
+				picker.setData(cityData3); 
+				
+				pickerType.setData([{
+					value: '1',
+					text: '家庭地址'
+				},
+				{
+					value: '2',
+					text: '工作地址'
+				},
+				{
+					value: '3',
+					text: '学校地址'
+				}
+			]);
+				
+				//返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+                
+                
+                //选择地区
+				document.getElementById('area').addEventListener('tap', function() {
+
+					picker.show(function(items) {
+
+						document.getElementById('areaValue').value = items[0].text + '' + items[1].text + '' + items[2].text;   
+                        vm.adressArry = items[0].value + ',' + items[1].value + ',' + items[2].value;
+					})
+
+				})
+				
+				 //选择地址类型
+				document.getElementById('selectType').addEventListener('tap', function() {
+
+					pickerType.show(function(items) {
+
+						document.getElementById('adressType').innerText = items[0].text;
+						vm.adressType = items[0].value;
+
+					})
+
+				})
+				
+				//保存地址
+				document.getElementById('SaveAdress').addEventListener('tap', function() {
+
+					var userid = localStorage.getItem('userid');
+					
+					var name = document.getElementById('name').value;
+					
+					var AdressPhone = document.getElementById('phone').value;
+					
+					var phone = localStorage.getItem('phone');
+					
+					var token = localStorage.getItem('token');
+					
+					var adressIDarry = vm.adressArry.split(',');
+					
+					var provinceId = adressIDarry[0];
+					
+					var cityId = adressIDarry[1];
+					
+					var districtId = adressIDarry[2];
+					
+					var detailAddress = document.getElementById('detailAddress').value;
+					
+					var type =  vm.adressType; 
+					
+					var address = document.getElementById('areaValue').value + detailAddress;
+					
+					var params = {
+							userId:userid,
+							name:name,
+							phone:AdressPhone,
+							provinceId:provinceId,
+							cityId:cityId,
+							districtId:districtId,
+							detailAddress:detailAddress,
+							address:address,
+							type:type
+							
+						}
+					
+					var data = doPost('/userAddress/add',params,function(data){
+						
+						console.log(JSON.stringify(data));
+							if(data.code == '0'){
+								
+								mui.toast('添加成功！');
+								var opener = plus.webview.getWebviewById("adressList");//执行事件的页面id
+                                mui.fire(opener, 'clearData-AD');//页面执行方法
+								
+								mui.back();
+								
+							}
+						
+						
+					})
+					
+//					mui.ajax(baseUrl+'/userAddress/add',{
+//						headers: {
+//						'Authorization': token,
+//						phone: phone
+//					   },
+//						data:{
+//							userId:userid,
+//							name:name,
+//							phone:AdressPhone,
+//							provinceId:provinceId,
+//							cityId:cityId,
+//							districtId:districtId,
+//							detailAddress:detailAddress,
+//							address:address,
+//							type:type
+//							
+//						},
+//						dataType:'json',//服务器返回json格式数据
+//						type:'post',//HTTP请求类型
+//						timeout:10000,//超时时间设置为10秒；
+//						success:function(data){
+//							console.log(JSON.stringify(data));
+//							if(data.code == '0'){
+//								
+//								mui.toast('添加成功！');
+//								var opener = plus.webview.getWebviewById("adressList");//执行事件的页面id
+//                              mui.fire(opener, 'clearData-AD');//页面执行方法
+//								
+//								mui.back();
+//								
+//							}
+//							
+//						},
+//						error:function(xhr,type,errorThrown){
+//							
+//						}
+//					});
+					
+					
+
+				})
+				
+
+			});
+		</script>
+	</body>
+
+</html>

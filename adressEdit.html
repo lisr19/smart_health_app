@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>修改地址页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<link rel="stylesheet" href="css/mui.picker.min.css" />
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					修改地址
+				</div>
+				<div class="baike-header-top-right" id="SaveAdress">保存</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="adress-from">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="adress-input">
+					<input id="name" placeholder="收货人" />
+					<img src="img/right-tip.png" />
+				</div>
+				<div class="adress-input">
+					<input id="phone" placeholder="手机号码" />
+					<img src="img/right-tip.png" />
+				</div>
+				<div class="adress-input" id="area">
+					<input placeholder="所在地区" id="areaValue" />
+					<img src="img/right-tip.png" />
+				</div>
+				<div class="adress-input-area">
+					<textarea id="detailAddress" placeholder="详细地址：如道路、小区、楼道号、单元号等">
+				</textarea>
+				</div>
+
+				<div class="fenjiekuai"></div>
+
+				<div class="adress-select" id="selectType">
+					<span>地址标签</span>
+					<img src="img/right-tip.png" />
+					<div class="adress-result" id="adressType">请选择</div>
+				</div>
+				<div class="fenjiekuai"></div>
+				<div class="adress-select" id="deleteAd">
+					<span style="color: red;">删除地址</span>
+				</div>
+
+				<!--主要内容结束-->
+
+				<!--底部-->
+				<div class="footer">
+
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="js/city.data-3.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: '#adress-from',
+				data: {
+					propertyList: '',
+					adressArry: '',
+					adressType: '',
+					provinceText: '',
+					cityText: '',
+					districtText: ''
+
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//获取地址
+				loadAdressMessage();
+
+				var picker = new mui.PopPicker({
+					layer: 3
+				});
+
+				var pickerType = new mui.PopPicker();
+
+				picker.setData(cityData3);
+
+				pickerType.setData([{
+						value: '1',
+						text: '家庭地址'
+					},
+					{
+						value: '2',
+						text: '公司地址'
+					},
+					{
+						value: '3',
+						text: '学校地址'
+					}
+				]);
+
+				//返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+
+				//删除用户地址
+				document.getElementById('deleteAd').addEventListener('tap', function() {
+					var self = plus.webview.currentWebview();
+
+					var addresId = self.addresId;
+
+					var token = localStorage.getItem('token');
+
+					var phone = localStorage.getItem('phone');
+
+					var btnArray = ['否', '是'];
+					mui.confirm('是否删地址', '删除地址', btnArray, function(e) {
+						if(e.index == 1) {
+
+							mui.ajax(baseUrl + '/userAddress/del', {
+								headers: {
+									'Authorization': token,
+									phone: phone
+								},
+								data: {
+									ids: addresId
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'get', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+
+									if(data.code == 0) {
+										mui.toast('删除成功！');
+										var opener = plus.webview.getWebviewById("adressList"); //执行事件的页面id
+										mui.fire(opener, 'clearData-AD'); //页面执行方法
+
+										mui.back();
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+
+								}
+							});
+
+						} else {
+							return;
+						}
+					})
+
+				});
+
+				//选择地区
+				document.getElementById('area').addEventListener('tap', function() {
+
+					picker.show(function(items) {
+
+						document.getElementById('areaValue').value = items[0].text + '' + items[1].text + '' + items[2].text;
+						vm.adressArry = items[0].value + ',' + items[1].value + ',' + items[2].value;
+					})
+
+				})
+
+				//选择地址类型
+				document.getElementById('selectType').addEventListener('tap', function() {
+
+					pickerType.show(function(items) {
+
+						document.getElementById('adressType').innerText = items[0].text;
+						vm.adressType = items[0].value;
+
+					})
+
+				})
+
+				//保存地址
+				document.getElementById('SaveAdress').addEventListener('tap', function() {
+
+					var self = plus.webview.currentWebview();
+					var userid = localStorage.getItem('userid');
+					var addresId = self.addresId;
+					var name = document.getElementById('name').value;
+					var AdressPhone = document.getElementById('phone').value;
+					var phone = localStorage.getItem('phone');
+					var token = localStorage.getItem('token');
+					var adressIDarry = vm.adressArry.split(',');
+					var provinceId = adressIDarry[0];
+					var cityId = adressIDarry[1];
+					var districtId = adressIDarry[2];
+					var detailAddress = document.getElementById('detailAddress').value;
+					var type = vm.adressType;
+					var address = document.getElementById('areaValue').value + detailAddress;
+					console.log(userid);
+					console.log(name);
+					console.log(AdressPhone);
+					console.log(provinceId);
+					console.log(cityId);
+					console.log(districtId);
+					console.log(detailAddress);
+					console.log(address);
+					console.log(type);
+
+					mui.ajax(baseUrl + '/userAddress/update', {
+						headers: {
+							'Authorization': token,
+							phone: phone
+						},
+						data: {
+							id: addresId,
+							name: name,
+							phone: AdressPhone,
+							provinceId: provinceId,
+							cityId: cityId,
+							districtId: districtId,
+							detailAddress: detailAddress,
+							address: address,
+							type: type
+
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							console.log(JSON.stringify(data));
+							if(data.code == '0') {
+
+								mui.toast('修改成功！');
+								var opener = plus.webview.getWebviewById("adressList"); //执行事件的页面id
+								mui.fire(opener, 'clearData-AD'); //页面执行方法
+
+								mui.back();
+
+							}
+
+						},
+						error: function(xhr, type, errorThrown) {
+
+						}
+					});
+
+				})
+
+			});
+
+			//获取地址信息
+			function loadAdressMessage() {
+
+				var self = plus.webview.currentWebview();
+				var name = self.name;
+				var phone = self.phone;
+				var provinceId = self.provinceId;
+				var cityId = self.cityId;
+				var districtId = self.districtId;
+				var detailAddress = self.detailAddress;
+				vm.adressArry = provinceId + ',' + cityId + ',' + districtId;
+				var adtype = self.adtype;
+
+				document.getElementById('name').value = name;
+				document.getElementById('phone').value = phone;
+				document.getElementById('detailAddress').value = detailAddress;
+
+				for(var i = 0; i < cityData3.length; i++) {
+					if(cityData3[i].value == provinceId) { //遍历省号
+						vm.provinceText = cityData3[i].text;
+						for(var j = 0; j < cityData3[i].children.length; j++) {
+							if(cityData3[i].children[j].value == cityId) { //遍历市号
+								vm.cityText = cityData3[i].children[j].text;
+								if(!cityData3[i].children[j].children) { //如果不存在部分市不存在区号
+									vm.districtText = '';
+									return;
+								} else {
+									for(var l = 0; l < cityData3[i].children[j].children.length; l++) {
+										if(cityData3[i].children[j].children[l].value == districtId) { //区号
+											vm.districtText = cityData3[i].children[j].children[l].text;
+										}
+
+									}
+								}
+							}
+						}
+					}
+					//					for(var j = 0; j < cityData3[i].children.length; j++){
+					//							if(!cityData3[i].children[j].children){
+					//							console.log(cityData3[i].children[j].text);
+					//							} 
+					//					}
+				}
+
+				//				console.log(vm.provinceText);
+				//				console.log(vm.cityText);
+				//				console.log(vm.districtText);
+
+				//组合成省市区
+				document.getElementById('areaValue').value = vm.provinceText + vm.cityText + vm.districtText;
+
+				vm.adressType = adtype;
+
+				if(adtype == '1') {
+					document.getElementById('adressType').innerText = '家庭地址';
+				}
+				if(adtype == '2') {
+					document.getElementById('adressType').innerText = '工作地址';
+				}
+				if(adtype == '3') {
+					document.getElementById('adressType').innerText = '学校地址';
+				}
+
+			}
+		</script>
+	</body>
+
+</html>

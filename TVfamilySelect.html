@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>家庭组列表页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					选择家庭组
+				</div>
+				<div class="baike-header-top-right">
+
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;" id="health-form">
+			<div class="mui-scroll">
+
+				<!--家庭组卡片-->
+				<div v-for="(items,index) in groupList" class="family-group" @click="checkmore(items.groupInfo.id,items.groupInfo.name)" style="min-height: 1.2rem;">
+					<!--<div class="family-group-one" v-for="item in items.userList">
+						<img v-if="guolv(item.sex,item.year) == 1" src="img/woman.png" />
+						<img v-if="guolv(item.sex,item.year) == 2" src="img/mans.png" />
+                         
+						<img v-if="guolv(item.sex,item.year) == 3" src="img/girls.png" />
+						<img v-if="guolv(item.sex,item.year) == 4" src="img/boys.png" /> {{item.name}}
+					</div>-->
+					<!--<div style="clear: both;"></div>
+					<div class="family-group-name">
+						组名：{{items.groupInfo.name}}
+						<button class="family-group-more">详情</button>
+					</div>-->
+					<div class="family-group-left">
+						<img src="img/luyouqi.png" />
+					</div>
+					<div class="family-group-center">
+						<span>{{items.groupInfo.name}}</span>
+					</div>
+					<div class="family-group-right">
+						<button>请选择</button>
+					</div>
+				</div>
+				<div style="width: 7.5rem;height: 1.3rem;"></div>
+			</div>
+		</div>
+		
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#health-form",
+				data: {
+					groupList: '',
+				},
+				methods: {
+					checkmore: function(groupid, groupName) { //查看组详情
+						var thisid = groupid;
+						console.log('组id' + groupid);
+						
+				    var self = plus.webview.currentWebview();
+					var uuid = self.uuid;
+					var code = self.code;
+						
+						
+						var params = {
+							uuid: uuid,
+							code: code,
+							groupId:groupid
+						}
+						var data = doPost('/user/qrCodeLogin', params, function(data) {
+
+							console.log('tv登录信息' + JSON.stringify(data));
+							if(data.code != '0') {
+								mui.toast('请检查网络！');
+								return;
+							} else {
+
+								mui.toast('登录成功');
+								mui.openWindow({
+									url: 'index.html',
+									id: 'index'
+								})
+
+							}
+
+						})
+
+					}
+
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				loadGroup();
+
+			});
+
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				console.log('返回')
+				mui.back();
+			});
+
+			//获取家庭组列表数据
+			function loadGroup() {
+				var phone = localStorage.getItem('phone');
+				var userid = localStorage.getItem('userid');
+				var token = localStorage.getItem("token");
+
+				var params = {
+
+					userId: userid,
+
+				}
+
+				var data = doGet('/group/findGroupByUser', params, function(data) {
+
+					console.log(JSON.stringify(data));
+					if(data.code != '0') {
+						mui.toast('查询失败！');
+						return;
+					} else {
+
+						var dataJson = data.data;
+						if(dataJson == ''){
+							
+							mui.toast('暂无家庭组');
+							
+							//没有家庭组------------------------------
+				    var self = plus.webview.currentWebview();
+					var uuid = self.uuid;
+					var code = self.code;	
+							var params = {
+							uuid: uuid,
+							code: code,
+							groupId:-1
+						}
+						var data = doPost('/user/qrCodeLogin', params, function(data) {
+
+							console.log('tv登录信息' + JSON.stringify(data));
+							if(data.code != '0') {
+								mui.toast('请检查网络！');
+								return;
+							} else {
+								mui.openWindow({
+									url: 'index.html',
+									id: 'index'
+								})
+
+							}
+
+						})
+						}else{
+							
+							vm.groupList = dataJson;
+						}
+						
+
+					}
+
+				})
+			}
+		</script>
+	</body>
+
+</html>

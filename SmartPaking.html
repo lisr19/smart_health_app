@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>智能停车页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					智能停车
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="smartparking">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				
+				 <div class="adress-list">
+				 	<!--单个地址-->
+				 	<div class="adress-option" v-for="item in smallCommonList" >
+				 		<div class="adress-option-left">
+				 			<div class="adress-img">
+				 				<img src="img/homeAd.png" />
+				 				
+				 			</div>
+				 		</div>
+				 		<div class="smallcommon-option-center">
+				 			
+				 			<span>{{item.smallCommunityName}}</span>  
+				 			
+				 		</div>
+				 		<div class="adress-option-right" @click="selectParking(item.url);">
+				 			选择
+				 		</div>
+				 	</div>
+				 	
+				 </div>
+				
+				
+				<!--主要内容结束-->
+				<!--底部-->
+				<div class="footer">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el:'#smartparking',
+				data:{
+					smallCommonList:'',
+					
+				},
+				methods:{
+					selectParking :function(url){
+						  var ParkUrl = url;
+						  var ws=plus.webview.currentWebview();
+                           var embed=plus.webview.create(ParkUrl, '',{top:'66px',bottom:'0px'});
+                           ws.append(embed); 
+						
+					}
+				}
+				
+				
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				 
+				 var smallComId = localStorage.getItem('smallComId');
+				 var token2 = localStorage.getItem('token2');
+				 console.log(token2);
+				 console.log(smallComId);
+				 
+				 if(smallComId == null){
+				 	mui.ajax('http://zhoushengli.s1.natapp.cc/parkLinkInfo/V1.0.0/getList',{
+				 	data:{
+				 	  token:token2,
+				 	},
+				 	dataType:'json',//服务器返回json格式数据
+				 	type:'post',//HTTP请求类型
+				 	timeout:10000,//超时时间设置为10秒；
+				 	success:function(data){
+				 	   if(data.code == '0'){
+				 	   	mui.toast('请选择小区');
+				 	   	 vm.smallCommonList = data.data.list;
+				 	   }else{
+				 	   	mui.toast('链接失败，请检查网络！');
+				 	   }
+				 	   
+				 	  
+				 	    
+				 		
+				 	},
+				 	error:function(xhr,type,errorThrown){
+				 		
+				 	}
+				 });
+				 	
+				 	
+				 	
+				 }else{
+				 	
+				 	mui.ajax('http://zhoushengli.s1.natapp.cc/parkLinkInfo/V1.0.0/getList',{
+				 	data:{
+				 	  token:token2,
+				 	  smallCommunityCode:smallComId
+				 	},
+				 	dataType:'json',//服务器返回json格式数据
+				 	type:'post',//HTTP请求类型
+				 	timeout:10000,//超时时间设置为10秒；
+				 	success:function(data){
+				 		//console.log('智能停车页面'+JSON.stringify(data));
+				 		if(data.code == '0'){
+				 		
+				 		   var ParkUrl = data.data.list[0].url;
+				 		   //console.log(ParkUrl);
+				 		  
+				           //var wurl="http://www.baidu.com/";
+                           var ws=plus.webview.currentWebview();
+                           var embed=plus.webview.create(ParkUrl, '',{top:'66px',bottom:'0px'});
+                           ws.append(embed); 
+				
+				 			
+				 		}
+				 		
+				 	},
+				 	error:function(xhr,type,errorThrown){
+				 		
+				 	}
+				 });
+				 	
+				 }
+				 
+				 
+				
+				
+				
+                   
+                   
+			});
+			
+			
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			
+			
+		</script>
+	</body>
+
+</html>

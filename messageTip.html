@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>消息通知</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					消息
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="msg-tip">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="tipContent">
+					<div class="tipList">
+						<!--单条消息-->
+						<div class="tipList-One" v-for='item in dataList'
+							:user="item.user" :type="item.type" :resourceId="item.resourceId" :user="item.userName">
+							<div class="tipList-One-left">
+								<img src="img/Rectangle 14.png" />
+							</div>
+							<div class="tipList-One-right">
+								<div class="tipList-One-right-title">
+									<span>{{item.topic}}</span><span>{{item.createTime}}</span>
+								</div> 
+								<div class="tipList-One-right-content">
+									<p style="font-size: 0.25rem;">
+										<span>{{item.userPrefix}}</span>
+										<span style="color: #007AFF;">{{item.userName}}</span>
+										<span>{{item.texts}}</span>
+									</p>
+									<p>
+										<span style="color:#E64760">
+											{{item.content}}
+										</span>
+									</p>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--主要内容结束-->
+
+				<!--底部-->
+				<div class="footer">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: '#msg-tip',
+				data: {
+					dataList:[],
+					data_vif:false,
+					addData:[
+						{
+							"topic":"为你推荐的食谱",
+				            "content":"葱香豆浆饼做法",
+				            "target":"473",
+				            "status":"success",
+				            "createTime":"2019-02-25 16:07:38",
+				            "id":988,
+				            "user":"37",
+				            "userName":"张扬权",
+				            "type":3,
+				            "resourceId":null
+						},
+						{
+							"topic":"这篇文章也许对您会有帮助",
+				            "content":"虽然有很多减肥的方法...",
+				            "target":"473",
+				            "status":"success",
+				            "createTime":"2019-02-25 16:07:38",
+				            "id":999,
+				            "user":"37",
+				            "userName":"张扬权",
+				            "type":2,
+				            "resourceId":null
+						}
+					]
+				},
+			})
+			mui.plusReady(function() {
+				getPushMsg();
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				//判断消息type跳转到对应详情页
+				mui('.tipList').on('tap','.tipList-One',function(){
+					var type = this.getAttribute('type'),
+						resourceId = this.getAttribute('resourceId'),
+						user = this.getAttribute('user');
+					localStorage.setItem('otherUserId',user);
+					if(type == 1){
+						mui.openWindow({
+							url: 'familyCheckById.html',
+							id: 'familyCheckById',
+						})
+					}
+					if(type == 2){
+						mui.openWindow({
+							url:'discovery.html',
+							id:'discovery'
+						})
+					}
+					if(type == 3){
+						mui.openWindow({
+							url:'meals-index.html#/healthyRecipes',
+							id:'meals'
+						})
+					}
+				})
+			});
+			//获取推送消息
+			function getPushMsg(){
+				var userId = localStorage.getItem('userid');
+//				console.log(userId);
+				params = {
+					userId : userId
+				} 
+				doGet('/pushMessage/findMyPushMessageList', params, function(data) {
+					console.log('消息  ' + JSON.stringify(data));
+					if(data.code != '0') {
+						console.log('链接失败，请检查网络');
+					} else { 
+						var resArray = data.data;
+						var dataJson = [];
+						var texts = '的体检报告';
+						resArray.unshift(vm.addData[0]);
+						resArray.unshift(vm.addData[1]);
+						resArray.forEach(function(item,index,array){
+							if(item.type == 1){
+								var userUpdataName = '';
+								var userPrefix = ';'
+									if(item.user == userId){
+										userUpdataName=item.userName = ''
+										userPrefix = '您'
+									}else{
+										userUpdataName = item.userName
+										userPrefix = '您家人'
+									}
+								dataJson.push({
+									"texts":texts,
+									"userPrefix":userPrefix,
+									"topic": "健康提醒",
+						            "content": item.content,
+						            "target": item.target,
+						            "status": item.status,
+						            "createTime": item.createTime,
+						            "id": item.id,
+						            "user": item.user,
+						            "userName": userUpdataName,
+						            "type": item.type,
+						            "resourceId": item.resourceId									
+								})
+							}
+							if(item.type == 2){
+								dataJson.push({
+									"topic": "为您推荐的相关资讯",
+						            "content": item.content,
+						            "target": item.target,
+						            "status": item.status,
+						            "createTime": item.createTime,
+						            "id": item.id,
+						            "user": item.user,
+						            "userName": null,
+						            "type": item.type,
+						            "resourceId": item.resourceId										
+								})
+							}if(item.type == 3){
+								dataJson.push({
+									"topic": "为您推荐的相关食谱",
+						            "content": item.content,
+						            "target": item.target,
+						            "status": item.status,
+						            "createTime": item.createTime,
+						            "id": item.id,
+						            "user": item.user,
+						            "userName": null,
+						            "type": item.type,
+						            "resourceId": item.resourceId										
+								})
+							}
+						})
+						vm.dataList = dataJson;
+						
+//						data.data.forEach(function(item,index,array){
+//							
+//							if(item.user != '系统推送'){//排除文章信息和自己的推送消息
+//								if(item.user == userId){
+//									item.userName = ''
+//									item.userPrefix = '您的'
+//								}else{
+//									item.userPrefix = '您的家人'
+//								}
+//								dataJson.push(item);
+//							}
+//							vm.dataList = dataJson;
+//						})
+						
+						//手动插入数据
+						
+					}
+				})
+			} 
+ 
+//			mui('.tipList').on('tap', '.tipList-One', function() {
+//					var thisTip = this;
+//					var user = thisTip.getAttribute('user');
+//					console.log(user);
+//					if(user !== '系统推送'){
+//						localStorage.setItem('otherUserId',user)
+//						mui.openWindow({
+//							url: 'familyCheckById.html',
+//							id: 'familyCheckById',
+//						})
+//					} 
+//				});	
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			
+			
+		</script>
+	</body>
+
+</html>

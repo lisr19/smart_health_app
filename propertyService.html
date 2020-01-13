@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+		<title>物业服务</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 0.6rem;">
+			<!--<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					物业服务
+				</div>
+			</div>-->
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;">
+			<div class="mui-scroll">
+				<!--主要内容-->
+
+				<!--主要内容结束-->
+				<!--底部-->
+				<div class="footer">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//内部webview页面生成 
+				var smallComId = localStorage.getItem('smallComId');
+				//				var self = plus.webview.currentWebview();
+				//				var wurl = self.advUrl;
+				
+				var token = localStorage.getItem('token2');
+				var smallComId = localStorage.getItem('smallComId');
+				
+				
+				var comUrl ='http://test.dgyunju.cn/collegesite/index.html?token='+token+'&smallCommunityCode='+smallComId;
+				
+				var ws = plus.webview.currentWebview();
+
+				var embed = plus.webview.create(comUrl, '物业服务', {
+					top: '34px',
+					bottom: '0px',
+				});
+
+				ws.append(embed);
+
+				// 返回上次页面，如果是首页，再次返回就关闭webview
+				function goBack() {
+					embed.canBack(function(event) {
+						var canBack = event.canBack;
+						if(canBack) {
+							embed.back();
+						} else {
+							// 执行重写前的back方法
+							old_back();
+						}
+					});
+				}
+
+				//物理键返回也会执行
+				var old_back = mui.back;
+				mui.back = function() {
+					// 执行关闭
+					goBack();
+				};
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+		</script>
+	</body>
+
+</html>

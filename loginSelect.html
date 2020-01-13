@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登录方式选择界面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+	</head>
+
+	<body>
+		<div class="login-select-title"></div>
+		<div class="login-select" id="register-button">
+			验证码登录
+		</div>
+
+		<div class="login-select" id="idcard-button">
+			身份证登录
+		</div>
+
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript">
+			mui.init()
+
+
+			mui.plusReady(
+				function() {
+				// 1. 声明的JS“扩展插件别名”
+				var _BARCODE = 'IDreaderPlugin',
+					B = window.plus.bridge,
+					IDreaderPlugin = {
+						// 2. 声明异步返回方法
+						onRead: function(cbOk, cbErr) {
+							var success = typeof cbOk !== 'function' ? null : function(args) {
+									cbOk(args);
+								},
+								fail = typeof cbErr !== 'function' ? null : function(code) {
+									cbErr(code);
+								},
+								callbackID = B.callbackId(success, fail);
+							// 3. 通知Native层CtAccountPlugin扩展插件运行”onCreate”方法
+							return B.exec(_BARCODE, 'onRead', [callbackID]);
+						}
+					};
+				window.plus.IDreaderPlugin = IDreaderPlugin;
+
+               
+                //本地存有token则自动进入主界面
+					var userKEY = localStorage.getItem("token");
+					if(userKEY) {
+						mui.openWindow({
+							url: 'index.html',
+							id: 'index'
+						})
+					}
+				
+
+
+				//密码登录
+				document.getElementById('register-button').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'phoneLogin.html',
+						id: 'phoneLogin'
+					})
+
+				});
+
+				// 监听身份证登录
+				document.getElementById('idcard-button').addEventListener('tap', function() {
+					mui.toast('请刷把身份证放到识别区域');
+					window.plus.IDreaderPlugin.onRead(function(args) {
+						// args: 身份证id
+						var params = {
+
+							idNum: args
+
+						}
+
+						var data = doPost('/user/loginByIdNumNoPassword', params, function(data) {
+
+							mui.toast('身份证:' + args);
+
+							if (data.code == '0') {
+
+								var token = data.data.token;
+
+								var name = data.data.userInfo.name;
+								var sex = data.data.userInfo.sex;
+								var userid = data.data.userInfo.id;
+								var email = data.data.userInfo.email;
+								var phone = data.data.userInfo.phone;
+								var weight = data.data.userInfo.weight;
+								var height = data.data.userInfo.height;
+								var year = data.data.userInfo.year;
+								var month = data.data.userInfo.month;
+								var day = data.data.userInfo.day;
+								var idNumber = data.data.userInfo.idNumber;
+								var token2 = data.data.token2;
+								//用户标签
+								var label = JSON.stringify(data.data.label);
+								
+								localStorage.setItem("token", token);
+								localStorage.setItem("token2", token2);
+								localStorage.setItem("name", name);
+								localStorage.setItem("sex", sex);
+								localStorage.setItem("userid", userid);
+								localStorage.setItem("email", email);
+								localStorage.setItem("phone", phone);
+								localStorage.setItem("height", height);
+								localStorage.setItem("weight", weight);
+								localStorage.setItem("year", year);
+								localStorage.setItem("month", month);
+								localStorage.setItem("day", day);
+								localStorage.setItem("idNumber", idNumber);
+								//用户标签
+								localStorage.setItem("label",label);
+								
+								mui.openWindow({
+									url: 'index.html',
+									id: 'index'
+								})
+
+							} else {
+
+								mui.toast("登录失败，请检查网络！");
+
+
+							}
+
+
+
+
+						})
+
+
+
+					}, function(code) {
+						alert(code);
+					});
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

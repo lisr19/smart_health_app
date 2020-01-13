@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>百科查询页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					 查询结果
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;" id="yaopin-from">
+			<div class="mui-scroll">
+				<!--主内容区-->
+				<div class="baikelist">
+					<!--单个药品-->
+					<div  v-for="(item,index) in zhongchengyaoList"  :yaopinInfo='index'  class="baikelist-option">
+						<div class="baikelist-option-left">
+							<img src="img/yaopin.jpg" />
+						</div>
+						<div class="baikelist-option-right">
+							<div class="baikelist-option-right-title">
+								{{item.name}}
+								<button>查看</button>
+							</div>
+							<p>
+								{{item.functionalManage}}
+							</p>
+
+						</div>
+					</div>
+				
+				</div>
+				
+				<!--主内容区结束-->
+             <div style="width: 7.5rem;height: 0.3rem;"></div>
+             <div class="fool" onclick="readmore();"><span>点击查看更多</span></div>
+             <div style="width: 7.5rem;height: 0.8rem;"></div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js" ></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el:'#yaopin-from',
+				data:{
+					zhongchengyaoList:'',
+					limit:8,
+					
+
+					
+				}
+			})
+			
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+                
+                //监听返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+					//查看药品详情
+				mui(".baikelist").on('tap', '.baikelist-option', function() {  
+				   
+				   var thisYaopin = this;
+				   
+				   var yaopinInfo = thisYaopin.getAttribute('yaopinInfo');
+				   				   				   
+				   localStorage.setItem('yaopinInfo',JSON.stringify(vm.zhongchengyaoList[yaopinInfo]));
+				   				   
+				   mui.openWindow({
+				   	url:'healthOne.html',
+				   	id:'healthOne',
+
+				   })
+				   
+				
+				});
+                
+					
+				
+				loadYaopinResult();
+				
+
+			});
+			
+			function readmore(){
+				
+				vm.limit = vm.limit + 8;
+				
+				loadYaopinResult();
+				
+			}
+			
+			
+			
+			//查询结果
+			function loadYaopinResult(){
+				
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+				var self = plus.webview.currentWebview();
+				var searchValue = self.searchValue;
+				
+				mui.ajax(baseUrl+'/drug/findList',{
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data:{
+						page:1,
+						limit:vm.limit,
+						name:searchValue
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						console.log(JSON.stringify(data))
+						var dataJson = data.data.data;
+						vm.zhongchengyaoList = dataJson;
+						
+						
+						
+					},
+					error:function(xhr,type,errorThrown){
+						
+					}
+				});
+				
+				
+				
+			}
+				
+		</script>
+	</body>
+
+</html>

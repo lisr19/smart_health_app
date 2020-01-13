@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>地址列表页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		
+		<style>
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					我的地址
+				</div>
+				<div class="baike-header-top-right" id="adressAdd">新增</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="adress-from">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				 <div class="adress-list">
+				 	<!--单个地址-->
+				 	<div class="adress-option" v-for="item in adressList" >
+				 		<div class="adress-option-left">
+				 			<div class="adress-img">
+				 				<img v-if="item.type == '1'" src="img/homeAd.png" />
+				 				<img v-if="item.type == '2'" src="img/work.png" />
+				 				<img v-if="item.type == '3'" src="img/shopping.png" />
+				 			</div>
+				 		</div>
+				 		<div class="adress-option-center">
+				 			<div class="adress-option-center-name">{{item.name}}
+				 			<span>{{item.phone}}</span>
+				 			</div>
+				 			<div class="adress-message">
+				 				{{item.address}}
+				 			</div>
+				 			
+				 		</div>
+				 		<div class="adress-option-right" :adId='item.id' :name='item.name' :type='item.type' :phone = 'item.phone' :provinceId = 'item.provinceId' :cityId = 'item.cityId' :districtId='item.districtId' :detailAddress ='item.detailAddress'>
+				 			编辑
+				 		</div>
+				 	</div>
+				 	
+				 </div>
+				<!--主要内容结束-->
+
+				<!--底部-->
+				<div class="footer">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el:'#adress-from',
+				data:{
+					adressList:'',
+					
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+				//获取本地地址
+				loadAdress();
+				
+				
+				//监听事件刷新本地地址
+				window.addEventListener('clearData-AD', function(evt) {
+                 loadAdress();
+	            
+				});
+				
+				
+			});
+			
+			
+			
+			//监听编辑
+			mui(".adress-list").on('tap', '.adress-option-right', function() { 
+			  
+			  var thisAdress = this;
+			  
+			  var name = thisAdress.getAttribute('name');
+			  var phone = thisAdress.getAttribute('phone');
+			  var provinceId = thisAdress.getAttribute('provinceId');
+			  var cityId = thisAdress.getAttribute('cityId');
+			  var districtId = thisAdress.getAttribute('districtId');
+			  var detailAddress = thisAdress.getAttribute('detailAddress');
+			  var addresId = thisAdress.getAttribute('adId');
+			  var adtype = thisAdress.getAttribute('type');
+			  
+			  
+			  
+			  mui.openWindow({
+			  	url:'adressEdit.html',
+			  	id:'adressEdit',
+			  	extras:{
+			  		name:name,
+			  		phone:phone,
+			  		provinceId:provinceId,
+			  		cityId:cityId,
+			  		districtId:districtId,
+			  		detailAddress:detailAddress,
+			  		adtype:adtype,
+			  		addresId:addresId
+			  	}
+			  })
+			  
+			 
+			  
+			
+			
+			});
+			
+			
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			
+			//地址添加
+			document.getElementById('adressAdd').addEventListener('tap', function() {
+				mui.openWindow({
+					url:'adressAdd.html',
+					id:'adressAdd'
+					
+				})
+			});
+			
+			//获取本地地址
+			function loadAdress(){
+				
+				var token = localStorage.getItem('token');
+				
+				var phone = localStorage.getItem('phone');
+				
+				var userid = localStorage.getItem('userid');
+				
+		
+				
+				mui.ajax(baseUrl+'/userAddress/findByUserId',{
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data:{
+						
+						userId:userid
+					},
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success:function(data){
+						console.log('地址列表'+JSON.stringify(data));
+						if(data.code == '0'){
+							
+						 vm.adressList = data.data;
+						
+						}
+						
+						
+						
+					},
+					error:function(xhr,type,errorThrown){
+						
+					}
+				});
+				
+				
+				
+			}
+			
+			
+		</script>
+	</body>
+
+</html>

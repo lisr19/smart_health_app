@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<!--<link rel="stylesheet" href="css/style.css" />-->
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/meals.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<title>订餐功能</title>
+	</head>
+
+	<body>
+		<div id="app">
+			
+			<!--头部搜索&菜单固定模块-->
+			<div class="head-fix">
+				<div class="meals-top-search flex"  style="background-image: url(img/background1.png);">
+					<input oninput="hideSearchLogo()" class="searchInput" type="text" name="meals-search" placeholder="高血糖食品" value="" />
+					<img class="searchLogo" src="img/meals/meals-search-logo.png" />
+				</div>
+				<div class="meals-nav flex">
+					<router-link tag='li' to='/healthyCatering'>健康餐饮</router-link>
+					<router-link tag='li' to='/healthyRecipes'>健康食谱</router-link>
+				</div>
+			</div>
+			<router-view v-bind:parentmsg='cookBookDieData' v-bind:parent-index='sliderIndex'></router-view>
+		</div>
+
+		<!--底部菜单-->
+		<div class="health-main-menu">
+			<div class="main-page page" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-zhuye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-jiating"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page icon-active page" id="meals-page">
+				<svg class="icon-menu  icon-active" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>订餐</span>
+			</div>
+			<div class="shop-page page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>发现</span>
+			</div>
+			<div class="my-page page" id="my-page">
+				<svg class="icon-menu " aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<!--健康餐饮内容模块-->
+		<template id="healthyCatering">
+			<div class="healthyCatering con show">
+				<!--banner-->
+				<div class="meals-banner">
+					<img src="img/meals/meals-banner.png" alt="图片" />
+				</div>
+				<!--功能菜单-->
+				<div class="meals-menu-container flex">
+					<div class="meals-menu flex">
+						<img src="img/meals/meals-yxms.png" />
+						<p>优选美食</p>
+					</div>
+					<div class="meals-menu flex">
+						<img src="img/meals/meals-zczp.png" />
+						<p>早餐粥铺</p>
+					</div>
+					<div class="meals-menu flex">
+						<img src="img/meals/meals-scbl.png" />
+						<p>商超便利</p>
+					</div>
+					<div class="meals-menu flex">
+						<img src="img/meals/meals-tpyp.png" />
+						<p>甜品饮品</p>
+					</div>
+					<div class="meals-menu flex">
+						<img src="img/meals/meals-sysm.png" />
+						<p>送药上门</p>
+					</div>
+				</div>
+				<!--今日优选-->
+				<div class="today-yx flex">
+					<img src="img/meals/meals-today-yx.png" />
+				</div>
+				<!--甄选菜品内容-->
+				<div class="zxcp">
+					<p class="zxcp-title">甄选菜品</p>
+					<div class="food-content flex">
+						<div class="food-content-img">
+							<img src="img/meals/food1.png" />
+						</div>
+						<div class="food-rightContent">
+							<div class="food-title flex">
+								<p class="food-name">葱香豆浆饼</p>
+								<span id="onechoose">选购+</span>
+							</div>
+							<div class="food-label flex">
+								<li class="label flex">不含糖</li>
+								<li class="label flex second">低盐份</li>
+							</div>
+							<p class="food-abstract">营养成分：热量·1911.85千卡/蛋白质·209.66克/脂肪·71.66克/碳水化合物·110.86克/膳食纤维·4.50克/胆固醇·1663.00毫克/维生素A·260.40微克/胡萝卜素·774.50微克/硫胺素·0.50毫克/核黄素…</p>
+							<p class="money">¥ 35.00</p>
+						</div>
+					</div>
+					<div class="food-content flex second-food">
+						<div class="food-content-img">
+							<img src="img/meals/food2.png" />
+						</div>
+						<div class="food-rightContent">
+							<div class="food-title flex">
+								<p class="food-name">椰香山楂雪丽球</p>
+								<span id="twochoose">选购+</span>
+							</div>
+							<div class="food-label flex">
+								<li class="label flex">不含糖</li>
+								<li class="label flex second">低盐份</li>
+							</div>
+							<p class="food-abstract">营养成分：热量·1911.85千卡/蛋白质·209.66克/脂肪·71.66克/碳水化合物·110.86克/膳食纤维·4.50克/胆固醇·1663.00毫克/维生素A·260.40微克/胡萝卜素·774.50微克/硫胺素·0.50毫克/核黄素…</p>
+							<p class="money">¥ 35.00</p>
+						</div>
+					</div>
+					<div class="food-content flex second-food">
+						<div class="food-content-img">
+							<img src="img/meals/food3.png" />
+						</div>
+						<div class="food-rightContent">
+							<div class="food-title flex">
+								<p class="food-name">焦糖奶茶</p>
+								<span id="threechoose">选购+</span>
+							</div>
+							<div class="food-label flex">
+								<li class="label flex">不含糖</li>
+								<li class="label flex second">低盐份</li>
+							</div>
+							<p class="food-abstract">营养成分：热量·1911.85千卡/蛋白质·209.66克/脂肪·71.66克/碳水化合物·110.86克/膳食纤维·4.50克/胆固醇·1663.00毫克/维生素A·260.40微克/胡萝卜素·774.50微克/硫胺素·0.50毫克/核黄素…</p>
+							<p class="money">¥ 35.00</p>
+						</div>
+					</div>
+					<div class="food-content flex second-food">
+						<div class="food-content-img">
+							<img src="img/meals/meals-food1.png" />
+						</div>
+						<div class="food-rightContent">
+							<div class="food-title flex">
+								<p class="food-name">日料·天妇罗</p>
+								<span id="fourchoose">选购+</span>
+							</div>
+							<div class="food-label flex">
+								<li class="label flex">不含糖</li>
+								<li class="label flex second">低盐份</li>
+							</div>
+							<p class="food-abstract">营养成分：热量·1911.85千卡/蛋白质·209.66克/脂肪·71.66克/碳水化合物·110.86克/膳食纤维·4.50克/胆固醇·1663.00毫克/维生素A·260.40微克/胡萝卜素·774.50微克/硫胺素·0.50毫克/核黄素…</p>
+							<p class="money">¥ 35.00</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
+		<!--健康食谱内容模块-->
+		<template ref="healthyRecipes" id="healthyRecipes">
+			<div class="healthyRecipes con">
+				<!--主要内容-->
+				<div class="hr-content">
+					<!--菜品banner-->
+					<div id="foodBanner" class="foodBanner flex">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<img onclick="goDetails()" src="img/meals/food1.png" />
+									<!--菜品简介-->
+									<div class="foodBriefing">
+										<!--菜品名称-->
+										<p class="foodName">{{parentmsg[parentIndex].name}}</p>
+										<!--菜品介绍-->
+										<p class="fooText">{{parentmsg[parentIndex].introduce}}</p>
+										<!--收藏-->
+										<div class="collection">
+											<img src="img/meals/health.png" />
+										</div>
+									</div>
+								</div>
+								<div class="swiper-slide">
+									<img onclick="goDetails()" src="img/meals/food2.png" />
+									<!--菜品简介-->
+									<div class="foodBriefing">
+										<!--菜品名称-->
+										<p class="foodName">{{parentmsg[parentIndex].name}}</p>
+										<!--菜品介绍-->
+										<p class="fooText">{{parentmsg[parentIndex].introduce}}</p>
+										<!--收藏-->
+										<div class="collection">
+											<img src="img/meals/health.png" />
+										</div>
+									</div>
+								</div>
+								<div class="swiper-slide">
+									<img onclick="goDetails()" src="img/meals/food3.png" />
+									<!--菜品简介-->
+									<div class="foodBriefing">
+										<!--菜品名称-->
+										<p class="foodName">{{parentmsg[parentIndex].name}}</p>
+										<!--菜品介绍-->
+										<p class="fooText">{{parentmsg[parentIndex ].introduce}}</p>
+										<!--收藏-->
+										<div class="collection">
+											<img src="img/meals/health.png" />
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</template>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//健康餐饮内容模块
+			var healthyCatering = {
+				template: '#healthyCatering',
+				data() {
+					return {
+
+					}
+				}
+			}
+			//健康食谱内容模块
+			var healthyRecipes = {
+				template: '#healthyRecipes',
+				data() {
+					return {
+						sliderIndex: null,
+					}
+				},
+				mounted() {
+					this.swiperRefresh();
+
+				},
+				props: ['parentmsg', 'parent-index'],
+				methods: {
+					//swiper重新刷新
+					swiperRefresh() {
+						var mySwiper = new Swiper('.swiper-container', {
+							autoplay: false,
+							onSlideChangeEnd: function(swiper) {
+								vm.sliderIndex = swiper.activeIndex
+								console.log(vm.sliderIndex);
+							}
+						})
+					},
+
+				}
+
+			}
+			//创建路由对象
+			var router = new VueRouter({
+				routes: [{
+						path: '/',
+						redirect: '/healthyCatering'
+					},
+					{
+						path: '/healthyCatering',
+						component: healthyCatering
+					},
+					{
+						path: '/healthyRecipes',
+						component: healthyRecipes
+					}
+				]
+			})
+			//定义vue实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					sliderIndex: 0,
+					cookBookDieData: [{
+							name: "葱香豆浆饼",
+							introduce: "豆浆是我们中国传统且受大家喜爱的饮品，豆浆含有丰富的植物蛋白和磷脂，还含有维生素B1.B2和烟酸。此外，豆浆还含有铁、钙等矿物质，有营养又美味，所以也被称为“植物奶”。",
+							bannerImgUrl: "img/meals/food1.png"
+						},
+						{
+							name: "椰香山楂雪丽球",
+							introduce: "老式桃酥用的植物油，还放了能够给老人健脑的核桃仁，成品非常酥脆，用牛奶泡过以后还是很柔软好吃的，曾经我们小的时候就吃过，妈妈现在也很喜欢这种吃法~~",
+							bannerImgUrl: "img/meals/food2.png"
+						},
+						{
+							name: "焦糖奶茶",
+							introduce: "自己做的蜂蜜柚子茶味道更清香更甜美，坚持长期喝还有美白祛斑、嫩肤养颜的功效。蜂蜜中含有的L－半胱氨酸具有排毒作用，经常长暗疮的人喝能有缓解的效果。柚子含维生素C比较高，有一定的美白效果。",
+							bannerImgUrl: "img/meals/food3.png"
+						}
+					]
+				},
+				components: {
+					healthyCatering,
+					healthyRecipes
+				},
+				router,
+			});
+
+			//搜索框输入logo隐藏
+			function hideSearchLogo() {
+				var hideSearchLogo = document.querySelector(".searchLogo");
+				console.log(hideSearchLogo);
+				var searchInput = document.querySelector(".searchInput")
+				if(searchInput.value.length > 0) {
+					hideSearchLogo.classList.add("searchLogoHide");
+				} else {
+					hideSearchLogo.classList.remove("searchLogoHide");
+				}
+			}
+			//go详情页
+			function goDetails() {
+				mui.openWindow({
+					url: 'cookbook.html',
+					id: 'cookbook',
+					extras: {
+						name: vm.cookBookDieData[vm.sliderIndex].name,
+						introduce: vm.cookBookDieData[vm.sliderIndex].introduce,
+						bannerImgUrl: vm.cookBookDieData[vm.sliderIndex].bannerImgUrl,
+					}
+				})
+			}
+			mui.plusReady(function() {
+				function bb(idname) {
+					document.getElementById(idname).addEventListener('tap', function() {
+						console.log(12312312312);
+						var tb = document.getElementById(idname);
+						tb.addEventListener("click", function(e) {
+							console.log(e.target.parentNode.children[0].innerText);
+							var foodtext = e.target.parentNode.children[0].innerText;
+								if(foodtext == '葱香豆浆饼') {
+//									console.log(1);
+									vm.sliderIndex = 0;
+									mui.openWindow({
+										url: 'cookbook.html',
+										id: 'cookbook',
+										extras: {
+											name: vm.cookBookDieData[vm.sliderIndex].name,
+											introduce: vm.cookBookDieData[vm.sliderIndex].introduce,
+											bannerImgUrl: vm.cookBookDieData[vm.sliderIndex].bannerImgUrl,
+										}
+									})
+								}
+								if(foodtext == '椰香山楂雪丽球') {
+//									console.log(2);
+									vm.sliderIndex = 1;
+									mui.openWindow({
+										url: 'cookbook.html',
+										id: 'cookbook',
+										extras: {
+											name: vm.cookBookDieData[vm.sliderIndex].name,
+											introduce: vm.cookBookDieData[vm.sliderIndex].introduce,
+											bannerImgUrl: vm.cookBookDieData[vm.sliderIndex].bannerImgUrl,
+										}
+									})
+								}
+								if(foodtext == '焦糖奶茶') {
+//									console.log(3);
+									vm.sliderIndex = 2;
+									mui.openWindow({
+										url: 'cookbook.html',
+										id: 'cookbook',
+										extras: {
+											name: vm.cookBookDieData[vm.sliderIndex].name,
+											introduce: vm.cookBookDieData[vm.sliderIndex].introduce,
+											bannerImgUrl: vm.cookBookDieData[vm.sliderIndex].bannerImgUrl,
+										}
+									})
+								}
+								if(foodtext == '日料·天妇罗') {
+//									console.log(3);
+									vm.sliderIndex = 2;
+									mui.openWindow({
+										url: 'cookbook.html',
+										id: 'cookbook',
+										extras: {
+											name: "日料·天妇罗",
+											introduce: "天妇罗的烹制方法中最为关键的是面糊的制作。天妇罗以鸡蛋面糊为最多，调好的面糊叫天妇罗衣，做面衣用的面粉，日语叫薄力粉",
+											bannerImgUrl: vm.cookBookDieData[vm.sliderIndex].bannerImgUrl,
+										}
+									})
+								}
+						})
+					});
+				};
+				bb('onechoose');
+				bb('twochoose');
+				bb('threechoose');
+				bb('fourchoose');
+
+			})
+			//swiper
+			var mySwiper = new Swiper('.swiper-container', {
+				autoplay: false,
+				onSlideChangeEnd: function(swiper) {
+					vm.sliderIndex = swiper.activeIndex
+					console.log(vm.sliderIndex);
+				}
+			})
+		</script>
+	</body>
+
+</html>

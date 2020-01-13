@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/cookbook.css" />
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<title>菜品详情</title>
+	</head>
+
+	<body>
+		<div id="app">
+			<!--页面主要内容-->
+			<div class="cookbookContent">
+				<!--头部banner-->
+				<div class="cb-banner">
+					<!--<img src="img/meals/meals-banner.png"/>-->
+					<img v-if="name == '葱香豆浆饼'" src="img/meals/food1.png" />
+					<img v-if="name == '椰香山楂雪丽球'" src="img/meals/food2.png" />
+					<img v-if="name == '焦糖奶茶'" src="img/meals/food3.png" />
+					<img v-if="name == '日料·天妇罗'" src="img/meals/meals-food-one.png" />
+				</div>
+				<!--标题文字介绍-->
+				<div class="ck-titleText">
+					<p v-cloak>{{name}}</p>
+					<p v-cloak>{{introduce}}</p>
+				</div>
+				<!--收藏按钮-->
+				<div class="ck-collection">
+					<img src="img/meals/health.png" alt="图片" />
+				</div>
+				<!--返回按钮-->
+				<a id="back" class="return"><img src="img/meals/ck-return.png" /></a>
+				<!--页数显示-->
+				<div class="ck-page">
+					<img src="img/meals/ck-page.png" />
+				</div>
+				<!--标签块-->
+				<div class="ck-tag flex">
+					<!--时间-->
+					<div class="tag ck-tag-time">
+						<div class="tag-timeLogo">
+							<img src="img/meals/cook-time.png" />
+						</div>
+						<span>30分钟</span>
+					</div>
+					<!--步骤-->
+					<div class="ck-tag-bz tag">
+						<div class="tag-bzLogo">
+							<img src="img/meals/cook-bz.png" />
+						</div>
+						<span>步骤6</span>
+					</div>
+					<!--学者-->
+					<div class="ck-tag-cxz tag">
+						<div class="tag-cxzLogo">
+							<img src="img/meals/cook-xz.png" />
+						</div>
+						<span>初学者</span>
+					</div>
+				</div>
+				<!--营养成分-->
+				<div class="nutrients">
+					<p class="nutrients-title">营养成分</p>
+					<p class="nutrients-content flex"><span>热量</span><span>340.34大卡</span></p>
+					<p class="nutrients-content flex"><span>脂肪</span><span>00.00克</span></p>
+					<p class="nutrients-content flex"><span>蛋白质</span><span>12.00克</span></p>
+					<p class="nutrients-content flex"><span>纤维素</span><span>6.00克</span></p>
+					<p class="nutrients-content flex"><span>碳水化合物</span><span>72.00克</span></p>
+
+				</div>
+				<!--食用材料-->
+				<div class="foodMaterials">
+					<p class="foodMaterials-title">食用材料</p>
+					<p class="foodMaterials-content flex"><span>荞麦面</span><span>180.00克</span></p>
+					<p class="foodMaterials-content flex"><span>绿豆芽</span><span>10.00克</span></p>
+					<p class="foodMaterials-content flex"><span>黄瓜</span><span>30.00克</span></p>
+					<p class="foodMaterials-content flex"><span>苹果</span><span>20.00克</span></p>
+					<p class="foodMaterials-content flex"><span>鸡蛋</span><span>一个</span></p>
+					<p class="foodMaterials-content flex"><span>芝麻</span><span>2.00克</span></p>
+					<p class="foodMaterials-content flex"><span>海苔</span><span>2.00克</span></p>
+					<p class="foodMaterials-content flex"><span>姜蒜蓉</span><span>5.00克</span></p>
+					<p class="foodMaterials-content flex"><span>香油</span><span>3茶匙</span></p>
+					<p class="foodMaterials-content flex"><span>香醋</span><span>半茶匙</span></p>
+					<p class="foodMaterials-content flex"><span>生抽</span><span>半茶匙</span></p>
+					<p class="foodMaterials-content flex"><span>白糖</span><span>40.00克</span></p>
+					<p class="foodMaterials-content flex"><span>辣椒油</span><span>两茶匙</span></p>
+				</div>
+				<!--菜品做法-->
+				<div class="foodPractices">
+					<p class="foodPractices-title">菜谱做法</p>
+					<!--主要内容-->
+					<div class="foodPractices-content">
+						<!--每步步骤内容-->
+						<div class="fpc flex">
+							<p class="number">1</p>
+							<p class="fpc-text">荞麦速食面用50°C左右的开水浸泡20-25分钟，泡软后沥尽水，泡面的时间准备其他材料。</p>
+							<div class="fpc-img fixWH">
+								<img src="img/meals/bz1.png" />
+							</div>
+						</div>
+						<div class="fpc flex">
+							<p class="number">2</p>
+							<p class="fpc-text">摊鸡蛋薄饼，摊好后切丝备用。</p>
+							<div class="fpc-img fixWH">
+								<img src="img/meals/bz2.png" />
+							</div>
+						</div>
+						<div class="fpc flex">
+							<p class="number">3</p>
+							<p class="fpc-text">黄瓜、苹果洗净切丝，蒜切末，香菜切末。</p>
+							<div class="fpc-img fixWH">
+								<img src="img/meals/bz3.png" />
+							</div>
+						</div>
+						<div class="fpc flex">
+							<p class="number">4</p>
+							<p class="fpc-text">泡好的面沥净水，上面放上黄瓜丝、鸡蛋丝、香菜末等、蒜末、盐、少许糖、生抽、香醋、蚝油。另外起锅，放适量色拉油、加少许香油，七成热时加花椒，花椒变色捞出扔掉，碗里放入干辣椒碎和芝麻，将炸好的油浇在辣椒碗里，这就是辣椒油，一次也可以多炸一些辣椒油，平时拌凉菜或拌面吃。</p>
+							<div class="fpc-img">
+								<img src="img/meals/bz4.png" />
+							</div>
+						</div>
+						<div class="fpc flex">
+							<p class="number">5</p>
+							<p class="fpc-text">将辣椒油浇在面条上 不喜欢吃辣椒的可以直接将炸好的花椒油浇在面条上，拌匀即可开吃。</p>
+							<div class="fpc-img">
+								<img src="img/meals/bz5.png" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--购物车-->
+				<div class="ck-shop" onclick="goBuyFood()">
+					<img src="img/meals/shop.png" />
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			//vm实例
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					name: '',
+					introduce: '',
+					bannerImgUrl:''
+				}
+			})
+			//			debugger
+			mui.plusReady(function() {
+				loadSonData();
+			})
+			function loadSonData() {
+				var self = plus.webview.currentWebview();
+				console.log(JSON.stringify(self));
+				
+				vm.name = self.name;
+				vm.introduce = self.introduce;
+				vm.bannerImgUrl = self.bannerImgUrl;
+				console.log(vm.name);
+			}
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+			//跳转到购买页面
+			function goBuyFood(){
+				mui.openWindow({
+					url:'buyFood.html',
+					id:'buyFood',
+					extras:{
+						name:vm.name,
+						bannerImgUrl:vm.bannerImgUrl
+					}
+				})
+			}
+		</script>
+	</body>
+</html>

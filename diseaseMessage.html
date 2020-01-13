@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>疾病详情页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="mui-scroll-wrapper" id="disease-info">
+			<div class="mui-scroll">
+				<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+					<div class="baike-header">
+						<div class="baike-header-left" id="back">
+							<img src="img/return.png" />
+						</div>
+						<div class="baike-header-right">
+							{{diseaseInfo.name}}
+						</div> 
+					</div>
+				</div>
+				
+				<!--主内容区-->
+				<div class="baike-yaopin-content" style="margin-top: 0.7rem;">
+					<div class="baike-jianjie">
+						<div class="baike-jianjie-header">
+							疾病简介
+						</div>
+						<p>{{diseaseInfo.introduction}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							是否属于医保
+						</div>
+						<p>{{diseaseInfo.medicalInsurance}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							发病部位
+						</div>
+						<p>{{diseaseInfo.incidenceSite}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							传染性
+						</div>
+						<p>{{diseaseInfo.infectiousness}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							多发人群
+						</div>
+						<p>{{diseaseInfo.common}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							相关症状
+						</div>
+						<p>{{diseaseInfo.relatedSymptoms}}</p>
+					</div>
+					<div class="baike-yaopin-fenxiang">
+						<div class="baike-yaopin-fenxiang-header">
+							并发疾病
+						</div>
+						<p>{{diseaseInfo.concurrentIsease}}</p>
+					</div>
+					
+				</div>
+
+				
+             <div style="width: 100%;height: 1.3rem;"></div>
+			</div>
+		</div>
+		<!--<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>-->
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<!--<script type="text/javascript" src="js/menu.js"></script>-->
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el:'#disease-info',
+				data:{
+					diseaseInfo:'',
+				}
+				
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听药品百科
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+                
+
+//              获取药品详细信息
+                vm.diseaseInfo = JSON.parse(localStorage.getItem('diseaseInfo'));
+                
+                
+			});
+
+		</script>
+	</body>
+
+</html>

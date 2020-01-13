@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>健康百科主页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="header" style="background-image: url(img/background.svg);background-size:cover;">
+					<div class="baike-header">
+						<div class="baike-header-left" id="back">
+							<img src="img/return.png" />
+						</div>
+						<div class="baike-header-title"> 
+							健康百科
+						</div>
+						<!--<div class="baike-input">
+							<input type="text" style="width: 6rem;text-align: center;" disabled="disabled" placeholder="可查看包括药品/疾病/保健等信息" />
+						</div>-->
+				</div>
+				<div class="baike-title">甄选推荐</div>
+			</div>
+
+			<!--轮播-->
+			<div class="swiper" style="margin-top: -125px;">
+				<div class="swiper-container">
+					<div class="swiper-wrapper" style="margin-left: -30px;" id="loopImg">
+						<!--<div class="swiper-slide">
+							<div class="swiper-shadow"></div>
+							<img src="img/banner6.jpg" />
+						</div>
+						<div class="swiper-slide">
+							<div class="swiper-shadow"></div>
+							<img src="img/banner5.jpg" />
+						</div>
+						<div class="swiper-slide">
+							<div class="swiper-shadow"></div>
+							<img src="img/banner1.jpg" />
+						</div>-->
+					</div>
+				</div>
+			</div>
+			<!--轮播结束-->
+
+			<div class="fenjiexian"></div>
+
+			<!--主内容区-->
+			<div class="baike-content">
+				<div class="baike-content-title">药品知识小百科</div>
+				<div class="baike-content-one" id="yaopin">
+					<div class="baike-content-one-left">
+						<div class="baike-content-one-left-title">
+							药品百科
+						</div>
+						<div class="baike-content-one-p">
+							提供全面的药品信息
+						</div>
+					</div>
+					<div class="baike-content-one-right">
+						<button>查看</button>
+					</div>
+				</div>
+
+				<div class="baike-content-one" id="disease">
+					<div class="baike-content-one-left">
+						<div class="baike-content-one-left-title">
+							疾病百科
+						</div>
+						<div class="baike-content-one-p">
+							完善的疾病信息库
+						</div>
+					</div>
+					<div class="baike-content-one-right">
+						<button>查看</button>
+					</div>
+				</div>
+
+				<div class="baike-content-one" id="healthCare">
+					<div class="baike-content-one-left">
+						<div class="baike-content-one-left-title">
+							健康保健
+						</div>
+						<div class="baike-content-one-p">
+							提供日常的健康知识与保健知识
+						</div>
+					</div>
+					<div class="baike-content-one-right">
+						<button>查看</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		</div>
+		<!--<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>-->
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+	<!--	<script type="text/javascript" src="js/menu.js"></script>-->
+		<script type="text/javascript" src="js/utils/http.js" ></script>
+		<script type="text/javascript" src="js/configUrl.js" ></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听药品百科
+				document.getElementById('yaopin').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'healthyEncyclopediaList.html',
+						id: 'healthyEncyclopediaList'
+					})
+				});
+
+				//监听疾病百科
+				document.getElementById('disease').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'disease.html',
+						id: 'disease'
+					})
+				});
+
+				//监听健康保健
+				document.getElementById('healthCare').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'healthcareList.html',
+						id: 'healthcareList'
+					})
+				});
+
+				//监听返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				
+				loadAdverisement();
+				
+				//监听广告
+//				mui(".swiper-wrapper").on('tap', '.swiper-slide img', function() {
+//					var thisAdv = this;
+//					var advUrl = thisAdv.getAttribute('data-url');
+//					if(advUrl != ''){
+//					mui.openWindow({
+//						url:'adverisement.html',
+//						id:'adverisement',
+//						extras:{
+//							advUrl:advUrl
+//						}
+//					})
+//					}
+//
+//				});
+
+			});
+			
+			//获取广告
+				function loadAdverisement() {
+
+					var params = {
+						limit: 6,
+						status: 1,
+					}
+
+					var data = doGet('/advertisement/findList', params, function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code != '0') {
+
+							console.log('网络失败！');
+
+						} else {
+							//vm.adverisement = data.data.data;
+							//启动轮播图
+							var adverisment = data.data.data;
+							var loopImg = document.getElementById('loopImg');
+							var html = '';
+							for(var i =0;i<adverisment.length;i++){
+								
+								html += '<div  class="swiper-slide">'
+								+'<div class="swiper-shadow"></div>'
+								+'<img src="'+adverisment[i].imgUrl+'" data-url="'+adverisment[i].url+'" />'
+							    +'</div>'
+								
+								
+							}
+						
+							loopImg.innerHTML = html;
+							
+							var mySwiper = new Swiper('.swiper-container', {
+								direction: 'horizontal',
+								loop: true,
+								autoplay: 5000,
+								slidesPerView: "auto",
+								centeredSlides: true,
+								spaceBetween: 20,
+								initialSlide :0,
+                                observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                                 observeParents:true//修改swiper的父元素时，自动初始化swip
+
+							})
+							
+						}
+					});
+                  
+                  
+				}
+            
+            
+           
+		</script>
+	</body>
+
+</html>

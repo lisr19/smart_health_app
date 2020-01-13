@@ -1,0 +1,451 @@
+
+/*
+ *2019-02-20
+ * 麦展豪
+ * */
+/*订餐功能页面样式*/
+.flex{
+	display: flex;
+}
+p{
+	margin: 0;
+}
+body{
+	margin: 0;
+	font-size: 0;	
+}
+#app{
+	width: 100%;
+	font-size: 0;
+	/*position: relative;*/
+}
+.gai{
+	width: 100%;
+	height: 0.3rem;
+	background: white;
+	z-index: 600;
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+.head-fix{
+	width: 100%;
+	/*height: 2.28rem;*/
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 300;
+}
+/*头部搜索框样式*/
+.meals-top-search{
+	width: 100%;
+	height: 1.16rem;
+	padding-top: 0.28rem;
+	/*margin-top: 0.28rem;*/
+	background: #FFFFFF;
+	justify-content: center;
+	align-items: center;
+	border-bottom:0.02rem solid rgb(243,242,242);
+	position: relative;
+}
+.searchLogo{
+	width: 0.24rem;
+	height: 0.24rem;
+	/*margin-top: 0.3rem;*/
+	position: absolute;
+	left: 2.87rem;
+	top: 0.59rem;
+}
+.searchLogoHide{
+	display: none;
+}
+.meals-top-search input{
+	width: 7.1rem;
+	height: 0.58rem;
+	margin: 0;
+	border: none;
+	background:rgba(243,242,242,1);
+	border-radius:0.29rem;
+	text-align: center;
+	font-size: 0.28rem;
+	font-family:PingFangSC-Regular;
+	font-weight:400;
+}
+.meals-top-search input::-webkit-input-placeholder{
+	width:1.4rem;
+	height:0.4rem;
+	font-size: 0.28rem;
+	font-family:PingFangSC-Regular;
+	font-weight:400;
+	color:rgba(188,188,188,1);
+	line-height: 0.4rem;
+	text-indent: 0.3rem;
+}
+/*nav样式*/
+.meals-nav{
+	width:100%;
+	/*height: 1rem;*/
+	background:rgba(255,255,255,1);
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+.meals-nav li{
+	width: 50%;
+	height: 100%;
+	font-size: 0.28rem;
+	/*padding-top: 0.2rem;*/
+	font-family:PingFangSC-Medium;
+	color: #1F2266;
+	font-weight:500;
+	list-style: none;
+	line-height: 0.8rem;
+	position: relative;
+}
+
+/*banner样式*/
+.meals-banner{
+	width: 100%;
+	height: 2.91rem;
+	/*margin-top: 1.7rem;*/
+	
+}
+.meals-banner img{
+	width: 100%;
+	height: 100%;
+}
+/*功能菜单样式*/
+.meals-menu-container{
+	width: 100%;
+	height: 2.14rem;
+	padding-top: 0.6rem;
+	background: #FFFFFF;
+}
+.meals-menu{
+	width: 20%;
+	height: 1.34rem;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.meals-menu img{
+	width:0.85rem;
+	height:0.85rem;
+	background:rgba(255,77,77,1);
+	
+}
+.meals-menu p{
+	height:0.33rem;
+	font-size:0.24rem;
+	font-family:PingFangSC-Regular;
+	font-weight:400;
+	color:rgba(155,155,155,1);
+	line-height:0.33rem;
+	margin: 0;
+	margin-top: 0.15rem;
+}
+.meals-nav .router-link-active{
+	color: #6F4BEF;
+	font-weight: bold;
+}
+.meals-nav .router-link-active:after{
+	content: "";
+	width:0.4rem;
+	height:0.04rem;
+	background: #6F4BEF;
+	position: absolute;
+	left: 1.7rem;
+	top: 0.7rem;
+}
+/*健康餐饮内容*/
+.healthyCatering{
+	/*display: none;*/
+	margin-top: 1.96rem;
+	margin-bottom:  1.5rem;
+}
+/*今日优选样式*/
+.today-yx{
+	width: 100%;
+	height: 3.39rem;
+	justify-content: center;
+	align-items: flex-end;
+	background: #FFFFFF;
+}
+.today-yx img{
+	width: 7.35rem;
+	height: 3.31rem;
+}
+/*甄选菜品内容样式*/
+.zxcp{
+	width: 100%;
+	margin-top: 0.16rem;
+	padding-bottom: 1.2rem;
+	padding-top: 0.32rem;
+	background: #FFFFFF;
+}
+.zxcp-title{
+	font-size:0.32rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color: #1F2266;
+	line-height:0.45rem;
+	margin: 0;
+	padding-left: 0.28rem;
+	margin-bottom: 0.32rem;
+	position: relative;
+}
+.zxcp-title:after{
+	content: "";
+	width:0.06rem;
+	height:0.4rem;
+	position: absolute;
+	left: 0.08rem;
+	top: 0.06rem;
+	background:linear-gradient(180deg,rgba(110,75,239,1) 0%,rgba(173,94,253,1) 100%);
+}
+.food-content{
+	height: 2.28rem;
+	margin-left: 0.08rem;
+	
+}
+.food-content-img{
+	width: 1.8rem;
+	height: 2.28rem;
+}
+.food-content-img img{
+	width: 100%;
+	height: 100%;
+}
+.food-rightContent{
+	width: 5.6rem;
+	height: 100%;
+	margin-left: 0.24rem;
+	padding-top: 0.08rem;
+}
+.food-title{
+	width: 100%;
+	height: 0.45rem;
+	justify-content: space-between;
+	align-items: center;
+}
+.food-name{
+	font-size:0.32rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	margin: 0;
+	padding: 0;
+}
+#onechoose,#twochoose,#threechoose,#fourchoose{
+	display: block;
+	width:1rem;
+	height:0.45rem;
+	background:linear-gradient(90deg,rgba(110,75,239,1) 0%,rgba(173,94,253,1) 100%);
+	border-radius:0.08rem;
+	margin-right: 0.28rem;
+	font-size:0.24rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(255,255,255,1);
+	text-align: center;
+	text-decoration: none;
+	line-height: 0.48rem;
+}
+.food-label{
+	width: 100%;
+	height: 0.28rem;
+	margin-top: 0.08rem;
+	flex-direction: row;
+	
+}
+.food-label li{
+	list-style: none;
+	width:0.6rem;
+	height:0.28rem;
+	background:rgba(92,110,77,1);
+	border-radius:0.02rem;
+	font-size:0.16rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(255,255,255,1);
+	justify-content: center;
+	align-items: center;
+}
+.second{
+	margin-left: 0.1rem;
+}
+.food-abstract{
+	width:5.04rem;
+	height:0.63rem;
+	background:rgba(255,255,255,1);
+	margin: 0;
+	margin-top: 0.15rem;
+	font-size:0.24rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(171,172,197,1);
+	line-height: 0.33rem;
+	margin-left: 0.04rem;
+	overflow: hidden;
+	/*background: red;*/
+	
+}
+.money{
+	width:1.07rem;
+	height:0.45rem;
+	font-size:0.24rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(126,76,248,1);
+	line-height:0.33rem;
+	margin-top: 0.3rem;
+}
+.second-food{
+	margin-top: 0.4rem;
+}
+
+
+
+/*健康食谱内容*/
+.healthyRecipes{
+	/*display: none;*/
+	margin-top: 1.96rem;
+	width: 100%;
+}
+/*主要内容*/
+.hr-content{
+	width: 100%;
+	height: auto;
+	/*background:rgba(248,248,248,1);*/
+}
+/*菜品banner*/
+.foodBanner{
+	width: 100%;
+	/*height: 10.5rem;*/
+	/*background:rgba(248,248,248,1);*/
+	justify-content: center;
+	position: relative;
+	font-size: 0.23rem;
+}
+.swiper-container{
+	width: 100%;
+	/*height: 10.5rem;*/
+	font-size: 0.28rem;
+}
+.swiper-wrapper{
+	width: 100%;
+	height: 100%;
+}
+.swiper-slide img{
+	width: 100%;
+	height: 5.4rem;
+}
+/*菜品名称*/
+.foodBriefing .foodName{
+	height:0.67rem;
+	font-size:0.48rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.67rem;
+	text-align: center;
+}
+/*菜品介绍*/
+.fooText{
+	width:6.9rem;
+	height:0.8rem;
+	font-size:0.28rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(171,172,197,1);
+	line-height:0.4rem;
+	margin: 0;
+	/*text-align: center;*/
+	margin: 0 auto;
+	margin-top: 0.24rem;
+	overflow: hidden;
+}
+/*收藏*/
+.collection{
+	width: 0.83rem;
+	height: 0.83rem;
+	margin: 0 auto;
+	margin-top: 0.3rem;
+	margin-bottom: 0.32rem;
+}
+.collection img{
+	width: 100%;
+	height: 100%;
+}
+/*菜品简介*/
+.swiper-slide .foodBriefing{
+	width: 100%;
+	/*height: 3.49rem;*/
+	/*background:rgba(248,248,248,1);*/
+	padding-top: 0.32rem;
+}
+
+
+
+/*导航栏通用样式*/
+
+.health-main-menu {
+	position: fixed;
+	bottom: 0px;
+	left: 0;
+	height: 1.16rem;
+	padding-top: 0.2rem;
+	background-color: #FBFBFB;
+	z-index: 300;
+	text-align: center;
+	border-top: 1px solid #F0F0F0;
+}
+
+.health-main-menu span {
+	font-size: 0.24rem;
+	line-height: 80%;
+}
+
+.icon-menu {
+	width: 1.2rem;
+	height: 0.41rem;
+	vertical-align: -0.15em;
+	fill: #D6D6D6;
+	overflow: hidden;
+}
+
+.icon-active {
+	color: #6E62FF!important;
+	fill:#6E62FF!important;
+}
+
+.main-page {
+	float: left;
+	width: 20%;
+	height: 100%;
+/*	margin-right: 0.6rem;*/
+	color: #9B9B9B;
+}
+
+.shop-page {
+	float: left;
+	width: 20%;
+	height: 100%;
+	/*margin-right: 0.65rem;*/
+	color: #9B9B9B;
+}
+
+.family-page {
+	float: left;
+	width: 20%;
+	height: 100%;
+	/*margin-right: 0.6rem;*/
+	color: #9B9B9B;
+}
+
+.my-page {
+	float: left;
+	width: 20%;
+	height: 100%;
+	color: #9B9B9B;
+}

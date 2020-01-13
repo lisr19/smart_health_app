@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>家庭成员健康图表页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+              .mui-slider-group{
+              	min-height: 10rem;
+              }
+		</style>
+	</head>
+
+	<body style="background: #FBFBFB;">
+		<div id="group-from">
+			<header class="health-header">
+				<div class="health-header-left" id="back">
+					<img src="img/back.png" />
+				</div>
+				<div class="health-header-center" id="uname">
+					人员
+				</div>
+				<div class="health-header-right" id="history">
+					<img src="img/history.png" />
+				</div>
+			</header>
+
+			<div id="slider" class="mui-slider" style="margin-top: 1.33rem;">
+				<div id="sliderSegmentedControl" style="background: white;font-size: 13px;height: 0.8rem;padding-top: 0.1rem;" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">
+						体重
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						体脂
+					</a>
+					<a class="mui-control-item" href="#item3mobile">
+						血糖
+					</a>
+					<a class="mui-control-item" href="#item4mobile">
+						血压
+					</a>
+					
+					
+				</div>
+				<!--高亮导航栏-->
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-3">
+					<!--<div style="width: 0.78rem;background: #FBFBFB;height: 0.04rem;float: left;"></div>
+					<div style="width: 0.4rem;background: #5D8AFE;height: 0.04rem;float: left;"></div>
+					<div style="width: 0.69rem;background:#FBFBFB;height: 0.04rem;float: left;"></div>-->
+
+				</div>
+				<div class="mui-slider-group">
+
+					<!--体重-->
+					<div id="item1mobile" class="mui-slider-item mui-control-content echart-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="health-echart">
+									<div class="echart-title">
+										<div class="echart-title-left">
+											近期数据
+										</div>
+										<div class="echart-title-right">
+											<div class="echart-title-right-rollleft" id="LastMonth">
+												<img src="img/Triangle.png" />
+											</div>
+											<span id="thisDateTime"></span>
+											<div class="echart-title-right-rollright" id="NextMonth">
+												<img src="img/Triangle1.png" />
+											</div>
+										</div>
+									</div>
+
+									<div class="echart-body">
+										<!--条状图-->
+										<div class="bar-chart">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													体重
+												</div>
+												<div class="bar-chart-header-right">
+													千克
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<!--<div class="bar-border"></div>-->
+												
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in weightData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="tizhongShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														100Kg
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														0Kg
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+
+										<!--条状图-->
+										<div class="bar-chart bar-chart-thems-pink">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													身体质量指数(BMI)
+												</div>
+												<div class="bar-chart-header-right">
+													kg/㎡
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border-BMI2"></div>
+												<div class="bar-border-BMI1"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in weightData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="BMIShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														40
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														10
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<!--体脂-->
+					<div id="item2mobile" class="mui-slider-item mui-control-content echart-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+									<div class="health-echart">
+									<div class="echart-title">
+										<div class="echart-title-left">
+											近期数据
+										</div>
+										<div class="echart-title-right">
+											<div class="echart-title-right-rollleft" id="LastMonth1">
+												<img src="img/Triangle.png" />
+											</div>
+											<span id="thisDateTime1"></span>
+											<div class="echart-title-right-rollright" id="NextMonth1">
+												<img src="img/Triangle1.png" />
+											</div>
+										</div>
+									</div>
+
+									<div class="echart-body">
+										<!--条状图-->
+										<div class="bar-chart">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													脂肪率
+												</div>
+												<div class="bar-chart-header-right">
+													百分比
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border-zf"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in tizhiData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="zhifangShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														45%
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														0%
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+
+										<!--条状图-->
+										<div class="bar-chart bar-chart-thems-pink">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													水分率
+												</div>
+												<div class="bar-chart-header-right">
+													百分比
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<!--<div class="bar-border"></div>-->
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in tizhiData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="shuifenShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+													  100%
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+													  0%
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+                                         
+                                        <!--条状图-->
+										<div class="bar-chart">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													内脏脂肪等级
+												</div>
+												<div class="bar-chart-header-right">
+													等级
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in tizhiData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="neizangdengjiShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														20
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														0
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+                                        
+                                        
+                                        <!--条状图-->
+										<div class="bar-chart bar-chart-thems-pink">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													肌肉量
+												</div>
+												<div class="bar-chart-header-right">
+													千克
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<!--<div class="bar-border"></div>-->
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in tizhiData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="jirouShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														50Kg
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														10Kg
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+                                         
+                                        
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<!--血糖-->
+					<div id="item3mobile" class="mui-slider-item mui-control-content echart-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="health-echart">
+
+										
+									<div class="echart-title">
+										<div class="echart-title-left">
+											近期数据
+										</div>
+										<div class="echart-title-right">
+											<div class="echart-title-right-rollleft" id="LastMonth2">
+												<img src="img/Triangle.png" />
+											</div>
+											<span id="thisDateTime2"></span>
+											<div class="echart-title-right-rollright" id="NextMonth2">
+												<img src="img/Triangle1.png" />
+											</div>
+										</div>
+									</div>
+
+									<div class="echart-body">
+										<!--条状图-->
+										<div class="bar-chart">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													血糖(餐前)
+												</div>
+												<div class="bar-chart-header-right">
+													毫摩尔每升(mmol/L)
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border-cq1"></div>
+												<div class="bar-border-cq2"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in xuetangData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="qXuetangShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														15
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														0
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+
+										<!--条状图-->
+										<div class="bar-chart bar-chart-thems-pink">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													血糖(餐后)
+												</div>
+												<div class="bar-chart-header-right">
+													毫摩尔每升(mmol/L)
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border-ch"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in xuetangData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="hXuetangShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														15
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														0
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+
+									</div>
+
+								
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+					<!--血压-->
+					<div id="item4mobile" class="mui-slider-item mui-control-content echart-content">
+						<div id="scroll4" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+									<div class="health-echart">
+
+										
+									<div class="echart-title">
+										<div class="echart-title-left">
+											近期数据
+										</div>
+										<div class="echart-title-right">
+											<div class="echart-title-right-rollleft" id="LastMonth3">
+												<img src="img/Triangle.png" />
+											</div>
+											<span id="thisDateTime3"></span>
+											<div class="echart-title-right-rollright" id="NextMonth3">
+												<img src="img/Triangle1.png" />
+											</div>
+										</div>
+									</div>
+
+									<div class="echart-body">
+										<!--条状图-->
+										<div class="bar-chart">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													收缩压
+												</div>
+												<div class="bar-chart-header-right">
+													毫米汞柱(mmHg)
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border-ss1"></div>
+												<div class="bar-border-ss2"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in xueyaData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="shousuoShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														230
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														30
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+
+										<!--条状图-->
+										<div class="bar-chart bar-chart-thems-pink">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													舒张压
+												</div>
+												<div class="bar-chart-header-right">
+													毫米汞柱(mmHg)
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border-sz1"></div>
+												<div class="bar-border-sz2"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in xueyaData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="shuzhangShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														120
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														20
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+                                        
+                                        <!--条状图-->
+										<div class="bar-chart">
+											<div class="bar-chart-header">
+												<div class="bar-chart-header-left">
+													脉搏
+												</div>
+												<div class="bar-chart-header-right">
+													次数/分
+												</div>
+											</div>
+											<div class="bar-chart-content">
+
+												<!--标准线-->
+												<div class="bar-border"></div>
+
+												<div class="bar-chart-content-left">
+													<div v-for="items in xueyaData">
+														<div v-if="items == null " class="bar-chart-one bar-chart-height0"></div>
+														<div v-if="items != null " :class="maiboShow(items)"></div>
+													</div>
+
+												</div>
+												<div class="bar-chart-content-right">
+													<div class="bar-chart-content-right-top">
+														200
+													</div>
+													<div class="bar-chart-content-right-bpttom">
+														0
+													</div>
+												</div>
+
+												<div class="bar-chart-timeHr">
+													<span class="month-firstday">1</span>
+													<span>·</span>
+													<span>05</span>
+													<span>·</span>
+													<span>10</span>
+													<span>·</span>
+													<span>15</span>
+													<span>·</span>
+													<span>20</span>
+													<span>·</span>
+													<span>25</span>
+													<span>·</span>
+													<span class="month-lastday"></span>
+												</div>
+
+											</div>
+
+										</div>
+                                        
+                                        
+                                        
+									</div>
+
+								
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<div class="health-main-menu">
+			<div class="main-page" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page  icon-active" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>-->
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+	<!--	<script type="text/javascript" src="js/menu.js"></script>-->
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#group-from",
+				data: {
+					show: '0',
+					weightData: [], //体重数据
+					tizhiData:[],//体脂数据
+					xuetangData:[],//血糖数据
+					xueyaData:[],//血压数据
+					tizhiData: '',
+					xuetangData: '',
+					xueyaData: '',
+					lastday: '', //本月最后一天
+					thisYear: '',
+					thisMonth: '',
+					beforMonthDays:'',//上个月的天数
+
+				},
+				methods: {
+					tizhongShow: function(weight) { //判断是不是体重仪的数据
+						var tizhong = []
+						if(weight != null) {
+							tizhong = weight.content.split(',')[0]; //获取体重数值
+							if(tizhong > 0 && tizhong <= 10) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(tizhong > 10 && tizhong <= 20) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(tizhong > 20 && tizhong <= 30) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(tizhong > 30 && tizhong <= 40) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(tizhong > 40 && tizhong <= 50) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(tizhong > 50 && tizhong <= 60) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(tizhong > 60 && tizhong <= 70) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(tizhong > 70 && tizhong <= 80) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(tizhong > 80 && tizhong <= 90) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(tizhong > 90 && tizhong <= 100) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					BMIShow: function(bmi) { //判断是不是BMI的数据
+						var BMIdata = []
+						if(bmi != null) {
+							BMIdata = bmi.content.split(',')[1]; //获取BMI数值
+
+							if(BMIdata > 0 && BMIdata <= 18) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(BMIdata > 18 && BMIdata <= 19) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(BMIdata > 19 && BMIdata <= 20) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(BMIdata > 20 && BMIdata <= 22) {
+								return 'bar-chart-one bar-chart-height' + 6 + ' bar-chart-warning';
+							}
+							if(BMIdata > 22 && BMIdata <= 26) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(BMIdata > 26 && BMIdata <= 30) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-danger';
+							}
+							if(BMIdata > 30 && BMIdata <= 40) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					zhifangShow: function(zhifang) { //判断是不是脂肪率的数据
+						var zhifanglv = []
+						if(zhifang != null) {
+							zhifanglv = zhifang.content.split(',')[0]; //获取脂肪率数值
+							if(zhifanglv > 0 && zhifanglv <= 4.5) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(zhifanglv > 4.5 && zhifanglv <= 9) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(zhifanglv > 9 && zhifanglv <= 13.5) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(zhifanglv > 13.5 && zhifanglv <= 18) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(zhifanglv > 18 && zhifanglv <= 22.5) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(zhifanglv > 22.5 && zhifanglv <= 27) {
+								return 'bar-chart-one bar-chart-height' + 6+ ' bar-chart-warning';
+							}
+							if(zhifanglv > 27 && zhifanglv <= 31.5) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(zhifanglv > 31.5 && zhifanglv <= 36) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(zhifanglv > 36 && zhifanglv <= 40.5) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(zhifanglv > 40.5 && zhifanglv <= 45) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					shuifenShow: function(shuifen) { //判断是不是水分率的数据
+						var shuifenlv = []
+						if(shuifen != null) {
+							shuifenlv = shuifen.content.split(',')[1]; //获取水分数值
+							if(shuifenlv > 0 && shuifenlv <= 10) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(shuifenlv > 10 && shuifenlv <= 20) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(shuifenlv > 20 && shuifenlv <= 30) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(shuifenlv > 30 && shuifenlv <= 40) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(shuifenlv > 40 && shuifenlv <= 50) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(shuifenlv > 50 && shuifenlv <= 60) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(shuifenlv > 60 && shuifenlv <= 70) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(shuifenlv > 70 && shuifenlv <= 80) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(shuifenlv > 80 && shuifenlv <= 90) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(shuifenlv > 90 && shuifenlv <= 100) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					neizangdengjiShow: function(dengjishu) { //判断是不是内脏等级的数据
+						var dengji = []
+						if(dengjishu != null) {
+							dengji = dengjishu.content.split(',')[2]; //获取内脏等级数值
+							if(dengji > 0 && dengji <= 2) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(dengji > 2 && dengji <= 4) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(dengji > 4 && dengji <= 6) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(dengji > 6 && dengji <= 8) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(dengji > 8 && dengji <= 10) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(dengji > 10 && dengji <= 12) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(dengji > 12 && dengji <= 14) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(dengji > 14 && dengji <= 16) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(dengji > 16 && dengji <= 18) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(dengji > 18 && dengji <= 20) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					jirouShow: function(jirouliang) { //判断是不是肌肉量的数据
+						var jirou = []
+						if(jirouliang != null) {
+							jirou = jirouliang.content.split(',')[3]; //获取肌肉量数值
+							if(jirou > 10 && jirou <= 14) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(jirou > 14 && jirou <= 18) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(jirou > 18 && jirou <= 22) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(jirou > 22 && jirou <= 26) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(jirou > 26 && jirou <= 30) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(jirou > 30 && jirou <= 34) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(jirou > 34 && jirou <= 38) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(jirou > 38 && jirou <= 42) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(jirou > 42 && jirou <= 46) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(jirou > 46 && jirou <= 50) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					qXuetangShow: function(xuetang) { //判断是不是餐前血糖的数据
+						var qxuetang = []
+						if(xuetang != null && xuetang.content.substr(0,1) == '+') {
+							qxuetang = xuetang.content.substr(1); //获取餐前血糖数值
+							if(qxuetang > 0 && qxuetang <= 1.5) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(qxuetang > 1.5 && qxuetang <= 3) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(qxuetang > 3 && qxuetang <= 4.5) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(qxuetang > 4.5 && qxuetang <= 6) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(qxuetang > 6 && qxuetang <= 7.5) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(qxuetang > 7.5 && qxuetang <= 9) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(qxuetang > 9 && qxuetang <= 10.5) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(qxuetang > 10.5 && qxuetang <= 12) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(qxuetang > 12 && qxuetang <= 13.5) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(qxuetang > 13.5 && qxuetang <= 15) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					hXuetangShow: function(xuetang) { //判断是不是餐后血糖的数据
+						var qxuetang = []
+						if(xuetang != null && xuetang.content.substr(0,1) == '-') {
+							qxuetang = xuetang.content.substr(1); //获取餐后血糖数值
+							if(qxuetang > 0 && qxuetang <= 1.5) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(qxuetang > 1.5 && qxuetang <= 3) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(qxuetang > 3 && qxuetang <= 4.5) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(qxuetang > 4.5 && qxuetang <= 6) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(qxuetang > 6 && qxuetang <= 7.5) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(qxuetang > 7.5 && qxuetang <= 9) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(qxuetang > 9 && qxuetang <= 10.5) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(qxuetang > 10.5 && qxuetang <= 12) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(qxuetang > 12 && qxuetang <= 13.5) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(qxuetang > 13.5 && qxuetang <= 15) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					shousuoShow: function(shousuo) { //判断是不是收缩压的数据
+						var shousuoya = []
+						if(shousuo != null) {
+							shousuoya = shousuo.content.split(',')[0]; //获取收缩压数值
+							if(shousuoya > 30 && shousuoya <= 50) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(shousuoya > 50 && shousuoya <= 70) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(shousuoya > 70 && shousuoya <= 90) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(shousuoya > 90 && shousuoya <= 110) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(shousuoya > 110 && shousuoya <= 130) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(shousuoya > 130 && shousuoya <= 150) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(shousuoya > 150 && shousuoya <= 170) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(shousuoya > 170 && shousuoya <= 190) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(shousuoya > 190 && shousuoya <= 210) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(shousuoya > 210 && shousuoya <= 230) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					shuzhangShow: function(shuzhang) { //判断是不是舒张压的数据
+						var shousuoya = []
+						if(shuzhang != null) {
+							shousuoya = shuzhang.content.split(',')[1]; //获取舒张压数值
+							if(shousuoya > 20 && shousuoya <= 30) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(shousuoya > 30 && shousuoya <= 40) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(shousuoya > 40 && shousuoya <= 50) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(shousuoya > 50 && shousuoya <= 60) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(shousuoya > 60 && shousuoya <= 70) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(shousuoya > 70 && shousuoya <= 80) {
+								return 'bar-chart-one bar-chart-height' + 6;
+							}
+							if(shousuoya > 80 && shousuoya <= 90) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(shousuoya > 90 && shousuoya <= 100) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(shousuoya > 100 && shousuoya <= 110) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(shousuoya > 110 && shousuoya <= 120) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					},
+					maiboShow: function(maibo) { //判断是不是脉搏的数据
+						var maiboshu = []
+						if(maibo != null) {
+							maiboshu = maibo.content.split(',')[2]; //获取脉搏数值
+							if(maiboshu > 0 && maiboshu <= 20) {
+								return 'bar-chart-one bar-chart-height' + 1;
+							}
+							if(maiboshu > 20 && maiboshu <= 40) {
+								return 'bar-chart-one bar-chart-height' + 2;
+							}
+							if(maiboshu > 40 && maiboshu <= 60) {
+								return 'bar-chart-one bar-chart-height' + 3;
+							}
+							if(maiboshu > 60 && maiboshu <= 80) {
+								return 'bar-chart-one bar-chart-height' + 4;
+							}
+							if(maiboshu > 80 && maiboshu <= 100) {
+								return 'bar-chart-one bar-chart-height' + 5;
+							}
+							if(maiboshu > 100 && maiboshu <= 120) {
+								return 'bar-chart-one bar-chart-height' + 6 + ' bar-chart-warning';
+							}
+							if(maiboshu > 120 && maiboshu <= 140) {
+								return 'bar-chart-one bar-chart-height' + 7 + ' bar-chart-warning';
+							}
+							if(maiboshu > 140 && maiboshu <= 160) {
+								return 'bar-chart-one bar-chart-height' + 8 + ' bar-chart-warning';
+							}
+							if(maiboshu > 160 && maiboshu <= 180) {
+								return 'bar-chart-one bar-chart-height' + 9 + ' bar-chart-danger';
+							}
+							if(maiboshu > 180 && maiboshu <= 200) {
+								return 'bar-chart-one bar-chart-height' + 10 + ' bar-chart-danger';
+							}
+
+						}
+					}
+				}
+
+			})
+			mui.plusReady(function() {
+
+				//参数：dark - 黑色; light - 白色
+				plus.navigator.setStatusBarStyle('dark');
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//获取webview翻转
+				var item2 = document.getElementById('item2mobile');
+				var item3 = document.getElementById('item3mobile');
+				var item4 = document.getElementById('item4mobile');
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					if(e.detail.slideNumber === 1) {
+						vm.show = '1';
+					} else if(e.detail.slideNumber === 2) {
+						vm.show = '2';
+					} else if(e.detail.slideNumber === 3) {
+						vm.show = '3';
+					}
+				});
+
+				loadUserChart();
+                loadUserChartTZ();
+                loadUserChartXT();
+                loadUserChartXY();
+				loadDay();
+				
+				
+			
+
+			});
+
+			//获取当前页面所选的日期
+			function loadDay() {
+
+				var thisDate = new Date();
+				var thisYear = thisDate.getFullYear();
+				var thisMonth = thisDate.getMonth() + 1;
+
+				vm.thisYear = thisYear;
+				vm.thisMonth = thisMonth;
+
+				document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+				document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+				document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+				document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+				var monthlist = document.getElementsByClassName('month-firstday');
+				if(monthlist) {
+					for(var i = 0; i < monthlist.length; i++) {
+						monthlist[i].innerHTML = vm.thisMonth + '.01';
+					}
+				}
+
+				loadChartDay(thisYear, thisMonth);
+			}
+
+			//获取当月的最后一天
+			function loadChartDay(year, month) {
+				var thismonth = month;
+				var lastDay = new Date(year, month, 0).getDate();
+				vm.lastday = lastDay;
+				console.log('当月最后一天' + lastDay);
+				var daylist = document.getElementsByClassName('month-lastday');
+				if(daylist) {
+					for(var j = 0; j < daylist.length; j++) {
+						daylist[j].innerHTML = thismonth + '.' + lastDay;
+					}
+				}
+
+			}
+
+			//获取最近用户30天数据（体重）
+			function loadUserChart() {
+
+				var self = plus.webview.currentWebview();
+				var userid = self.userid;
+				var usname = self.usname;
+				document.getElementById('uname').innerHTML = usname;
+
+				var params = {
+					userId: userid,
+					deviceTypeId: 1,
+					days: 31
+
+				}
+
+				var data = doGet('/data/findOneDataInDays', params, function(data) {
+					console.log('体重取最近31天数据' + JSON.stringify(data));
+					if(data.code == '0') {
+
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						//拿到最近的数据
+						var recentData = data.data;
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(0, thisDay);
+						//获取还有多少天到月底，补全数据
+						var unStartDay = vm.lastday - thisDay;
+						console.log('本月需要补多少天数据' + unStartDay + '天');
+						for(i = 0; i < unStartDay; i++) {
+							DisplayDate.unshift(null);
+						}
+						console.log('补全数据后的数组' + JSON.stringify(DisplayDate));
+						vm.weightData = DisplayDate;
+					}
+
+				})
+
+			}
+			
+			
+			//获取最近用户30天数据（体脂）
+			function loadUserChartTZ() {
+
+				var self = plus.webview.currentWebview();
+				var userid = self.userid;
+				var usname = self.usname;
+				var params = {
+					userId: userid,
+					deviceTypeId: 3,//体脂仪
+					days: 31
+
+				}
+
+				var data = doGet('/data/findOneDataInDays', params, function(data) {
+					console.log('体脂最近31天数据' + JSON.stringify(data));
+					if(data.code == '0') {
+
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						console.log('当前日期' + thisDay + '号');
+						//拿到最近的数据
+						var recentData = data.data;
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(0, thisDay);
+						console.log('当前月数据' + JSON.stringify(DisplayDate))
+
+						//获取还有多少天到月底，补全数据
+						var unStartDay = vm.lastday - thisDay;
+						console.log('本月需要补多少天数据' + unStartDay + '天');
+						for(i = 0; i < unStartDay; i++) {
+							DisplayDate.unshift(null);
+						}
+						console.log('补全数据后的数组' + JSON.stringify(DisplayDate));
+						vm.tizhiData = DisplayDate;
+					}
+
+				})
+
+			}
+			
+			//获取最近用户30天数据（血糖）
+			function loadUserChartXT() {
+
+				var self = plus.webview.currentWebview();
+				var userid = self.userid;
+				var usname = self.usname;
+				var params = {
+					userId: userid,
+					deviceTypeId: 4,//血糖测试仪
+					days: 31
+
+				}
+
+				var data = doGet('/data/findOneDataInDays', params, function(data) {
+					console.log('血糖最近31天数据' + JSON.stringify(data));
+					if(data.code == '0') {
+
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						console.log('当前日期' + thisDay + '号');
+						//拿到最近的数据
+						var recentData = data.data;
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(0, thisDay);
+						console.log('当前月数据' + JSON.stringify(DisplayDate))
+
+						//获取还有多少天到月底，补全数据
+						var unStartDay = vm.lastday - thisDay;
+						console.log('本月需要补多少天数据' + unStartDay + '天');
+						for(i = 0; i < unStartDay; i++) {
+							DisplayDate.unshift(null);
+						}
+						console.log('补全数据后的数组' + JSON.stringify(DisplayDate));
+						vm.xuetangData = DisplayDate;
+					}
+
+				})
+
+			}
+			
+			//获取最近用户30天数据（血压）
+			function loadUserChartXY() {
+
+				var self = plus.webview.currentWebview();
+				var userid = self.userid;
+				var usname = self.usname;
+				var params = {
+					userId: userid,
+					deviceTypeId: 5,//血压测试仪
+					days: 31
+
+				}
+
+				var data = doGet('/data/findOneDataInDays', params, function(data) {
+					console.log('血压最近31天数据' + JSON.stringify(data));
+					if(data.code == '0') {
+
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						console.log('当前日期' + thisDay + '号');
+						//拿到最近的数据
+						var recentData = data.data;
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(0, thisDay);
+						console.log('当前月数据' + JSON.stringify(DisplayDate))
+
+						//获取还有多少天到月底，补全数据
+						var unStartDay = vm.lastday - thisDay;
+						console.log('本月需要补多少天数据' + unStartDay + '天');
+						for(i = 0; i < unStartDay; i++) {
+							DisplayDate.unshift(null);
+						}
+						console.log('补全数据后的数组' + JSON.stringify(DisplayDate));
+						vm.xueyaData = DisplayDate;
+					}
+
+				})
+
+			}
+			
+			
+
+			//查看历史数据
+			document.getElementById('history').addEventListener('tap', function() {
+				var self = plus.webview.currentWebview();
+				var userid = self.userid;
+				var usname = self.usname;
+				mui.openWindow({
+					url: 'familyHealthOne.html',
+					id: 'familyHealthOne',
+					extras: {
+						userid: userid,
+						usname: usname
+					}
+				})
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				//参数：dark - 黑色; light - 白色
+				//plus.navigator.setStatusBarStyle('light');
+				var opener = plus.webview.getWebviewById("familyHealthGroup");
+				mui.fire(opener, 'clearTitle');
+				mui.back();
+			});
+			
+			//物理键返回也会执行
+			var old_back = mui.back;
+                mui.back = function() {
+                 // 获取目标口窗口对象
+                 var opener = plus.webview.getWebviewById("familyHealthGroup");
+				 mui.fire(opener, 'clearTitle');
+                    // 执行关闭
+                   old_back();
+               };
+
+
+			
+
+			//记录点击次数
+			var lastMonthTimes = 0;
+			//上个月数据（体重）
+			document.getElementById('LastMonth').addEventListener('tap', function() {
+
+				
+				//下个月箭头显示
+				document.getElementById('NextMonth').style.visibility = 'visible';
+				document.getElementById('NextMonth1').style.visibility = 'visible';
+				document.getElementById('NextMonth2').style.visibility = 'visible';
+				document.getElementById('NextMonth3').style.visibility = 'visible';
+				//只能往前翻3次
+				if(lastMonthTimes < 2) {
+					lastMonthTimes++;
+					if(vm.thisMonth == 1) {
+						vm.thisYear = vm.thisYear - 1;
+						vm.thisMonth = 12;
+					} else {
+						vm.thisMonth = vm.thisMonth - 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    console.log(lastMonthTimes);
+                    loadMonthData();
+                    
+				} else {
+
+					document.getElementById('LastMonth').style.visibility = 'hidden';
+					document.getElementById('LastMonth1').style.visibility = 'hidden';
+					document.getElementById('LastMonth2').style.visibility = 'hidden';
+					document.getElementById('LastMonth3').style.visibility = 'hidden';
+					mui.toast('只能查看最近三个月数据');
+
+				}
+
+			});
+			
+			//上个月数据（体脂）
+			document.getElementById('LastMonth1').addEventListener('tap', function() {
+
+				
+				//下个月箭头显示
+				document.getElementById('NextMonth').style.visibility = 'visible';
+				document.getElementById('NextMonth1').style.visibility = 'visible';
+				document.getElementById('NextMonth2').style.visibility = 'visible';
+				document.getElementById('NextMonth3').style.visibility = 'visible';
+				//只能往前翻3次
+				if(lastMonthTimes < 2) {
+					lastMonthTimes++;
+					if(vm.thisMonth == 1) {
+						vm.thisYear = vm.thisYear - 1;
+						vm.thisMonth = 12;
+					} else {
+						vm.thisMonth = vm.thisMonth - 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    console.log(lastMonthTimes);
+                    loadMonthData();
+                    
+				} else {
+                    document.getElementById('LastMonth').style.visibility = 'hidden';
+					document.getElementById('LastMonth1').style.visibility = 'hidden';
+					document.getElementById('LastMonth2').style.visibility = 'hidden';
+					document.getElementById('LastMonth3').style.visibility = 'hidden';
+					mui.toast('只能查看最近三个月数据');
+
+				}
+
+			});
+			
+			//上个月数据（血糖）
+			document.getElementById('LastMonth2').addEventListener('tap', function() {
+
+				
+				//下个月箭头显示
+				document.getElementById('NextMonth').style.visibility = 'visible';
+				document.getElementById('NextMonth1').style.visibility = 'visible';
+				document.getElementById('NextMonth2').style.visibility = 'visible';
+				document.getElementById('NextMonth3').style.visibility = 'visible';
+				//只能往前翻3次
+				if(lastMonthTimes < 2) {
+					lastMonthTimes++;
+					if(vm.thisMonth == 1) {
+						vm.thisYear = vm.thisYear - 1;
+						vm.thisMonth = 12;
+					} else {
+						vm.thisMonth = vm.thisMonth - 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    console.log(lastMonthTimes);
+                    loadMonthData();
+                    
+				} else {
+                    document.getElementById('LastMonth').style.visibility = 'hidden';
+					document.getElementById('LastMonth1').style.visibility = 'hidden';
+					document.getElementById('LastMonth2').style.visibility = 'hidden';
+					document.getElementById('LastMonth3').style.visibility = 'hidden';
+					mui.toast('只能查看最近三个月数据');
+
+				}
+
+			});
+			
+			
+			//上个月数据（血压）
+			document.getElementById('LastMonth3').addEventListener('tap', function() {
+
+				
+				//下个月箭头显示
+				document.getElementById('NextMonth').style.visibility = 'visible';
+				document.getElementById('NextMonth1').style.visibility = 'visible';
+				document.getElementById('NextMonth2').style.visibility = 'visible';
+				document.getElementById('NextMonth3').style.visibility = 'visible';
+				//只能往前翻3次
+				if(lastMonthTimes < 2) {
+					lastMonthTimes++;
+					if(vm.thisMonth == 1) {
+						vm.thisYear = vm.thisYear - 1;
+						vm.thisMonth = 12;
+					} else {
+						vm.thisMonth = vm.thisMonth - 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    console.log(lastMonthTimes);
+                    loadMonthData();
+                    
+				} else {
+                    document.getElementById('LastMonth').style.visibility = 'hidden';
+					document.getElementById('LastMonth1').style.visibility = 'hidden';
+					document.getElementById('LastMonth2').style.visibility = 'hidden';
+					document.getElementById('LastMonth3').style.visibility = 'hidden';
+					mui.toast('只能查看最近三个月数据');
+
+				}
+
+			});
+
+			//下个月数据（体重）
+			document.getElementById('NextMonth').addEventListener('tap', function() {
+
+				document.getElementById('LastMonth').style.visibility = 'visible';
+				document.getElementById('LastMonth1').style.visibility = 'visible';
+				document.getElementById('LastMonth2').style.visibility = 'visible';
+				document.getElementById('LastMonth3').style.visibility = 'visible';
+				//只能往后翻3次
+				if(lastMonthTimes < 1) {
+					document.getElementById('NextMonth').style.visibility = 'hidden';
+					document.getElementById('NextMonth1').style.visibility = 'hidden';
+					document.getElementById('NextMonth2').style.visibility = 'hidden';
+					document.getElementById('NextMonth3').style.visibility = 'hidden';
+					mui.toast('已经是最新数据了！');
+
+				} else {
+
+					lastMonthTimes--;
+					console.log(lastMonthTimes)
+					if(vm.thisMonth == 12) {
+						vm.thisYear = vm.thisYear + 1;
+						vm.thisMonth = 1;
+					} else {
+						vm.thisMonth = vm.thisMonth + 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    loadMonthData();
+				}
+
+			});
+			
+			
+				//下个月数据（体脂）
+			document.getElementById('NextMonth1').addEventListener('tap', function() {
+                document.getElementById('LastMonth').style.visibility = 'visible';
+				document.getElementById('LastMonth1').style.visibility = 'visible';
+				document.getElementById('LastMonth2').style.visibility = 'visible';
+				document.getElementById('LastMonth3').style.visibility = 'visible';
+				//只能往后翻3次
+				if(lastMonthTimes < 1) {
+					document.getElementById('NextMonth').style.visibility = 'hidden';
+					document.getElementById('NextMonth1').style.visibility = 'hidden';
+					document.getElementById('NextMonth2').style.visibility = 'hidden';
+					document.getElementById('NextMonth3').style.visibility = 'hidden';
+					mui.toast('已经是最新数据了！');
+
+				} else {
+
+					lastMonthTimes--;
+					console.log(lastMonthTimes)
+					if(vm.thisMonth == 12) {
+						vm.thisYear = vm.thisYear + 1;
+						vm.thisMonth = 1;
+					} else {
+						vm.thisMonth = vm.thisMonth + 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    loadMonthData();
+				}
+
+			});
+			
+			
+				//下个月数据（血糖）
+			document.getElementById('NextMonth2').addEventListener('tap', function() {
+                document.getElementById('LastMonth').style.visibility = 'visible';
+				document.getElementById('LastMonth1').style.visibility = 'visible';
+				document.getElementById('LastMonth2').style.visibility = 'visible';
+				document.getElementById('LastMonth3').style.visibility = 'visible';
+				//只能往后翻3次
+				if(lastMonthTimes < 1) {
+					document.getElementById('NextMonth').style.visibility = 'hidden';
+					document.getElementById('NextMonth1').style.visibility = 'hidden';
+					document.getElementById('NextMonth2').style.visibility = 'hidden';
+					document.getElementById('NextMonth3').style.visibility = 'hidden';
+					mui.toast('已经是最新数据了！');
+
+				} else {
+
+					lastMonthTimes--;
+					console.log(lastMonthTimes)
+					if(vm.thisMonth == 12) {
+						vm.thisYear = vm.thisYear + 1;
+						vm.thisMonth = 1;
+					} else {
+						vm.thisMonth = vm.thisMonth + 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    loadMonthData();
+				}
+
+			});
+			
+				//下个月数据（血压）
+			document.getElementById('NextMonth3').addEventListener('tap', function() {
+                document.getElementById('LastMonth').style.visibility = 'visible';
+				document.getElementById('LastMonth1').style.visibility = 'visible';
+				document.getElementById('LastMonth2').style.visibility = 'visible';
+				document.getElementById('LastMonth3').style.visibility = 'visible';
+				//只能往后翻3次
+				if(lastMonthTimes < 1) {
+					document.getElementById('NextMonth').style.visibility = 'hidden';
+					document.getElementById('NextMonth1').style.visibility = 'hidden';
+					document.getElementById('NextMonth2').style.visibility = 'hidden';
+					document.getElementById('NextMonth3').style.visibility = 'hidden';
+					mui.toast('已经是最新数据了！');
+
+				} else {
+
+					lastMonthTimes--;
+					console.log(lastMonthTimes)
+					if(vm.thisMonth == 12) {
+						vm.thisYear = vm.thisYear + 1;
+						vm.thisMonth = 1;
+					} else {
+						vm.thisMonth = vm.thisMonth + 1;
+					}
+
+					var monthlist = document.getElementsByClassName('month-firstday');
+					if(monthlist) {
+						for(var i = 0; i < monthlist.length; i++) {
+							monthlist[i].innerHTML = vm.thisMonth + '.01';
+						}
+					}
+					loadChartDay(vm.thisYear, vm.thisMonth);
+					document.getElementById('thisDateTime').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime1').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime2').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+					document.getElementById('thisDateTime3').innerHTML = vm.thisYear + '年' + vm.thisMonth + '月';
+                    loadMonthData();
+				}
+
+			});
+			
+			//截取数据并显示当前页的月数据
+			function loadMonthData() {
+				var self = plus.webview.currentWebview();
+				var userid = self.userid;
+				var usname = self.usname;
+                
+                //体重
+				var params = {
+					userId: userid,
+					deviceTypeId: 1,//设备编号
+					days: 92 //三个月最多92天
+
+				}
+				
+				//体脂
+				var paramsTZ = {
+					userId: userid,
+					deviceTypeId: 3,//设备编号
+					days: 92 //三个月最多92天
+
+				}
+				
+				//血糖
+				var paramsXT = {
+					userId: userid,
+					deviceTypeId: 4,//设备编号
+					days: 92 //三个月最多92天
+
+				}
+				
+				//血压
+				var paramsXY = {
+					userId: userid,
+					deviceTypeId: 5,//设备编号
+					days: 92 //三个月最多92天
+
+				}
+				
+			    //获取最近三个月每个月的天数
+			    var thisDate = new Date();
+			    var thisYear = thisDate.getFullYear();
+				var benMonth = thisDate.getMonth() + 1;//本月
+				var lastMonth = 0;//上个月
+				var lastlastMonth = 0;//上上个月
+				if(benMonth == 1){
+					thisYear = thisYear -1;
+					lastMonth =12;
+					lastlastMonth = 11;
+				}else if(benMonth == 2){
+					thisYear = thisYear -1;
+					lastMonth =1;
+					lastlastMonth = 12;
+				}else{
+					lastMonth = benMonth-1;
+					lastlastMonth = lastMonth-1;
+				}
+				
+				//var thisMonthDay = new Date(year, benMonth, 0).getDate();//本月每天天数
+				var lastMonthDay = new Date(thisYear,lastMonth, 0).getDate();//上个月的天数
+				var lastlastMonthDay = new Date(thisYear,lastlastMonth, 0).getDate();//上上个月的天数
+				
+				console.log('上个月有'+lastMonthDay);
+				console.log('上上个月有'+lastlastMonthDay);
+				
+				//当前月数据显示
+				if(lastMonthTimes == 0){
+					
+					loadUserChart();
+					loadUserChartTZ();
+					loadUserChartXT();
+					loadUserChartXY();
+					console.log('获取当前月数据');
+					
+				}else if(lastMonthTimes == 1){//截取上一个月的数据
+					
+					
+					//体重数据
+					var data = doGet('/data/findOneDataInDays', params, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						//截取当月1号到上个月1号的数据
+						var DisplayDate = recentData.slice(thisDay,thisDay+lastMonthDay);
+                        console.log('获取上个月数据'+JSON.stringify(DisplayDate));
+						vm.weightData = DisplayDate;
+					}
+
+				})
+				
+				
+				//体脂数据
+				var data = doGet('/data/findOneDataInDays', paramsTZ, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						//截取当月1号到上个月1号的数据
+						var DisplayDate = recentData.slice(thisDay,thisDay+lastMonthDay);
+                        console.log('获取上个月数据'+JSON.stringify(DisplayDate));
+						vm.tizhiData = DisplayDate;
+					}
+
+				})	
+				
+				//血糖数据
+				var data = doGet('/data/findOneDataInDays', paramsXT, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						//截取当月1号到上个月1号的数据
+						var DisplayDate = recentData.slice(thisDay,thisDay+lastMonthDay);
+                        console.log('获取上个月数据'+JSON.stringify(DisplayDate));
+						vm.xuetangData = DisplayDate;
+					}
+
+				})
+				
+				//血压数据
+				var data = doGet('/data/findOneDataInDays', paramsXY, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						//截取当月1号到上个月1号的数据
+						var DisplayDate = recentData.slice(thisDay,thisDay+lastMonthDay);
+                        console.log('获取上个月数据'+JSON.stringify(DisplayDate));
+						vm.xueyaData = DisplayDate;
+					}
+
+				})
+					
+					
+				}else if(lastMonthTimes == 2){//截取上上个月的数据
+					
+					//体重数据
+					var data = doGet('/data/findOneDataInDays', params, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						console.log('当前日期' + thisDay + '号');
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(thisDay+lastMonthDay,thisDay+lastMonthDay+lastlastMonthDay);
+                        console.log('获取上上个月数据'+JSON.stringify(DisplayDate));
+						vm.weightData = DisplayDate;
+					}
+
+				})
+					
+					//体脂数据
+					var data = doGet('/data/findOneDataInDays', paramsTZ, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						console.log('当前日期' + thisDay + '号');
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(thisDay+lastMonthDay,thisDay+lastMonthDay+lastlastMonthDay);
+                        console.log('获取上上个月数据'+JSON.stringify(DisplayDate));
+						vm.tizhiData = DisplayDate;
+					}
+
+				})
+					
+					
+					//血糖数据
+					var data = doGet('/data/findOneDataInDays', paramsXT, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						console.log('当前日期' + thisDay + '号');
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(thisDay+lastMonthDay,thisDay+lastMonthDay+lastlastMonthDay);
+                        console.log('获取上上个月数据'+JSON.stringify(DisplayDate));
+						vm.xuetangData = DisplayDate;
+					}
+
+				})
+					
+					//血压数据
+					var data = doGet('/data/findOneDataInDays', paramsXY, function(data) {
+					if(data.code == '0') {
+						//拿到数据
+						var recentData = data.data;
+						
+						//先确定今天的日期
+						var myDate = new Date();
+						var thisDay = myDate.getDate();
+						console.log('当前日期' + thisDay + '号');
+						//截取当前日期到1号的数据
+						var DisplayDate = recentData.slice(thisDay+lastMonthDay,thisDay+lastMonthDay+lastlastMonthDay);
+                        console.log('获取上上个月数据'+JSON.stringify(DisplayDate));
+						vm.xueyaData = DisplayDate;
+					}
+
+				})
+					
+					
+					
+					
+				}
+               
+			
+
+			}
+			
+			
+		</script>
+	</body>
+
+</html>

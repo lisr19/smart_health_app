@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<!--本页面弃用-->
+	<head>
+		<meta charset="UTF-8">
+		<title>我的页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<!--<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">-->
+				<div class="header" id="myself-form" style="background-image: url(img/background.svg);background-size:cover;height: 3.16rem;">
+					<div class="header-left" style="padding-top: 0.43rem;" id="config">
+						<span>设置</span>
+					</div>
+					<div class="header-center" style="border-bottom: none;">
+						
+					</div>
+					<div class="header-right">
+						<img src="img/newtip.png" />
+					</div>
+					<!--清除浮动-->
+					<div style="clear: both;"></div>
+					<!--个人信息-->
+                    <div class="my-info">
+                    	<div class="my-info-left" id="myselfEdit">
+                    		<img v-if="touxiangimg == 1" src="img/woman.png" />
+                    		<img v-if="touxiangimg == 2" src="img/mans.png" />
+                    		
+                    		<img v-if="touxiangimg == 3" src="img/girls.png" />
+                    		<img v-if="touxiangimg == 4" src="img/boys.png" />
+                    		<span id="name"></span>
+                    	</div>
+                    	<div class="my-info-right">
+                    		<img src="img/QRcode.png" id="qrcode-img" />
+                    	</div>
+                    </div>
+				</div>
+				<div class="my-infoXI" id="infoXI">
+					<div class="my-infoXI-one">
+					<span>0</span>	我的预约
+					</div>
+					<div class="my-infoXI-one">
+						<span>0</span> 我的医师
+					</div>
+					<div class="my-infoXI-one">
+						<span>0</span> 我的报告
+					</div>
+				</div>
+				<div class="min-br"></div>
+                 <div class="my-order" id="order">
+                 	<div class="my-order-header">
+                 		<div class="my-order-header-left">我的订单</div>
+                 		<div class="my-order-header-right">查看更多订单
+                 		<img src="img/right-tip.png" />
+                 		</div>
+                 	</div>
+                 	<div class="my-order-content">
+                 		<div class="my-order-one">
+                 			<img src="img/fukuang.png" />
+                 			<span>待付款</span>
+                 		</div>
+                 		<div class="my-order-one">
+                 			<img src="img/shouhuo.png" />
+                 			<span>待收货</span>
+                 		</div>
+                 		<div class="my-order-one">
+                 			<img src="img/pingjia.png" />
+                 			<span>待评价</span>
+                 		</div>
+                 		<div class="my-order-one">
+                 			<img src="img/shouhou.png" />
+                 			<span>售后</span>
+                 		</div>
+                 	</div>
+                 </div>
+                 <div class="min-br"></div>
+			       <!--<div class="my-order">
+                 	<div class="my-order-header">
+                 		<div class="my-order-header-left">必备工具</div>
+                 		<div class="my-order-header-right">查看全部工具
+                 		<img src="img/right-tip.png" />
+                 		</div>
+                 	</div>
+                 	<div class="my-order-content">
+                 		<div class="my-order-one">
+                 			<img src="img/zuji.png" />
+                 			<span>我的足迹</span>
+                 		</div>
+                 		<div class="my-order-one">
+                 			<img src="img/shoucang.png" />
+                 			<span>我的收藏</span>
+                 		</div>
+                 		<div class="my-order-one">
+                 			<img src="img/pingjia2.png" />
+                 			<span>我的评价</span>
+                 		</div>
+                 		<div class="my-order-one">
+                 			<img src="img/kefu.png" />
+                 			<span>我的客服</span>
+                 		</div>
+                 	</div>
+                 </div>-->
+				
+				<div class="min-br" style="height: 4.6rem;"></div>
+
+			<!--</div>
+		</div>-->
+		<div class="health-main-menu">
+			<div class="main-page" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>发现</span>
+			</div>
+			<div class="my-page  icon-active" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/menu.js" ></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el:'#myself-form',
+				data:{
+				  touxiangimg:''
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+//				mui('.mui-scroll-wrapper').scroll({
+//					scrollY: true,
+//					deceleration: 0.0003,
+//					indicators: false
+//				});
+
+			
+
+				//监听设置
+				document.getElementById('config').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'myself-config.html',
+						id: 'myself-config'
+					})
+				});
+				
+				//监听个人信息
+				document.getElementById('myselfEdit').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'myinformation.html',
+						id: 'myinformation'
+					})
+				});
+				
+				//监听本地页面
+				window.addEventListener('clearMyInfoAll', function(evt) {
+				location.reload();
+			     });
+				
+				//二维码
+				document.getElementById('qrcode-img').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'myselfCode.html',
+						id: 'myselfCode'
+					})
+				});
+				
+				
+				//监听我的订单（暂不开放）...
+				document.getElementById('order').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'buildTip.html',
+						id: 'buildTip'
+					})
+				});
+				
+				//监听我的预约（暂不开放）...
+				document.getElementById('infoXI').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'buildTip.html',
+						id: 'buildTip'
+					})
+				});
+				
+
+              var username = localStorage.getItem('name');
+              if(username == ''){
+              	document.getElementById('name').innerHTML = '暂无名字，请完善';
+              }else{
+              	  document.getElementById('name').innerHTML = username;
+
+              }
+              
+              getTouxiang();
+            
+		});
+		
+		   //根据年龄性别判断头像
+		   function getTouxiang(){
+             var myDate = new Date();
+			 var thisYear = myDate.getFullYear();
+			 var year = localStorage.getItem('year');
+			 var sex = localStorage.getItem('sex');
+			 var nianlin = thisYear-year;
+			 if(nianlin > 18 && sex == 3){//女人
+			     vm.touxiangimg = 1;
+			 }
+			 if(nianlin > 18 && sex != 3){//男人
+			 	vm.touxiangimg = 2;
+			 }
+			 if(nianlin < 18 && sex == 3){//小女孩
+			 	vm.touxiangimg = 3;
+			 }
+			 if(nianlin < 18 && sex != 3){//小男孩
+			 	vm.touxiangimg = 4;
+			 }
+			 
+            } 
+            
+            
+		
+		   
+		</script>
+	</body>
+
+</html>

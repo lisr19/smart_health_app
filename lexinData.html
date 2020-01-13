@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>个人信息编辑页面</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<style>
+
+		</style>
+	</head>
+
+	<body style="background: #EEEEEE;">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right-center">
+					乐心体脂秤
+				</div>
+				<div class="baike-header-top-right">
+					<div class="lianjieButton">
+						<div id="openBlueTooth" class="mui-switch mui-switch-mini" style="height:0.28rem;width:0.6rem">
+							<div class="mui-switch-handle" style="height:0.23rem;width:0.23rem"></div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.41rem;" id="my-form">
+			<div class="mui-scroll">
+				<!--主要内容-->
+				<div class="lexin-header">
+					<div class="lexin-title">
+						<img src="img/user.png" /> 身体成分
+					</div>
+					<div class="lexin-header-content">
+						<div class="lexin-header-content-left">
+							模特型
+						</div>
+						<div class="lexin-header-content-right">
+							83<span>分</span>
+						</div>
+					</div>
+				</div>
+				<!--乐心数据-->
+				<div class="lexin-option">
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							BMI
+						</div>
+						<div class="lexin-option-one-data">
+							19.0
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							身体年龄
+						</div>
+						<div class="lexin-option-one-data">
+							21<span>岁</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>年轻</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							内脏脂肪等级
+						</div>
+						<div class="lexin-option-one-data">
+							5
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							基础代谢
+						</div>
+						<div class="lexin-option-one-data">
+							1406<span>大卡</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>偏低</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="lexin-option">
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							脂肪率
+						</div>
+						<div class="lexin-option-one-data">
+							12.5<span>%</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							肌肉率
+						</div>
+						<div class="lexin-option-one-data">
+							82.9<span>%</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>年轻</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							蛋白质
+						</div>
+						<div class="lexin-option-one-data">
+							25.4<span>%</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							水分率
+						</div>
+						<div class="lexin-option-one-data">
+							57.5<span>%</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>偏低</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="lexin-option">
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							脂肪量
+						</div>
+						<div class="lexin-option-one-data">
+							6.9<span>kg</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							肌肉量
+						</div>
+						<div class="lexin-option-one-data">
+							45.5<span>kg</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>年轻</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							骨骼肌
+						</div>
+						<div class="lexin-option-one-data">
+							23.6<span>kg</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							骨量
+						</div>
+						<div class="lexin-option-one-data">
+							2.5<span>kg</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>偏低</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="lexin-option">
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							脂肪控制
+						</div>
+						<div class="lexin-option-one-data">
+							+0.2<span>kg</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							肌肉控制
+						</div>
+						<div class="lexin-option-one-data">
+							0<span>kg</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>年轻</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+							去脂体重
+						</div>
+						<div class="lexin-option-one-data">
+							47.9<span>kg</span>
+						</div>
+						<div class="lexin-option-tip">
+							<span>理想</span>
+						</div>
+					</div>
+
+					<div class="lexin-option-one">
+						<div class="lexin-option-one-title">
+
+						</div>
+						<div class="lexin-option-one-data">
+							<img src="img/right-tip.png" />
+						</div>
+						<div class="lexin-option-tip">
+
+						</div>
+					</div>
+				</div>
+
+				<div class="lexin-tip">
+					<img src="img/activity.png" />
+					<span>已经连续4天未记录体重，要坚持不能偷懒</span>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#my-form",
+				data: {
+					sex: '',
+				}
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+				 //默认链接状态是关闭 
+			var isManual = false;
+			//开启蓝牙
+			document.getElementById('openBlueTooth').addEventListener('tap', function() {
+
+				main = plus.android.runtimeMainActivity();
+				Context = plus.android.importClass("android.content.Context");
+				BManager = main.getSystemService(Context.BLUETOOTH_SERVICE);
+				plus.android.importClass(BManager); //引入相关的method函数
+				BAdapter = BManager.getAdapter();
+				plus.android.importClass(BAdapter); //引入相关的method函数，这样之后才会有isEnabled函数支持
+
+				if(isManual == true) {
+					console.log('关闭蓝牙');
+					isManual = false;
+					if(BAdapter.isEnabled()) {
+						BAdapter.disable();
+					}
+				} else {
+					console.log('开启蓝牙');
+					isManual = true;
+					if(!BAdapter.isEnabled()) {
+						BAdapter.enable();
+					}
+					//  调用拓展插件的方法，接收Native的返回结果
+//					window.plus.xxx.onCreate(function(args) {
+//						var data = JSON.parse(args);
+//
+//					}, function(code) {
+//						mui.toast(code);
+//					});
+				}
+
+			});
+
+			});
+
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+             
+           
+		</script>
+	</body>
+
+</html>

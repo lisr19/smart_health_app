@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧健康app</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+         <div id="diseaseList-from">
+		<div class="header" style="background-image: url(img/background.svg);background-size:cover;height: 1.4rem;">
+			<div class="baike-header">
+				<div class="baike-header-left" id="back">
+					<img src="img/return.png" />
+				</div>
+				<div class="baike-header-right">
+					{{searchKey}}
+				</div>
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper" style="margin-top: 1.4rem;" >
+			<div class="mui-scroll">
+				<!--主内容区-->
+				
+				<div v-for="(item,index) in zhongchengyaoList" :diseaseInfo='index'  class="disease-item">
+					<div class="disease-title">{{item.name}}</div>
+					<div class="disease-comment">{{item.introduction}}</div>
+					<div class="disease-more">查看详细内容></div>
+				</div>
+				
+				<!--主内容区结束-->
+				<div style="width: 7.5rem;height: 0.6rem;"></div>
+				 <div class="fool"><span onclick="readmore();loadYaopinResult();" >点击查看更多</span></div>
+				 <div style="width: 7.5rem;height: 0.8rem;"></div>
+			</div>
+		</div>
+		</div>
+		
+		
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script>
+			mui.init();
+			var vm = new Vue({
+				el: '#diseaseList-from',
+				data: {
+					zhongchengyaoList: '',
+					limit: 8,
+					searchKey: ''
+
+				}
+			})
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				//监听返回
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+
+				//查看疾病详情
+				mui(".mui-scroll").on('tap', '.disease-item', function() {  
+				   
+				   var thisDisease = this;
+				   
+				   var diseaseInfo = thisDisease.getAttribute('diseaseInfo');
+				   				   				   
+				   localStorage.setItem('diseaseInfo',JSON.stringify(vm.zhongchengyaoList[diseaseInfo]));
+				   				   
+				   mui.openWindow({
+				   	url:'diseaseMessage.html',
+				   	id:'diseaseMessage',
+				   })
+				   
+				
+				});
+
+				loadYaopinResult();
+
+			});
+
+			function readmore() {
+
+				vm.limit = vm.limit + 8;
+				loadYaopinResult();
+
+			}
+			
+			
+
+			//查询结果
+			function loadYaopinResult() {
+
+				var self = plus.webview.currentWebview();
+				var searchValue = self.searchValue;
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				mui.ajax(baseUrl + '/disease/findList', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						page: 1,
+						limit: vm.limit,
+						name: searchValue
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+
+						var dataJson = data.data.data;
+						vm.searchKey = searchValue;
+						if(dataJson == '' || dataJson == null){
+							mui.toast('没找到相关信息！');
+						}else{
+							vm.zhongchengyaoList = dataJson;
+						}
+						
+						
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+		</script>
+	</body>
+
+</html>

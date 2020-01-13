@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="UTF-8">
+		<title>专家咨询科室页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="header" style="background-image: url(img/background.svg);background-size:cover;height:2.2rem;">
+                    <div class="shop-header">
+                    	<div class="shop-header-left">
+                    		<img src="img/search.png" />
+                    	</div>
+                    	<div class="shop-header-right">
+                    		<div class="mall-header-search">
+							<input placeholder="请输入 药品/疾病 进行搜索"/>
+							<img src="img/Shape.png" />
+						</div>
+                    	</div>
+                    </div>
+                    <!--商品分类-->
+                    <div class="shop-type">
+                    	<span class="shop-type-active">常见疾病</span>
+                    	<span>女性疾病</span>
+                    	<span>男性疾病</span>
+                    	<span>儿童疾病</span>
+                    	<span>老人疾病</span>  	
+                    </div>       
+				</div>
+				<!--主功能区-->
+			    <div class="consult-label-content">
+			    	<!--常见疾病标签-->
+			    	<div class="consult-label">高血压</div>
+			    	<div class="consult-label">糖尿病</div>
+			    	<div class="consult-label">高血脂</div>
+			    	<div class="consult-label">冠心病</div>
+			    	<div class="consult-label">支气管炎</div>
+			    	<div class="consult-label">急性呼吸道感染</div>
+			    	
+			    </div>
+			    
+			    	<!--主内容区-->
+			    <div class="consult-title">
+			    	按科室找医生
+			    	<span id="quanbu">查看全部</span>
+			    </div>
+				<div class="health-check-content" style="margin-top: 0.2rem;">
+					<div class="health-check-one">
+						<div class="health-check-one-left">
+							<img src="img/dermatology.png" />
+						</div>
+						<div class="health-check-one-center">
+							<div class="health-check-one-center-title">
+								皮肤科
+							</div>
+							<p>皮肤科属于外科，主要治疗各种皮肤病。</p>
+						</div>
+						<div class="health-check-one-right">
+							<button id="xueya">查看</button>
+						</div>
+					</div>	
+					
+					<div class="health-check-one">
+						<div class="health-check-one-left">
+							<img src="img/dental.png" />
+						</div>
+						<div class="health-check-one-center">
+							<div class="health-check-one-center-title">
+								口腔科
+							</div>
+							<p>口腔科主要治疗口腔疾病、牙齿、牙病变等。</p>
+						</div>
+						<div class="health-check-one-right">
+							<button>查看</button>
+						</div>
+					</div>	
+					
+					<div class="health-check-one">
+						<div class="health-check-one-left">
+							<img src="img/psychology.png" />
+						</div>
+						<div class="health-check-one-center">
+							<div class="health-check-one-center-title">
+								心理咨询
+							</div>
+							<p>心理咨询是指对求询者进行相应的心理治疗。</p>
+						</div>
+						<div class="health-check-one-right">
+							<button>进入</button>
+						</div>
+					</div>
+					<div class="health-check-one">
+						<div class="health-check-one-left">
+							<img src="img/Rectangle 142.png" />
+						</div>
+						<div class="health-check-one-center">
+							<div class="health-check-one-center-title">
+								体重检测
+							</div>
+							<p>帮助你记录你每天的体重并计算体脂比。</p>
+						</div>
+						<div class="health-check-one-right">
+							<button>查看</button>
+						</div>
+					</div>	
+				</div>
+			    <div style="width: 7.5rem;height: 1rem;"></div>
+			    
+			    
+			</div>
+		</div>
+		<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shouye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-xin"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-shangcheng"></use>
+				</svg>
+				<span>商城</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				
+				
+				
+				
+				//监听专家详情
+				document.getElementById('quanbu').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'consultList.html',
+						id: 'consultList'
+					})
+				});
+				
+			});
+		</script>
+	</body>
+
+</html>

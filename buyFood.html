@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购买食材</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/buyFood.css"/>
+	</head>
+	<body>
+		<div id="app">
+			<!--头部-->
+			<header>
+				<!--返回按钮-->
+				<div id="back" class="return"><img src="img/meals/buyFood-return.png"/></div>
+				<!--标题-->
+				<p>购买食材</p>
+			</header>
+			<!--主要内容-->
+			<div class="content">
+				<!--个人信息-->
+				<div class="userMsg">
+					<!--信息展示-->
+					<div class="userMsgContent">
+						<div class="nameAndPhone flex">
+							<span>收货人:刘先生</span>
+							<span>13888883211</span>
+						</div>
+						<!--地址-->
+						<p>收货地址：广东省广州市番禺区xx街道大学城北中山大学顺丰丰巢代收</p>
+					</div>
+					<!--定位-->
+					<div class="location"><img src="img/meals/dinwei.png"/></div>
+					<!--地址详情-->
+					<div class="addressDetails"><img src="img/meals/jinru.png"/></div>
+				</div>
+				<!--购买信息-->
+				<div class="buyCard">
+					<!--图片名字和价钱-->
+					<div class="foodMore flex">
+						<div class="foodImg">
+							<!--<img :src="bannerImgUrl"/>-->
+							<img v-if="name == '葱香豆浆饼'" src="img/meals/food1.png" />
+							<img v-if="name == '椰香山楂雪丽球'" src="img/meals/food2.png" />
+							<img v-if="name == '焦糖奶茶'" src="img/meals/food3.png" />
+						</div>
+						<div class="bMsg">
+							<p class="foodName">{{name}}--食材</p>
+							<div class="moneyAndNum flex">
+								<span>¥ 19.80</span>
+								<div class="num flex">
+									<div class="jia"><img src="img/meals/jian.png"/></div>
+									<span>1</span>
+									<div class="jian"><img src="img/meals/jia.png"/></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--配送-->
+					<div class="peison flex">
+						<span>配送方式</span>
+						<span>快递 免邮</span>
+					</div>
+					<!--小计-->
+					<div class="xiaoji flex">
+						<span>小计</span>
+						<span>¥ 19.80</span>
+					</div>
+				</div>
+				<!--更多-->
+				<div class="more">
+					<p class="time">
+						<span>配送时间</span>
+						<span>今天 17:30</span>
+					</p>
+					<p class="fapiao">
+						<span>发票抬头</span>
+						<span>个人</span>
+					</p>
+					<p class="message">
+						<span>卖家留言：</span>
+						<input type="text" placeholder="选填：填写内容已和买家协商确认"/>
+					</p>
+				</div>
+				<!--提交订单-->
+				<div class="buy flex">
+					<!--提交订单-->
+					<div class="buyOrder">提交订单</div>
+					<div class="hejiMoney"><span>合计金额</span><span>¥ 19.80</span></div>
+				</div>
+				
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					name:'',
+					bannerImgUrl:''
+				}
+			})
+			mui.plusReady(function() {
+				loadData();
+			})
+			//读取上一页数据
+			function loadData(){
+				var self = plus.webview.currentWebview();
+				console.log(JSON.stringify(self));
+				vm.name = self.name;
+				vm.bannerImgUrl = self.bannerImgUrl;
+			}
+			document.getElementById('back').addEventListener('tap', function() {
+				mui.back();
+			});
+		</script>
+	</body>
+</html>

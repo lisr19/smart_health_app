@@ -1,0 +1,247 @@
+/*
+ *2019-02-23
+ * 麦展豪
+ * */
+/*菜谱详情页面样式*/
+.flex{
+	display: flex;
+}
+p{
+	margin: 0;
+}
+body{
+	margin: 0;
+}
+#app{
+	width: 100%;
+	font-size: 0;
+}
+/*页面主要内容*/
+.cookbookContent{
+	width: 100%;
+	position: relative;
+	background:rgba(248,248,248,1);
+}
+/*头部banner*/
+.cb-banner{
+	width: 100%;
+	height: 6.3rem;
+	background: black;
+}
+.cb-banner img{
+	width: 100%;
+	height: 100%;
+}
+/*标题文字介绍*/
+.ck-titleText{
+	width: 100%;
+	height: 1.8rem;
+	margin-top: -2.16rem;
+	padding-top: 0.39rem;
+	/*overflow: hidden;*/
+	/*background: yellow;*/
+}
+.ck-titleText p:first-child{
+	font-size:0.48rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(255,255,255,1);
+	line-height:0.67rem;
+}
+.ck-titleText p:last-child{
+	width:5.87rem;
+	height:0.8rem;
+	font-size:0.28rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(240,240,240,1);
+	line-height:0.4rem;
+	margin-top: 0.1rem;
+	overflow: hidden;
+}
+.ck-titleText p {
+	margin-left: 0.3rem;
+}
+/*收藏按钮*/
+.ck-collection{
+	width: 0.83rem;
+	height: 0.83rem;
+	position: absolute;
+	right: 0.3rem;
+	top: 5.19rem;
+	
+}
+.ck-collection img {
+	width: 100%;
+	height: 100%;
+}
+/*返回按钮*/
+.return{
+	width:0.66rem;
+	height:0.66rem;
+	position: absolute;
+	top: 0.37rem;
+	left: 0.3rem;
+}
+.return img{
+	width: 30%;
+	height: 50%;
+}
+/*页数显示*/
+.ck-page{
+	width: 0.49rem;
+	height: 0.55rem;
+	position: absolute;
+	right: 0.3rem;
+	top: 0.3rem;
+}
+.ck-page img{
+	width: 100%;
+	height: 100%;
+}
+/*标签块*/
+.ck-tag{
+	width: 100%;
+	height: 1.71rem;
+	border-bottom: 0.02rem solid #DDDDDD;
+}
+/*每个标签样式*/
+.ck-tag-time,.ck-tag-cxz{
+	width: 30%;
+	height: 100%;
+}
+.ck-tag-bz{
+	width: 40%;
+	height: 100%;
+}
+.tag-timeLogo,.tag-bzLogo,.tag-cxzLogo{
+	width: 0.54rem;
+	height: 0.54rem;
+	margin: 0 auto;
+		margin-top: 0.4rem;
+	
+}
+.tag-timeLogo img,.tag-bzLogo img,.tag-cxzLogo img{
+	width: 100%;
+	height: 100%;
+}
+.tag{
+	text-align: center;
+
+}
+.tag span{
+	display: inline-block;
+	font-size:0.24rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.33rem;
+	margin-top: 0.17rem;
+}
+
+/*营养成分样式*/
+.nutrients{
+	width: 100%;
+	/*background: red;*/
+	font-size: 0.23rem;
+	padding-top: 0.39rem;
+}
+/*食用材料，菜品做法*/
+.foodMaterials,.foodPractices{
+	width: 100%;
+	padding-top: 0.44rem;
+	border-top:0.02rem solid #DDDDDD ;
+}
+
+.nutrients-title,.foodMaterials-title,.foodPractices-title{
+	/*width:144px;*/
+	height:0.5rem;
+	font-size:0.36rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.50rem;
+	position: relative;
+	padding-left: 0.3rem;
+}
+.nutrients-title:after,.foodMaterials-title:after,.foodPractices-title:after{
+	content: "";
+	width:0.06rem;
+	height:0.4rem;
+	position: absolute;
+	left: 0.1rem;
+	top: 0.06rem;
+	background:linear-gradient(180deg,rgba(110,75,239,1) 0%,rgba(173,94,253,1) 100%);
+}
+.nutrients p:nth-child(2),.foodMaterials p:nth-child(2){
+	margin-top: 0.4rem;
+}
+.nutrients-content,.foodMaterials-content{
+	width:100%;
+	height:0.45rem;
+	/*padding: 0rem 0.3rem 0rem 0.3rem;*/
+	justify-content: space-between;
+	margin-bottom: 0.4rem;
+}
+.nutrients-content span,.foodMaterials-content span{
+	font-size:0.32rem;
+	font-family:PingFangSC-Regular;
+	font-weight:400;
+	color:rgba(31,34,102,1);
+	line-height:0.45rem;
+	padding: 0 0.3rem;
+}
+/*菜品做法主要内容*/
+.foodPractices-content{
+	width: 100%;
+	font-size: 0.23rem;
+}
+.fpc{
+	width: 100%;
+	margin-top: 0.44rem;
+}
+.number{
+	width:0.2rem;
+	height:0.67rem;
+	font-size:0.48rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(31,34,102,1);
+	line-height:0.67rem;
+	margin-left: 0.3rem;
+}
+
+.fpc-text{
+	width:3.04rem;
+	/*height:2rem;*/
+	font-size:0.28rem;
+	font-family:PingFangSC-Regular;
+	font-weight:400;
+	color:rgba(31,34,102,1);
+	line-height:0.4rem;	
+	margin-left: 0.34rem;
+}
+.fpc-img{
+	width: 3.12rem;
+	/*height: 2.28rem;*/
+	margin-left: 0.2rem;
+}
+.fixWH{
+	height: 2.28rem;
+}
+.fpc-img img{
+	width: 100%;
+	height: 100%;
+}
+/*购物车*/
+.ck-shop{
+	width: 0.83rem;
+	height: 0.83rem;
+	position: fixed;
+	bottom: 0.3rem;
+	right: 0.3rem;
+}
+.ck-shop img{
+	width: 100%;
+	height: 100%;
+}

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>智慧健康app</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+		<!--<script type="text/javascript" src="js/lib-flexible.js" ></script>-->
+		<style>
+
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-scroll-wrapper" id="health-main">
+			<div class="mui-scroll">
+				<!--评分模块-->
+				<div class="main-banner">
+					<div class="main-banner-header"  style="display: flex;justify-content: space-between;">
+						<div class="saomiao">
+							<img src="img/saomiao.png" id="saomiao" />
+						</div>
+						<div class="messageGo">
+							<img src="img/meals/xiaoxi.png"/>
+						</div>
+						<!--通知入口-->
+						
+					</div>
+					<!--圆圈百分比-->
+					<div class="fenshu-content" v-show="fenshuchenck =='0'">
+						<canvas id="fenshu-canvas" width="416" height="416" style="width: 4.18rem;height: 4.18rem;"></canvas>
+						<div class="fenshu-date">
+							{{ADate}}
+						</div>
+						<button class="fenshu-check" id="NumCheck">
+			    	查看
+			    </button>
+					</div>
+
+					<!--暂无数据-->
+					<div class="fenshu-none" v-show="fenshuchenck =='1'">
+						<img src="img/nodata.png" />
+						<div class="fenshu-none-title" style="margin-bottom: 0.5rem;">
+							当前数据不全暂无评分，快去体检吧
+						</div>
+						<button class="fenshu-check" id="NoNumCheck">
+			    	查看
+			    </button>
+					</div>
+
+				</div>
+				<!--主功能区-->
+				<div class="main-gongneng">
+					<div class="main-gongneng-one maingongneng-border1" id="smallCheck">
+						<img src="img/shequBig.png" />
+						<span>社区体检</span>
+					</div>
+					<div class="main-gongneng-one maingongneng-border2" id="familyCheck">
+						<img src="img/familyBig.png" />
+						<span>家庭体检</span>
+					</div>
+					<div class="main-gongneng-one maingongneng-border1" id="healthService">
+						<img src="img/baikeBig.png" />
+						<span>健康服务</span>
+					</div>
+					<div class="main-gongneng-one maingongneng-border2" id="healthEncyclopedia">
+						<img src="img/healthBig.png" />
+						<span>健康百科</span>
+					</div>  
+					<div class="main-gongneng-one maingongneng-border1" id="familyDoctor">
+						<img src="img/doctorLogo.png" />
+						<span>家庭医生</span>
+					</div>
+					<div class="main-gongneng-one maingongneng-border2" id="smartShopping">
+						<img src="img/businessLogo.png" />
+						<span>智慧商城</span>
+					</div>
+				</div>
+
+				<!--小区服务-->
+				<div class="main-smallcom">
+					<div class="main-smallcom-title">小区服务</div>
+					<div class="main-smallcom-content">
+						<div class="main-samllcom-one" id="propertyTip">
+							<img src="img/wuyeBig.png" />
+							<span>物业服务</span>
+						</div>
+						<div class="main-samllcom-one" id="parking">
+							<img src="img/smartpaking.png" />
+							<span>智能停车</span>
+						</div>
+						<div class="main-samllcom-one" id="onekey">
+							<img src="img/onekey.png" />
+							<span>一键开锁</span>
+						</div>
+					</div>
+				</div>
+
+				<div style="width: 7.5rem;height: 1.2rem;"></div>
+
+			</div>
+		</div>
+		<div class="health-main-menu">
+			<div class="main-page icon-active" id="main-page">
+				<svg class="icon-menu icon-active" aria-hidden="true">
+					<use xlink:href="#icon-zhuye"></use>
+				</svg>
+				<span>首页</span>
+			</div>
+			<div class="family-page" id="family-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-jiating"></use>
+				</svg>
+				<span>家庭健康</span>
+			</div>
+			<div class="shop-page" id="meals-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>订餐</span>
+			</div>
+			<div class="shop-page" id="shop-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-faxian"></use>
+				</svg>
+				<span>发现</span>
+			</div>
+			<div class="my-page" id="my-page">
+				<svg class="icon-menu" aria-hidden="true">
+					<use xlink:href="#icon-wode"></use>
+				</svg>
+				<span>我的</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/menu.js"></script>
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script type="text/javascript" src="js/utils/http.js"></script>
+		<script>
+			mui.init();
+			var msg_content = ''; //消息内容
+			var msg_topic = ''; //主题
+			var clientId = ''; //个推生成的客户端id
+
+			var vm = new Vue({
+				el: "#health-main",
+				data: {
+					versionid: '', //版本号
+					vurl: '', //版本下载地址
+					fenshuchenck: '1', //是否显示分数
+					fenshu: '',
+					ADate: '',
+				},
+			});
+
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+
+				var info = plus.push.getClientInfo(); // 获取推送客户端标识信息
+				var pushToken = info.token; //ios用的标识
+				var pushClientid = info.clientid; //android用的标识		
+				var cnt = 0;
+				console.log(localStorage.getItem('label'))
+				/**
+				 * 监听接受推送消息事件
+				 * 接收到推送消息后，创建本地通知栏消息
+				 */
+				plus.push.addEventListener("receive", function(msg) {
+					/**
+					 * 创建本地消息
+					 */
+					plus.push.createMessage(msg.content, msg.payload || '', msg);
+					plus.runtime.setBadgeNumber(++cnt);
+				}, false);
+
+				/**
+				 * 监听本地消息点击事件
+				 */
+				plus.push.addEventListener("click", function(msg) {
+					// 分析msg.payload处理业务逻辑 
+					alert(msg.content);
+					cnt = 0;
+					mui.openWindow({
+						url: 'messageTip.html',
+						id: 'messageTip'
+					})
+
+				}, false);
+
+				function randomString(length) {
+					var text = "";
+					var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					for(var i = 0; i < length; i++)
+						text += possible.charAt(Math.floor(Math.random() * possible.length));
+					return text;
+
+				}
+
+				//首页返回键处理  
+				//处理逻辑：2秒内，连续两次按返回键，则退出应用  
+				var first = null;
+				mui.back = function() {
+					if(!first) {
+						first = new Date().getTime();
+						mui.toast('再按一次退出应用');
+						setTimeout(function() {
+							first = null;
+						}, 2000);
+					} else {
+						if(new Date().getTime() - first < 2000) {
+							plus.runtime.quit();
+						}
+					}
+				};
+
+				//获取小鹿社区用户信息
+				loadUserMesaagae();
+
+				//检查更新
+				findNewVersion();
+
+				//启动动画循环
+				drawFrame();
+
+				//健康分数
+				healthCheckfenshu();
+
+				//获取徕康最后的体检日期
+				loadLKdata();
+
+				//检测一键登录用户是否初次注册用户
+				userCheck();
+
+			});
+
+			//--------------------------打分圈功能--------------------------------------
+			var canvas = document.getElementById('fenshu-canvas'), //获取canvas元素
+				context = canvas.getContext('2d'), //获取画图环境，指明为2d
+				centerX = canvas.width / 2, //Canvas中心点x轴坐标
+				centerY = canvas.height / 2, //Canvas中心点y轴坐标
+				rad = Math.PI * 2 / 100, //将360度分成100份，那么每一份就是rad度
+				speed = 0.1; //加载的快慢就靠它了 
+
+			//绘制白色外圈
+			function whiteCircle(n) {
+				context.save();
+				context.strokeStyle = "#fff"; //设置描边样式
+				context.lineWidth = 10; //设置线宽
+				context.lineCap = 'round'; //设置线帽圆滑
+				context.beginPath(); //路径开始
+				context.arc(centerX, centerY, 200, -Math.PI / 2, -Math.PI / 2 + n * rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
+				context.stroke(); //绘制
+				context.closePath(); //路径结束
+				context.restore();
+			}
+
+			//绘制蓝色外圈
+			function blueCircle() {
+				context.save();
+				context.beginPath();
+				context.lineWidth = 4; //设置线宽
+				context.strokeStyle = "#6264FE";
+				context.arc(centerX, centerY, 200, 0, Math.PI * 2, false);
+				context.stroke();
+				context.closePath();
+				context.restore();
+			}
+
+			//百分比文字绘制
+			function text(n) {
+				context.save(); //save和restore可以保证样式属性只运用于该段canvas元素
+				context.strokeStyle = "#6262FE"; //设置描边样式
+				context.font = "114px 微软雅黑 "; //设置字体大小和字体
+				//绘制字体，并且指定位置
+				context.fillStyle = 'white';
+				if(n < 10) {
+					context.fillText(n.toFixed(0), centerX - 28, centerY - 15);
+				}
+				if(n >= 10 && n < 100) {
+					context.fillText(n.toFixed(0), centerX - 65, centerY - 15);
+				}
+				if(n >= 100) {
+					context.fillText(n.toFixed(0), centerX - 100, centerY - 15);
+				}
+				context.stroke(); //执行绘制
+				context.restore();
+			}
+
+			//动画循环，分数控制
+			function drawFrame() {
+
+				//启动动画，每帧回调一次
+				window.requestAnimationFrame(drawFrame, canvas);
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				blueCircle();
+				text(speed);
+				whiteCircle(speed);
+				var fenshus = fenshu(); //显示分数
+				if(speed > fenshus) {
+					speed = fenshus;
+					window.cancelAnimationFrame(window.requestAnimationFrame(drawFrame, canvas)); //停止动画刷新
+				}
+				speed += 3; //转动速度，越大变化越快
+
+				//setInterval(drawFrame,100);
+
+			};
+
+			//判断分数
+			function healthCheckfenshu() {
+				var userid = localStorage.getItem('userid');
+				var params = {
+					userId: userid
+				}
+				var data = doGet('/score/calculate', params, function(data) {
+					if(data.code != '0') {
+						vm.fenshuchenck = '1'; //显示需要去体检
+					} else {
+						if(data.data == '') {
+							vm.fenshuchenck = '1'; //显示需要去体检
+						} else {
+							var fenshu = data.data;
+							vm.fenshuchenck = '0';
+							vm.fenshu = fenshu; //拿到服务器分数
+						}
+					}
+
+				})
+
+			}
+
+			//确定分数
+			function fenshu() {
+				var fenshu = vm.fenshu;
+				return fenshu - 3;
+
+			}
+
+			//--------------------------打分圈功能结束--------------------------------------
+
+			//监听消息通知页面
+			document.querySelector('.messageGo').addEventListener('tap',function(){
+				mui.openWindow({
+					url:'messageTip.html',
+					id:'messageTip'
+				})
+			})
+			//监听扫描界面
+			document.getElementById('saomiao').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'saomaLogin.html',
+					id: 'saomaLogin'
+				})
+			});
+
+			//监听社区体检
+			document.getElementById('smallCheck').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'healthCheck.html',
+					id: 'healthCheck'
+				})
+			});
+
+			//监听社区体检（分数）
+			document.getElementById('NumCheck').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'healthCheck.html',
+					id: 'healthCheck'
+				})
+			});
+
+			//监听社区体检（没分数）
+			document.getElementById('NoNumCheck').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'healthCheck.html',
+					id: 'healthCheck'
+				})
+			});
+
+			//监听家庭医生
+			document.getElementById('familyDoctor').addEventListener('tap', function() {
+				mui.openWindow({
+//					url: 'consultList.html',
+//					id: 'consultList'
+					url: 'chatByAI.html',
+					id: 'chatByAI'
+				})
+			});
+ 
+			//监听智慧商城
+			document.getElementById('smartShopping').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'businessList.html', 
+					id: 'businessList'
+				}) 
+//				mui.openWindow({//暂时建设
+//					url: 'buildTip.html', 
+//					id: 'buildTip'
+//				})
+			});
+
+			//监听家庭体检
+			document.getElementById('familyCheck').addEventListener('tap', function() {
+//				mui.openWindow({
+//					url: 'familyCheck.html',
+//					id: 'familyCheck'
+//				})
+				mui.openWindow({
+					url: 'bodyfatScale.html',
+					id: 'bodyfatScale'
+				})
+			});
+
+			//监听健康百科
+			document.getElementById('healthEncyclopedia').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'healthyEncyclopedia.html',
+					id: 'healthyEncyclopedia'
+				})
+			});
+
+			//监听智能停车
+			document.getElementById('parking').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'SmartPaking.html',
+					id: 'SmartPaking'
+				})
+
+			});
+
+			//监听物业通知
+			document.getElementById('propertyTip').addEventListener('tap', function() {
+//				mui.openWindow({
+//					url: 'propertyTip.html',
+//					id: 'propertyTip'
+//				})
+				mui.openWindow({
+					url: 'propertyService.html',
+					id: 'propertyService'
+				})
+			});
+
+			//监听健康服务
+			document.getElementById('healthService').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'healthService.html',
+					id: 'healthService'
+				})
+			});
+
+			// 监听一键开锁
+			document.getElementById('onekey').addEventListener('tap', function() {
+				var token2 = localStorage.getItem('token2');
+				if(mui.os.android) {
+					// 获取主Activity对象的实例
+					var main = plus.android.runtimeMainActivity();
+					var Intent = plus.android.importClass("android.content.Intent");
+					var intent = new Intent(main.getIntent());
+					intent.putExtra("token",token2);
+					intent.setClassName(main, "com.sysu.Smart_health.OneKey.MainActivity");
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+					main.startActivity(intent);
+
+				} else {
+					mui.alert('目前一键开锁功能仅支持安卓平台。', '提示', null);
+				}
+			});
+
+			//获取徕康最后的体检数据
+			function loadLKdata() {
+
+				var userId = localStorage.getItem('userid');
+
+				var params = {
+					userId: userId,
+				}
+
+				var myDate = new Date();
+				var thisyear = myDate.getFullYear();
+				var thismonth = myDate.getMonth() + 1;
+				var thisday = myDate.getDate();
+				//获取系统日期，格式2018-10-10
+				var today = thisyear + '-' + thismonth + '-' + thisday;
+
+				var data = doGet('/data/findLKLastData', params, function(data) {
+					if(data.code != '0') {
+						console.log('链接失败，请检查网络');
+					} else {
+						var dataJson = data.data.ADate;
+						if(dataJson == null) {
+							vm.ADate = '您还没进行过体检';
+						} else {
+
+							var checkDaye = dataJson.slice(0, -9);
+							var upDay = DateDifference(today, checkDaye);
+//							console.log('今天日期' + checkDaye);
+//							console.log('上次体检日期' + today)
+//							console.log('相差日期' + upDay);
+							if(upDay >= 2) {
+
+								vm.ADate = '您已经' + upDay + '天没有体检了';
+
+							} else {
+
+								vm.ADate = checkDaye;
+
+							}
+
+						}
+					}
+
+				})
+			}
+
+			//比较相差多少天
+			function DateDifference(Date1, Date2) { //Date1和Date2是2017-07-10格式  
+				var sDate, newDate1, newDate2, Days
+				aDate = Date1.split("-");
+				newDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); //转换为07-10-2017格式  
+				aDate = Date2.split("-");
+				newDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
+				Days = parseInt(Math.abs(newDate1 - newDate2) / 1000 / 60 / 60 / 24); //把差的毫秒数转换为天数  
+				return Days;
+			}
+
+			//获取小鹿社区用户的基本信息
+			function loadUserMesaagae() {
+				var token2 = localStorage.getItem('token2');
+				mui.ajax('http://zhoushengli.s1.natapp.cc/sysBuyer/V1.0.0/getInfo', {
+					data: {
+						token: token2,
+
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+
+//						console.log('获取小鹿社区用户信息' + JSON.stringify(data));
+						if(data.code == 0) {
+							if(data.data.smallCommunity != '') {
+								//存储小区id							
+								var smallComId = data.data.smallCommunity[0].smallCommunityCode;
+								//console.log('-------------'+JSON.stringify(smallComId))
+								localStorage.setItem('smallComId', smallComId);
+							}
+
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+				});
+
+			}
+
+			//获取服务器版本号
+			function findNewVersion() {
+
+				var token = localStorage.getItem('token');
+				var phone = localStorage.getItem('phone');
+
+				mui.ajax(baseUrl + '/apkVersion/findLastVersion', {
+					headers: {
+						'Authorization': token,
+						phone: phone
+					},
+					data: {
+						type: 1,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'get', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+//						console.log('服务器版本' + JSON.stringify(data));
+						if(data.code != '0') {
+							//mui.toast('获取版本号失败');
+						} else {
+
+							var versionJson = data.data;
+							vm.versionid = versionJson.version;
+							vm.vurl = versionJson.url;
+							//获取本地版本号---------------调试期间暂停更新
+							onPlusReady();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+
+					}
+
+				});
+
+			}
+
+			//更新
+			function onPlusReady() {
+				//mui.toast('Application(apk/ipa) version：' + plus.runtime.version);
+				var versionid = plus.runtime.version;
+				if(!versionid) {
+					setTimeout(
+						function() {
+							versionid = plus.runtime.version;
+						}, 5000)
+				}
+
+//				console.log('当前版本号：' + versionid);
+
+//				console.log('服务器版本号' + vm.versionid);
+
+				if(vm.versionid != versionid) {
+
+					var btnArray = ['下次再说', '马上升级'];
+					mui.confirm('检查到最新版本，请更新，否则将影响您正常使用', '版本更新', btnArray, function(e) {
+						if(e.index == 1) {
+
+							var wgtWaiting = plus.nativeUI.showWaiting("开始下载");
+							//版本号不相同则更新
+							var versionUrl = vm.vurl;
+//							console.log(versionUrl)
+							var url = versionUrl; // 下载文件地址
+							var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+								if(status == 200) { // 下载成功
+									wgtWaiting.setTitle("开始安装");
+									var path = d.filename;
+									plus.runtime.install(path);
+								} else { //下载失败
+									alert("Download failed: " + status);
+								}
+							});
+
+							dtask.addEventListener("statechanged", function(download, status) {
+								switch(download.state) {
+									case 2:
+										wgtWaiting.setTitle("已连接到服务器");
+										break;
+									case 3:
+										var percent = download.downloadedSize / download.totalSize * 100;
+										wgtWaiting.setTitle("已下载 " + parseInt(percent) + "%");
+										break;
+									case 4:
+										wgtWaiting.setTitle("下载完成");
+										break;
+								}
+							});
+
+							dtask.start();
+
+						} else {
+							return;
+						}
+					})
+
+				}
+			}
+
+			function userCheck() {
+
+				var name = localStorage.getItem('name');
+				if(name == '' || name == null) {
+
+					mui.toast('您是初次注册用户，请先完善个人信息');
+					mui.openWindow({
+						url: 'myinformationFirst.html',
+						id: 'myinformationFirst'
+					});
+
+				}
+
+			}
+		</script>
+	</body>
+
+</html>

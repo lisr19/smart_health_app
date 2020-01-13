@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登录界面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+	</head>
+
+	<body>
+		<div class="login-title">
+			账号登录
+		</div>
+		<div class="login-form" id="login-form">
+			<div class="login-username">
+				<div class="login-username-icon">
+					<img src="img/username.png" />
+				</div>
+				<input v-model="username" id="username" placeholder="请输入手机号" />
+			</div>
+			<div class="login-password">
+				<div class="login-password-icon">
+					<img src="img/password.png" />
+				</div>
+				<input v-model="password" id="password" type="password" placeholder="请输入密码" />
+				<!--
+                	暂时不需要忘记密码的功能
+                <div class="forget-password">忘记密码</div>-->
+			</div>
+			<!--遮盖层,防止多次点击-->
+		<div v-if="zhegai == '1'" class="model-div"></div>
+		</div>
+		<div class="login-submit">
+			<button type="button" id="submit-button" class="mui-btn login-button">登录</button>
+
+		</div>
+		<div class="login-zhuce" style="margin-top: 3.65rem;" ><span  id="register-button">立即注册</span> | <span id="check-button">验证码登录</span> | <span id="onekey-button">一键登录</span></div>
+		
+		
+		<script type="text/javascript" src="js/configUrl.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var vm = new Vue({
+				el: "#login-form",
+				data: {
+					username: '',
+					password: '',
+					zhegai:'0'
+				}
+			})
+			//监听内容变化，有内容变色
+			vm.$watch('password', function() {
+				if(vm.password == null || vm.password == '') {
+					document.getElementById("submit-button").className = "mui-btn login-button";
+
+				} else {
+					document.getElementById("submit-button").className = "mui-btn-blue login-button-active";
+
+				}
+			});
+			mui.plusReady(
+				function() {
+                   // 1. 声明的JS“扩展插件别名”
+					var _BARCODE = 'CtAccountPlugin',
+						B = window.plus.bridge,
+						CtAccountPlugin = {
+							// 2. 声明异步返回方法
+							onCreate: function(cbOk, cbErr) {
+								var success = typeof cbOk !== 'function' ? null: function(args) {
+									cbOk(args);
+								},
+								fail = typeof cbErr !== 'function' ? null : function(code) {
+									cbErr(code);
+								},
+								callbackID = B.callbackId(success, fail);
+								// 3. 通知Native层CtAccountPlugin扩展插件运行”onCreate”方法
+								return B.exec(_BARCODE, 'onCreate', [callbackID]);
+							}
+						};
+					window.plus.CtAccountPlugin = CtAccountPlugin;
+                   
+                
+
+					//登录功能
+					document.getElementById('submit-button').addEventListener('tap', function() {
+						//						mui.openWindow({
+						//							url: 'index.html',
+						//							id: 'index'
+						//						})
+						login();
+
+					});
+					//注册功能
+					document.getElementById('register-button').addEventListener('tap', function() {
+						mui.openWindow({
+							url: 'register.html',
+							id: 'register'
+						})
+
+					});
+					
+					//验证码登录
+					document.getElementById('check-button').addEventListener('tap', function() {
+						mui.openWindow({
+							url: 'phoneLogin.html',
+							id: 'phoneLogin'
+						})
+
+					});
+					
+					//一键登录
+					document.getElementById('onekey-button').addEventListener('tap', function() {
+
+						// 4. 调用拓展插件的方法，接收Native的返回结果
+						window.plus.CtAccountPlugin.onCreate(function(args) {
+							var data = JSON.parse(args);
+                            
+                            if(data.data.userInfo.name == ''){
+                            	
+                            var token = data.data.token;
+							var name = data.data.userInfo.name;
+							var sex = data.data.userInfo.sex;
+							var userid = data.data.userInfo.id;
+//							var email = data.data.userInfo.email;
+							var phone = data.data.userInfo.phone;
+							var weight = data.data.userInfo.weight;
+							var height = data.data.userInfo.height;
+							var year = data.data.userInfo.year;
+							var month = data.data.userInfo.month;
+							var day = data.data.userInfo.day;
+							var idNumber = data.data.userInfo.idNumber;
+							var token2 = data.data.token2;
+							//用户标签
+							var label = JSON.stringify(data.data.label);
+							
+							localStorage.setItem("token", token);
+							localStorage.setItem("token2", token2);
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year);
+							localStorage.setItem("month", month);
+							localStorage.setItem("day", day);
+							localStorage.setItem("idNumber", idNumber);
+                            //用户标签
+							localStorage.setItem("label",label);
+                            
+                            mui.toast('您是初次注册用户，请先完善个人信息');
+							mui.openWindow({
+								url: 'myinformationFirst.html',
+								id: 'myinformationFirst'
+							});
+                            	
+                            	
+                            }else{
+                            	
+                        	var token = data.data.token;
+							var name = data.data.userInfo.name;
+							var sex = data.data.userInfo.sex;
+							var userid = data.data.userInfo.id;
+							var phone = data.data.userInfo.phone;
+							var weight = data.data.userInfo.weight;
+							var height = data.data.userInfo.height;
+							var year = data.data.userInfo.year;
+							var month = data.data.userInfo.month;
+							var day = data.data.userInfo.day;
+							var idNumber = data.data.userInfo.idNumber;
+							var token2 = data.data.token2;
+							//用户标签
+							var label = JSON.stringify(data.data.label);
+
+							localStorage.setItem("token", token);
+							localStorage.setItem("token2", token2);
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year);
+							localStorage.setItem("month", month);
+							localStorage.setItem("day", day);
+							localStorage.setItem("idNumber", idNumber);
+							//用户标签
+							localStorage.setItem("label",label);
+
+							mui.openWindow({
+								url: 'index.html',
+								id: 'index'
+							});
+                            	
+                            	
+                            }
+                            
+							
+						}, function(code) {
+							mui.toast(code);
+						});
+
+					});
+
+				})
+
+			function login() {
+				var username = vm.username;
+				var passWord = vm.password;
+				vm.zhegai = '1';
+				
+				//md5加密
+				//passWord_md5 = md5(passWord);
+
+				if(passWord == '' || passWord == null) {
+					//本地存有账号密码则自动进入主界面
+					passWord = localStorage.getItem("password");
+					username = localStorage.getItem("username");
+				}
+
+				mui.ajax(baseUrl + '/user/appLogin', {
+					data: {
+						phone: username,
+						password: passWord
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 5000, //超时时间设置为5秒；
+					success: function(data) {
+						console.log('登录信息：'+JSON.stringify(data));
+						if(data.code != "0") { //非0则失败
+							//异常处理；
+							mui.toast('登陆失败,请输入正确账号或者密码!', {
+								duration: 'long',
+								type: 'div'
+							});
+							
+							vm.zhegai = '0';
+						} else {
+							if(data.data.userInfo.name == ''){//个人信息不全则直接跳到信息完善页面
+							var token = data.data.token;
+							var name = data.data.userInfo.name;
+							var sex = data.data.userInfo.sex;
+							var userid = data.data.userInfo.id;
+							var phone = data.data.userInfo.phone;
+							var weight = data.data.userInfo.weight;
+							var height = data.data.userInfo.height;
+							var year = data.data.userInfo.year;
+							var month = data.data.userInfo.month;
+							var day = data.data.userInfo.day;
+							var idNumber = data.data.userInfo.idNumber;
+							var token2 = data.data.token2;
+							//用户标签
+							var label = JSON.stringify(data.data.label);
+							
+							localStorage.setItem("token", token);
+							localStorage.setItem("token2", token2);
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year);
+							localStorage.setItem("month", month);
+							localStorage.setItem("day", day);
+							localStorage.setItem("idNumber", idNumber);
+							//用户标签
+							localStorage.setItem("label",label);
+							
+							    mui.toast('您是初次注册用户，请先完善个人信息');
+							    mui.openWindow({
+								url: 'myinformationFirst.html',
+								id: 'myinformationFirst'
+							})
+							    
+							vm.zhegai = '0';	
+							}else{
+								
+							var token = data.data.token;
+
+							var name = data.data.userInfo.name;
+							var sex = data.data.userInfo.sex;
+							var userid = data.data.userInfo.id;
+//							var email = data.data.userInfo.email;
+							var phone = data.data.userInfo.phone;
+							var weight = data.data.userInfo.weight;
+							var height = data.data.userInfo.height;
+							var year = data.data.userInfo.year;
+							var month = data.data.userInfo.month;
+							var day = data.data.userInfo.day;
+							var idNumber = data.data.userInfo.idNumber;
+							var token2 = data.data.token2;
+							//用户标签
+							var label = JSON.stringify(data.data.label);
+							
+							localStorage.setItem("token", token);
+							localStorage.setItem("token2", token2);
+							localStorage.setItem("name", name);
+							localStorage.setItem("sex", sex);
+							localStorage.setItem("userid", userid);
+//							localStorage.setItem("email", email);
+							localStorage.setItem("phone", phone);
+							localStorage.setItem("height", height);
+							localStorage.setItem("weight", weight);
+							localStorage.setItem("year", year);
+							localStorage.setItem("month", month);
+							localStorage.setItem("day", day);
+							localStorage.setItem("idNumber", idNumber);
+                            //用户标签
+							localStorage.setItem("label",label);
+							mui.openWindow({
+								url: 'index.html',
+								id: 'index'
+							})
+								
+							vm.zhegai = '0';	
+								
+							}
+
+							
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						//异常处理；
+						mui.toast('登陆失败，请检查网络', {
+							duration: 'long',
+							type: 'div'
+						})
+						
+						vm.zhegai = '0';	
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

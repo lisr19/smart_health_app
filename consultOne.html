@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<!--本页面暂时停用-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>健康智慧移动终端</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script type="text/javascript" src="js/rem.js"></script>
+		<script type="text/javascript" src="js/iconfont.js"></script>
+	</head>
+
+	<body>
+		<div class="mui-scroll-wrapper" id="doctor-Msg">
+			<div class="mui-scroll">
+					<div class="header" style="background-image: url(img/background.svg);background-size:cover;">
+					<div class="baike-header">
+						<div class="baike-header-left" id="back">
+							<img src="img/return.png" />
+						</div>
+						<div class="baike-header-right">
+							{{doctorName}}
+						</div>
+					</div>
+					<div class="consult-touxiang">
+							<img :src="doctorAvatarUrl" />
+						</div>
+					<div class="consult-card">
+						<div class="consult-shadow"></div>
+						<!--所属医院-->
+						<div class="consult-miaoshu">
+							{{doctorHospital}}
+							<br>
+							{{doctorDepartment}}
+							&nbsp;&nbsp;&nbsp;
+							{{doctorPhysicianship}}
+						</div>
+						
+					</div>
+				</div>
+				
+				<!--简介-->
+				<div class="consult-title" style="margin-top: 0.5rem;">
+					简介
+				</div>
+				<div class="consult-yiyuan" style="text-align: center;">
+					<!--中山市博爱医院 脑科门诊 主任医师-->
+					{{doctorDesc}}
+				</div>
+				<!--<div class="consult-title">
+					问诊服务
+				</div>-->
+				<!--<div class="consult-service" id="chat">
+					<div class="consult-service-one">
+						<div class="consult-service-left">
+							图文咨询<br />
+							<span>可使用图文与医生沟通</span>
+						</div>
+						<div class="consult-service-right" >
+							免费
+						</div>
+					</div>
+				</div>-->
+				<!--主要内容结束-->
+
+			</div>
+		</div>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/swiper.min.js"></script>
+		<!--<script type="text/javascript" src="js/menu.js"></script>-->
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var vm = new Vue({
+				el: "#doctor-Msg",
+				data: {
+					doctorName:'',
+					doctorHospital:'',
+					doctorPhysicianship:'',
+					doctorDepartment:'',
+					doctorDesc:'',
+					doctorId:'',
+					doctorAvatarUrl:'',
+				},
+				beforeback: function() {
+						var consultList = plus.webview.getWebviewById('consultList');
+       					consultList.reload();//页面返回重新加载
+					 }
+			})
+			mui.plusReady(function() {
+
+				//滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true,
+					deceleration: 0.0003,
+					indicators: false
+				});
+				loadBusinessMsg();
+			});
+
+			
+			var username = localStorage.getItem('name');
+			var userid = localStorage.getItem('userid');
+			//监听视频通话窗口
+//			document.getElementsByClassName('shipin')[0].addEventListener('tap', function() {
+//				if(mui.os.android && (mui.os.version  == '4.0.3'||
+//						mui.os.version == '4.0.4' || parseFloat(mui.os.version) > 4.1)) {
+//
+//					// 获取主Activity对象的实例
+//					var main = plus.android.runtimeMainActivity();
+//					var Intent = plus.android.importClass("android.content.Intent");
+//					var intent = new Intent(main.getIntent());
+//					intent.setClassName(main, "com.sysu.Smart_health.VideoChat.RTCDoubleRoom.RTCDoubleRoomActivity");
+//					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//					intent.putExtra("userid", userid);
+//					intent.putExtra("name", username);
+//
+//					main.startActivity(intent);
+//
+//				} else {
+//					mui.alert('目前视频通话功能仅支持安卓平台，且要求版本号至少为 4.0.3。', '提示', null);
+//				}
+//			});
+
+			//获取医生信息
+			function loadBusinessMsg() {
+//				var page = document.getElementById('page');
+				var self = plus.webview.currentWebview();
+				vm.doctorName = self.doctorName;
+				vm.doctorHospital= self.doctorHospital;
+				vm.doctorPhysicianship= self.doctorPhysicianship;
+				vm.doctorDepartment= self.doctorDepartment;
+				vm.doctorDesc= self.doctorDesc;
+//				vm.doctorId= self.doctorId;
+				vm.doctorAvatarUrl = self.doctorAvatarUrl;
+//				var content = self.NewsContent;
+//				var wenzhang = JSON.parse(content);
+//				vm.newsContent = wenzhang;
+
+			}
+			
+			
+			//返回
+			document.getElementById('back').addEventListener('tap', function() {
+//				var consultList = plus.webview.getWebviewById('consultList');
+//				consultList.reload();//页面返回重新加载
+				mui.back();
+				mui.back = function(){
+				var consultList = plus.webview.getWebviewById('consultList');
+				consultList.reload();//页面返回重新加载
+			}
+			});
+//			document.getElementById('chat').addEventListener('click',function(){
+////				console.log('医生id '+vm.doctorId);
+//				mui.openWindow({
+//					url: 'chat.html',
+//					id: 'chat',
+//					extras:{
+//						doctorName:vm.doctorName,
+//						doctorId:vm.doctorId,
+//						doctorAvatarUrl:vm.doctorAvatarUrl
+//					},
+////					createNew:true
+//				});
+//			})
+		</script>
+	</body>
+
+</html>
