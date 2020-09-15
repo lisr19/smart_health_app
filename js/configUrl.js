@@ -6,7 +6,8 @@
 
 //外网（阿里云）
 var baseUrl = 'http://120.24.0.130:8080/smart_health'
-
+//手表接口
+var baseUrl2 = 'http://120.24.0.130:11002/index/watchList'
 //内网
 // var baseUrl = 'http://192.168.0.123:8080/smart_health'
 

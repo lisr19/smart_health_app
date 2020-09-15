@@ -1,919 +1,887 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>智能手表</title>
-		<link href="css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="css/style.css" />
-		<link rel="stylesheet" href="css/watch.css" />
-		<link rel="stylesheet" href="css/timeline.css" />
-		<link rel="stylesheet" href="css/timer-shaft.css" />
-		<link rel="stylesheet" href="css/swiper.min.css" />
-		<script type="text/javascript" src="js/rem.js"></script>
-		<script type="text/javascript" src="js/iconfont.js"></script>
-		<script type="text/javascript" src="js/echarts.min.js"></script>
-	
-		<style>
-			.timeline-container {
-				margin-left: -3rem;
-			}
-			.timeline-dots-wrap.bottom ul{
-				height: 1.2rem;
-				padding-top: 0.3rem;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="smart_watch">
-			<div class="header" :style="'height: 1.4rem;background:'+color[currentIndex]">
-				<div class="baike-header">
-					<div class="baike-header-left" id="back">
-						<img src="img/return.png" />
-					</div>
-					<div class="baike-header-right-center">
-						{{title[currentIndex]}}
-					</div>
-					<div class="baike-header-top-right">
-						<img src="img/watch2.png" style="width: 0.3rem;height: 0.38rem;"/>
-					</div>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>智能手表</title>
+	<link href="css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/watch.css" />
+	<link rel="stylesheet" href="css/timeline.css" />
+	<link rel="stylesheet" href="css/timer-shaft.css" />
+	<link rel="stylesheet" href="css/swiper.min.css" />
+	<script type="text/javascript" src="js/rem.js"></script>
+	<script type="text/javascript" src="js/iconfont.js"></script>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+
+	<style>
+		.timeline-container {
+			margin-left: -3rem;
+		}
+		.timeline-dots-wrap.bottom ul{
+			height: 1.2rem;
+			padding-top: 0.3rem;
+		}
+	</style>
+</head>
+<body>
+<div id="smart_watch">
+	<div class="header" :style="'height: 1.4rem;background:'+color[currentIndex]">
+		<div class="baike-header">
+			<div class="baike-header-left" id="back">
+				<img src="img/return.png" />
+			</div>
+			<div class="baike-header-right-center">
+				{{title[currentIndex]}}
+			</div>
+			<div class="baike-header-top-right">
+				<img src="img/watch2.png" style="width: 0.3rem;height: 0.38rem;"/>
+			</div>
+		</div>
+	</div>
+
+	<div style="width: 7.5rem;">
+		<div class="tabs-body" :style="'border:1px solid '+color[currentIndex]">
+			<div v-for="(item,index) in iconShow"
+				 :class="index === 0?'tabs-panel tabs-panel-left':(index === 3?'tabs-panel tabs-panel-right':'tabs-panel')"
+				 :style="(index === currentIndex?'background:'+color[currentIndex]:'')"
+				 @click="changeTabsIndex(index)"	>
+				<img :src="item.icon"/>
+				<div class="tabs-panel-line" :style="'background:'+color[currentIndex]" v-if="index !== 3"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="tabs-panel-body" v-if="currentIndex === 0">
+		<div class="tabs-panel-taps">
+			<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2">{{walking_calories}}</span>大卡</div>
+			<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(88,134,233,1);">{{walking_distance}}</span>公里</div>
+			<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(233,167,88,1);">{{walking_duration}}</span>分钟</div>
+		</div>
+
+		<div class="tabs-panel-content">
+			<img src="img/point.png" class="tabs-panel-content-icon1"/>
+			<img src="img/share.png" class="tabs-panel-content-icon2"/>
+			<!--圆圈百分比-->
+			<div class="circle-content" >
+				<img src="img/foot_blue2.png" />
+				<canvas ref="bushu"  width="450" height="450" class="circle-big"></canvas>
+				<div class="circle-data">
+					/10,000步数
 				</div>
 			</div>
-			
-			<div style="width: 7.5rem;">
-				<div class="tabs-body" :style="'border:1px solid '+color[currentIndex]">
-					<div v-for="(item,index) in iconShow" 
-						:class="index === 0?'tabs-panel tabs-panel-left':(index === 3?'tabs-panel tabs-panel-right':'tabs-panel')"  
-						:style="(index === currentIndex?'background:'+color[currentIndex]:'')"
-						@click="changeTabsIndex(index)"	>
-						<img :src="item.icon"/>
-						<div class="tabs-panel-line" :style="'background:'+color[currentIndex]" v-if="index !== 3"></div>
-					</div>
+			<div class="circle-content-small" style="margin-left: 0.3rem;">
+				<img src="img/walking.png" style="width: 0.3rem;height: 0.48rem;"/>
+				<canvas ref="walking" width="800" height="800" class="circle-small"></canvas>
+				<div class="circle-data-small">
+					{{footDataShow.walking}}
+				</div>
+				<div class="circle-data-small2" >
+					走路
 				</div>
 			</div>
-			
-			
-			<div class="tabs-panel-body" v-if="currentIndex === 0">
-				<div class="tabs-panel-taps">
-					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2">{{walking_calories}}</span>大卡</div>
-					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(88,134,233,1);">{{walking_distance}}</span>公里</div>
-					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(233,167,88,1);">{{walking_duration}}</span>分钟</div>
+			<div class="circle-content-small" style="margin-left: 0.35rem;">
+				<img src="img/running.png" style="width: 0.42rem;height: 0.48rem;"/>
+				<canvas ref="running" width="800" height="800" class="circle-small"></canvas>
+				<div class="circle-data-small" style="color: #97C9FF;">
+					{{footDataShow.running}}
 				</div>
-				
-				<div class="tabs-panel-content">
-					<img src="img/point.png" class="tabs-panel-content-icon1"/>
-					<img src="img/share.png" class="tabs-panel-content-icon2"/>
-					<!--圆圈百分比-->
-					<div class="circle-content" >
-						<img src="img/foot_blue2.png" />
-						<canvas ref="bushu"  width="450" height="450" class="circle-big"></canvas>
-						<div class="circle-data">
-							/10,000步数
-						</div>
-					</div>
-					<div class="circle-content-small" style="margin-left: 0.3rem;">
-						<img src="img/walking.png" style="width: 0.3rem;height: 0.48rem;"/>
-						<canvas ref="walking" width="800" height="800" class="circle-small"></canvas>
-						<div class="circle-data-small">
-							{{footDataShow.walking}}
-						</div>
-						<div class="circle-data-small2" >
-							走路
-						</div>
-					</div>
-					<div class="circle-content-small" style="margin-left: 0.35rem;">
-						<img src="img/running.png" style="width: 0.42rem;height: 0.48rem;"/>
-						<canvas ref="running" width="800" height="800" class="circle-small"></canvas>
-						<div class="circle-data-small" style="color: #97C9FF;">
-							{{footDataShow.running}}
-						</div>
-						<div class="circle-data-small2" >
-							跑步
-						</div>
-					</div>
+				<div class="circle-data-small2" >
+					跑步
 				</div>
-<!--				<div class="foot">-->
-<!--					<div v-for="(item,index) in weekList" >{{item.day}}</div>-->
-<!--				</div>-->
-<!--				<div class="my-timeline">-->
-<!--					<div class="my-timeline-body">-->·
-<!--						<div class="timeline-container ">-->
-<!--						    <div class="timeline" id="foot">-->
-<!--						        <div v-for="(item,index) in weekList" :data-time="item.day"></div>-->
-<!--						    </div>	-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
+			</div>
+		</div>
+		<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+<!--			<div class="mui-scroll" id="foot1">-->
+<!--				<a class="mui-control-item" v-for="(item,index) in weekList">-->
+<!--					{{item.day}}-->
+<!--				</a>-->
 <!--			</div>-->
-			
-			<!--活动详情-->
-			<div class="tabs-panel-body" v-if="currentIndex === 1">
-				<div class="my-select" >
-					<div class="my-select-title" >
-						<div style="display: inline-block;float: left;">今天</div>
-						<img src="img/date.png" />
-					</div>
-					<ul style="height: 560px;overflow:auto;">
-						<li class="line"></li>
-<!--						<li>现在</li>-->
-						<template  v-for="item in dayHistory">
-							<li v-if="item.active_name==='走路'">
-								<div class="tip">
-									<div class="distance" style="font-size: 12px;width: auto;padding: 0 5px;display: flex;align-items: center">
-										<span >{{item.distance}}</span>
-									</div>
-									<div class="time">
-										<p>{{item.start_time}}</p>
-										<p>{{item.end_time}}</p>
-									</div>
-								</div>
-								<div class="icon">
-									<img src="img/zoulu.png" />
-								</div>
-								<div class="type">
-									<p style="font-size:0.32rem;font-weight:500;color:rgba(88,158,233,1);">{{item.active_name}}</p>
-									<p class="time2">{{item.total_time}}</p>
-								</div>
-							</li>
-							<li  v-if="item.active_name==='睡眠'">
-								<div class="tip" style="margin: -1rem 0;">
-									<div class="time sleep">
-										<p style="border: none;">{{item.start_time}}</p>
-										<p>{{item.end_time}}</p>
-									</div>
-								</div>
-								<div class="icon">
-									<img src="img/sleep.png" />
-								</div>
-								<div class="type">
-									<p style="font-size:0.32rem;font-weight:500;color:rgba(175,131,255,1);">睡眠</p>
-									<p class="time2">{{item.total_time}}</p>
-								</div>
-							</li>
-							<li v-if="item.active_name==='心跳'" >
-								<div class="tip">
-									<div class="time">
-										<p style="border: none;">{{item.start_time}}</p>
-									</div>
-								</div>
-								<div class="icon">
-									<img src="img/xinlv.png" />
-								</div>
-								<div class="type">
-									<span class="num">{{item.heartbeat.substring(0,item.heartbeat.length-4)}}
-										<em>次/分</em>
-									</span>
-								</div>
-							</li>
-						</template>
-					</ul>
-				</div>
-			</div>
-			
-			<!--心率-->
-			<div class="tabs-panel-body" v-if="currentIndex === 2">
-				<div class="tabs-panel-taps" style="justify-content:space-around">
-					<div class="tabs-panel-taps-font4">
-						最小值<span class="tabs-panel-taps-font5">{{minHValue}}</span>
-						<span class="tabs-panel-taps-font1" style="vertical-align: top;">次/分</span>
-					</div>
-					<div class="tabs-panel-taps-font4">
-						最大值<span class="tabs-panel-taps-font5">{{maxHValue}}</span>
-						<span class="tabs-panel-taps-font1" style="vertical-align: top;">次/分</span>
-					</div>
-				</div>
-				<div class="tabs-panel-content" style="padding: 0;margin-top: 1rem;">
-					<div id="xinlv" style="width: 15rem;height: 6rem;"></div>
-				</div>
-				<div class="timerShaft-body">
-					<ul class="shaft" id="shaft">
-						<li class="timer this-day">|
-							<p>今天</p>
-						</li>
-					</ul>
-				</div>
-			</div>
-			
-			<!--睡眠-->
-			<div class="tabs-panel-body" v-if="currentIndex === 3">
-				<div class="tabs-panel-taps" style="text-align: center;">
-					<div>
-						<div class="tabs-panel-taps-font2">{{sleepDataShow.sleep}}</div>
-						<div class="tabs-panel-taps-font3">睡觉时间</div>
-					</div>
-					<div>
-						<div class="tabs-panel-taps-font2">{{sleepDataShow.wake}}</div>
-						<div class="tabs-panel-taps-font3">睡醒时间</div>
-					</div>
-				</div>
-				
-				<div class="tabs-panel-content">
-					<!--圆圈百分比-->
-					<div class="circle-content" >
-						<img src="img/moon_purple2.png" />
-						<div class="circle-data-big">{{sleepDataShow.sleep_count}}</div>
-						<canvas ref="sleep"  width="450" height="450" class="circle-big"></canvas>
-					</div>
-					<div class="circle-content-small" style="margin-left: 0.3rem;">
-						<canvas ref="sleep_deep" width="800" height="800" class="circle-small"></canvas>
-						<div class="circle-data-small" style="color: #AF83FF;">
-							{{sleepDataShow.sleep_deep}}
-						</div>
-						<div class="circle-data-small2" >
-							深睡
-						</div>
-					</div>
-					<div class="circle-content-small" style="margin-left: 0.35rem;">
-						<canvas ref="sleep_lightly" width="800" height="800" class="circle-small"></canvas>
-						<div class="circle-data-small" style="color: #CFB4FF;">
-							{{sleepDataShow.sleep_lightly}}
-						</div>
-						<div class="circle-data-small2" >
-							浅睡
-						</div>
-					</div>
-				</div>
-				
-				<div class="my-timeline">
-					<div class="my-timeline-body">
-						<div class="timeline-container ">
-						    <div class="timeline" id="sleep">
-						        <div v-for="(item,index) in weekList" :data-time="item.day"></div>
-						    </div>	
-						</div>
+		</div>
+		<div class="my-timeline">
+			<div class="my-timeline-body">
+				<div class="timeline-container ">
+					<div class="timeline" id="foot">
+						<div v-for="(item,index) in weekList" :data-time="item.day"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="js/timeline.js"></script>
-		<script type="text/javascript" src="js/timer-shaft.js"></script>
-		<script type="text/javascript" src="js/mui.min.js"></script>
-		<script type="text/javascript" src="js/vue.js"></script>
-		<script type="text/javascript" src="js/configUrl.js"></script>
-		<script type="text/javascript" src="js/utils/http.js"></script>
-		<script>
-			mui.init();
-			var vm = new Vue({
-				el: "#smart_watch",
-				data: {
-					weekList:[{
-						day:'今天'
-					}],
-					walking_calories:0,
-					walking_distance:0,
-					walking_duration:0,
-					currentDate:'',
-					step:true, //走路
-					heartRate:true, //心率
-					sleep:true, //睡眠
-					currentIndex:1,//当前模块位置
-					color:['#589EE9','#838383','#DC2C5A','#AF83FF'],
-					title:['步数','活动详情','心率','睡眠'],
-					test1:false,
-					speed:0,
-					footCountData:[
-						// {
-						// 	day:'5月10日',
-						// 	count:12200,
-						// 	walking:10325,
-						// 	running:1982
-						// },
-						// {
-						// 	day:'5月11日',
-						// 	count:8665,
-						// 	walking:6854,
-						// 	running:1211
-						// },
-						// {
-						// 	day:'5月12日',
-						// 	count:9900,
-						// 	walking:8422,
-						// 	running:1455
-						// },
-						// {
-						// 	day:'今天',
-						// 	count:0,
-						// 	walking:0,
-						// 	running:0
-						// }
-					],
-					footDataShow:{
-						walking:0,
-						running:0
-					},
-					sleepCountData:[
-						// {
-						// 	day:'5月12日',
-						// 	sleep:"23:38",
-						// 	wake:"7:38",
-						// 	sleep_count:310,
-						// 	sleep_deep:250,
-						// 	sleep_lightly:60
-						// },
-						// {
-						// 	day:'今天',
-						// 	sleep:"24:00",
-						// 	wake:"7:00",
-						// 	sleep_count:300,
-						// 	sleep_deep:240,
-						// 	sleep_lightly:60
-						// }
-					],
-					sleepDataShow:{
-						sleep:0,
-						wake:0,
-						sleep_count:0,
-						sleep_deep:0,
-						sleep_lightly:0
-					},
-					iconArray:[
-						[
-							{icon:'img/foot_blue.png'},
-							{icon:'img/more_blue.png'},
-							{icon:'img/xin_blue.png'},
-							{icon:'img/moon_blue.png'}
-						],
-						[
-							{icon:'img/foot_gray.png'},
-							{icon:'img/more_gray.png'},
-							{icon:'img/xin_gray.png'},
-							{icon:'img/moon_gray.png'}
-						],
-						[
-							{icon:'img/foot_red.png'},
-							{icon:'img/more_red.png'},
-							{icon:'img/xin_red.png'},
-							{icon:'img/moon_red.png'}
-						],
-						[
-							{icon:'img/foot_purple.png'},
-							{icon:'img/more_purple.png'},
-							{icon:'img/xin_purple.png'},
-							{icon:'img/moon_purple.png'}
-						]
-					],
-					iconShow:[],
-					currDate:'',
-					selectDate:'',
-					dayHistory:[],
-					xinlvData:[],
-					minHValue:0,
-					maxHValue:0,
+	</div>
 
-				},
-				created(){
-					this.userid = localStorage.getItem('userid');
-					console.log(this.userid);
-					this.changeTabsIndex(0)
-					this.getNowDate()
-					setTimeout(()=>{
-						this.getDay(-1,'-')
-						this.getDay(-2,'-')
-					})
+	<!--活动详情-->
+	<div class="tabs-panel-body" v-if="currentIndex === 1">
+		<div class="my-select" >
+			<div class="my-select-title" >
+				<div style="display: inline-block;float: left;">今天</div>
+				<img src="img/date.png" />
+			</div>
+			<ul style="height: 560px;overflow:auto;">
+				<li class="line"></li>
+				<!--						<li>现在</li>-->
+				<template  v-for="item in dayHistory">
+					<li v-if="item.active_name==='走路'">
+						<div class="tip">
+							<div class="distance" style="font-size: 12px;width: auto;padding: 0 5px;display: flex;align-items: center">
+								<span >{{item.distance}}</span>
+							</div>
+							<div class="time">
+								<p>{{item.start_time}}</p>
+								<p>{{item.end_time}}</p>
+							</div>
+						</div>
+						<div class="icon">
+							<img src="img/zoulu.png" />
+						</div>
+						<div class="type">
+							<p style="font-size:0.32rem;font-weight:500;color:rgba(88,158,233,1);">{{item.active_name}}</p>
+							<p class="time2">{{item.total_time}}</p>
+						</div>
+					</li>
+					<li  v-if="item.active_name==='睡眠'">
+						<div class="tip" style="margin: -1rem 0;">
+							<div class="time sleep">
+								<p style="border: none;">{{item.start_time}}</p>
+								<p>{{item.end_time}}</p>
+							</div>
+						</div>
+						<div class="icon">
+							<img src="img/sleep.png" />
+						</div>
+						<div class="type">
+							<p style="font-size:0.32rem;font-weight:500;color:rgba(175,131,255,1);">睡眠</p>
+							<p class="time2">{{item.total_time}}</p>
+						</div>
+					</li>
+					<li v-if="item.active_name==='心跳'" >
+						<div class="tip">
+							<div class="time">
+								<p style="border: none;">{{item.start_time}}</p>
+							</div>
+						</div>
+						<div class="icon">
+							<img src="img/xinlv.png" />
+						</div>
+						<div class="type">
+									<span class="num">{{item.heartbeat.substring(0,item.heartbeat.length-4)}}
+										<em>次/分</em>
+									</span>
+						</div>
+					</li>
+				</template>
+			</ul>
+		</div>
+	</div>
 
-				},
-				mounted:function(){
+	<!--心率-->
+	<div class="tabs-panel-body" v-if="currentIndex === 2">
+		<div class="tabs-panel-taps" style="justify-content:space-around">
+			<div class="tabs-panel-taps-font4">
+				最小值<span class="tabs-panel-taps-font5">{{minHValue}}</span>
+				<span class="tabs-panel-taps-font1" style="vertical-align: top;">次/分</span>
+			</div>
+			<div class="tabs-panel-taps-font4">
+				最大值<span class="tabs-panel-taps-font5">{{maxHValue}}</span>
+				<span class="tabs-panel-taps-font1" style="vertical-align: top;">次/分</span>
+			</div>
+		</div>
+		<div class="tabs-panel-content" style="padding: 0;margin-top: 1rem;">
+			<div id="xinlv" style="width: 15rem;height: 6rem;"></div>
+		</div>
+		<div class="timerShaft-body">
+			<ul class="shaft" id="shaft">
+				<li class="timer this-day">|
+					<p>今天</p>
+				</li>
+			</ul>
+		</div>
+	</div>
 
-				},
-				methods:{
-					open(){
-						console.log(4594194);
+	<!--睡眠-->
+	<div class="tabs-panel-body" v-if="currentIndex === 3">
+		<div class="tabs-panel-taps" style="text-align: center;">
+			<div>
+				<div class="tabs-panel-taps-font2">{{sleepDataShow.sleep}}</div>
+				<div class="tabs-panel-taps-font3">睡觉时间</div>
+			</div>
+			<div>
+				<div class="tabs-panel-taps-font2">{{sleepDataShow.wake}}</div>
+				<div class="tabs-panel-taps-font3">睡醒时间</div>
+			</div>
+		</div>
+
+		<div class="tabs-panel-content">
+			<!--圆圈百分比-->
+			<div class="circle-content" >
+				<img src="img/moon_purple2.png" />
+				<div class="circle-data-big">{{sleepDataShow.sleep_count}}</div>
+				<canvas ref="sleep"  width="450" height="450" class="circle-big"></canvas>
+			</div>
+			<div class="circle-content-small" style="margin-left: 0.3rem;">
+				<canvas ref="sleep_deep" width="800" height="800" class="circle-small"></canvas>
+				<div class="circle-data-small" style="color: #AF83FF;">
+					{{sleepDataShow.sleep_deep}}
+				</div>
+				<div class="circle-data-small2" >
+					深睡
+				</div>
+			</div>
+			<div class="circle-content-small" style="margin-left: 0.35rem;">
+				<canvas ref="sleep_lightly" width="800" height="800" class="circle-small"></canvas>
+				<div class="circle-data-small" style="color: #CFB4FF;">
+					{{sleepDataShow.sleep_lightly}}
+				</div>
+				<div class="circle-data-small2" >
+					浅睡
+				</div>
+			</div>
+		</div>
+
+		<div class="my-timeline">
+			<div class="my-timeline-body">
+				<div class="timeline-container ">
+					<div class="timeline" id="sleep">
+						<div v-for="(item,index) in weekList" :data-time="item.day"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/timeline.js"></script>
+<script type="text/javascript" src="js/timer-shaft.js"></script>
+<script type="text/javascript" src="js/mui.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/configUrl.js"></script>
+<script type="text/javascript" src="js/utils/http.js"></script>
+<script>
+	mui.init();
+	var vm = new Vue({
+		el: "#smart_watch",
+		data: {
+			weekList:[{
+				day:'今天'
+			}],
+			walking_calories:0,
+			walking_distance:0,
+			walking_duration:0,
+			currentDate:'',
+			step:true, //走路
+			heartRate:true, //心率
+			sleep:true, //睡眠
+			currentIndex:1,//当前模块位置
+			color:['#589EE9','#838383','#DC2C5A','#AF83FF'],
+			title:['步数','活动详情','心率','睡眠'],
+			test1:false,
+			speed:0,
+			footCountData:[],
+			footDataShow:{
+				walking:0,
+				running:0
+			},
+			sleepCountData:[],
+			sleepDataShow:{
+				sleep:0,
+				wake:0,
+				sleep_count:0,
+				sleep_deep:0,
+				sleep_lightly:0
+			},
+			iconArray:[
+				[
+					{icon:'img/foot_blue.png'},
+					{icon:'img/more_blue.png'},
+					{icon:'img/xin_blue.png'},
+					{icon:'img/moon_blue.png'}
+				],
+				[
+					{icon:'img/foot_gray.png'},
+					{icon:'img/more_gray.png'},
+					{icon:'img/xin_gray.png'},
+					{icon:'img/moon_gray.png'}
+				],
+				[
+					{icon:'img/foot_red.png'},
+					{icon:'img/more_red.png'},
+					{icon:'img/xin_red.png'},
+					{icon:'img/moon_red.png'}
+				],
+				[
+					{icon:'img/foot_purple.png'},
+					{icon:'img/more_purple.png'},
+					{icon:'img/xin_purple.png'},
+					{icon:'img/moon_purple.png'}
+				]
+			],
+			iconShow:[],
+			currDate:'',
+			selectDate:'',
+			dayHistory:[],
+			xinlvData:[],
+			minHValue:0,
+			maxHValue:0,
+
+		},
+		created(){
+			this.userid = localStorage.getItem('userid');
+			console.log(this.userid);
+			this.changeTabsIndex(0)
+			this.getNowDate()
+			setTimeout(()=>{
+				this.getDay(-1,'-')
+				this.getDay(-2,'-')
+				// this.getDay(-3,'-')
+				// this.getDay(-4,'-')
+			})
+
+		},
+		mounted:function(){
+
+		},
+		methods:{
+			open(){
+				console.log(4594194);
+			},
+			//获取当前时间
+			getDay(num, str) {
+				var today = new Date();
+				var nowTime = today.getTime();
+				var ms = 24 * 3600 * 1000 * num;
+				today.setTime(parseInt(nowTime + ms));
+				var oYear = today.getFullYear();
+				var oMoth = (today.getMonth() + 1).toString();
+				if (oMoth.length <= 1) oMoth = '0' + oMoth;
+				var oDay = today.getDate().toString();
+				if (oDay.length <= 1) oDay = '0' + oDay;
+				this.currDate = oYear + str + oMoth + str + oDay;
+				this.showDate = oMoth + '月' + oDay+'日'
+				this.weekList.unshift({
+					day:this.showDate
+				})
+				this.getInfor({uid:this.userid,date:this.currDate})
+
+			},
+
+			getNowDate () {
+				var date = new Date();
+				var seperator1 = "-";
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				this.currentDate = year + seperator1 + month + seperator1 + strDate;
+				this.getInfor({uid:this.userid,date:this.currentDate})
+				this.getInfor2({uid:this.userid,date:this.currentDate})
+				// this.getInfor2({uid:this.userid,date:'2020-09-14'})
+			},
+			//获取信息
+			getInfor(params){
+				var token = localStorage.getItem('token');
+				mui.ajax(baseUrl2,{
+					headers: {
+						'Authorization': token,
 					},
-					//获取当前时间
-					getDay(num, str) {
-						var today = new Date();
-						var nowTime = today.getTime();
-						var ms = 24 * 3600 * 1000 * num;
-						today.setTime(parseInt(nowTime + ms));
-						var oYear = today.getFullYear();
-						var oMoth = (today.getMonth() + 1).toString();
-						if (oMoth.length <= 1) oMoth = '0' + oMoth;
-						var oDay = today.getDate().toString();
-						if (oDay.length <= 1) oDay = '0' + oDay;
-						this.currDate = oYear + str + oMoth + str + oDay;
-						this.showDate = oMoth + '月' + oDay+'日'
-						this.weekList.unshift({
-							day:this.showDate
-						})
-						this.getInfor({uid:this.userid,date:this.currDate})
-
-					},
-
-					getNowDate () {
-						var date = new Date();
-						var seperator1 = "-";
-						var year = date.getFullYear();
-						var month = date.getMonth() + 1;
-						var strDate = date.getDate();
-						if (month >= 1 && month <= 9) {
-							month = "0" + month;
-						}
-						if (strDate >= 0 && strDate <= 9) {
-							strDate = "0" + strDate;
-						}
-						this.currentDate = year + seperator1 + month + seperator1 + strDate;
-						this.getInfor({uid:this.userid,date:this.currentDate})
-						this.getInfor2({uid:this.userid,date:this.currentDate})
-						// this.getInfor2({uid:this.userid,date:'2020-09-14'})
-					},
-					//获取信息
-					getInfor(params){
-						var token = localStorage.getItem('token');
-						mui.ajax(baseUrl2,{
-							headers: {
-								'Authorization': token,
-							},
-							data:params,
-							dataType:'json',//服务器返回json格式数据
-							type:'get',//HTTP请求类型
-							timeout:10000,//超时时间设置为10秒；
-							success: (data)=> {
-								if(data.errno === 0){
-									let dataList =data.data.list
-									let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
-									let total_calories = []
-									let total_distance = []
-									let total_duration = []
-									let walking = []
-									if(dataList.length){
-										dataList.forEach((item,index)=>{
-											walking.push(item.total_steps)
-											total_calories.push(item.total_calories)
-											total_distance.push(item.total_distance)
-											total_duration.push(item.total_duration)
-											if(item.action_type==='SLEEP'){
-												this.sleepCountData.unshift({
-													sleep:new Date(item.start_time).toTimeString().substr(0, 8),
-													// sleep:item.start_time,
-													// wake:item.end_time,
-													cdate:item.create_time,
-													wake:new Date(item.end_time).toTimeString().substr(0, 8),
-													sleep_count:((item.fall_asleep+item.restless)/(1000)).toFixed(2),
-													sleep_deep:((item.fall_asleep/(1000))).toFixed(2),
-													sleep_lightly:(item.restless/(1000)).toFixed(2)
-												})
-												// console.log(this.sleepCountData.length);
-											}
+					data:params,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success: (data)=> {
+						if(data.errno === 0){
+							let dataList =data.data.list
+							let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
+							let total_calories = []
+							let total_distance = []
+							let total_duration = []
+							let walking = []
+							if(dataList.length){
+								dataList.forEach((item,index)=>{
+									walking.push(item.total_steps)
+									total_calories.push(item.total_calories)
+									total_distance.push(item.total_distance)
+									total_duration.push(item.total_duration)
+									if(item.action_type==='SLEEP'){
+										this.sleepCountData.unshift({
+											sleep:new Date(item.start_time).toTimeString().substr(0, 8),
+											// sleep:item.start_time,
+											// wake:item.end_time,
+											cdate:item.create_time,
+											wake:new Date(item.end_time).toTimeString().substr(0, 8),
+											sleep_count:((item.fall_asleep+item.restless)/(1000)).toFixed(2),
+											sleep_deep:((item.fall_asleep/(1000))).toFixed(2),
+											sleep_lightly:(item.restless/(1000)).toFixed(2)
 										})
-
-										// console.log(JSON.stringify(this.sleepCountData));
-
-										walking=eval(walking.join("+"))
-										total_calories=(eval(total_calories.join("+"))/1000).toFixed(2)||0
-										total_distance=(eval(total_distance.join("+"))/1000).toFixed(2)||0
-										total_duration=(eval(total_duration.join("+"))/60).toFixed(2)||0
-										// this.footCountData=[]
-										this.footCountData.unshift({
-											walking:walking,
-											running:0,
-											// day:'今天',
-											count:walking,
-											total_calories:total_calories,
-											total_distance:total_distance,
-											total_duration:total_duration,
-										})
+										// console.log(this.sleepCountData.length);
 									}
+								})
 
-									// console.log(JSON.stringify(this.xinlvData));
-								}
+								// console.log(JSON.stringify(this.sleepCountData));
 
-							},
-							error:function(xhr,type,errorThrown){
-
+								walking=eval(walking.join("+"))
+								total_calories=(eval(total_calories.join("+"))/1000).toFixed(2)||0
+								total_distance=(eval(total_distance.join("+"))/1000).toFixed(2)||0
+								total_duration=(eval(total_duration.join("+"))/60).toFixed(2)||0
+								// this.footCountData=[]
+								this.footCountData.unshift({
+									walking:walking,
+									running:0,
+									// day:'今天',
+									count:walking,
+									total_calories:total_calories,
+									total_distance:total_distance,
+									total_duration:total_duration,
+								})
 							}
-						});
+
+							// console.log(JSON.stringify(this.xinlvData));
+						}
 
 					},
-					//选中tabs
-					changeTabsIndex:function(index){
-						var _self = this;
-						if(_self.currentIndex !== index){
+					error:function(xhr,type,errorThrown){
+
+					}
+				});
+
+			},
+			//选中tabs
+			changeTabsIndex:function(index){
+				var _self = this;
+				if(_self.currentIndex !== index){
 //							$("#foot").empty();
 //							$("#sleep").empty();
-							_self.currentIndex = index
-							_self.iconShow = _self.iconArray[index]
-							if(index === 0){//当tabs为0时
-								_self.speed = 300;
-								setTimeout(function(){
-									if(_self.footCountData.length >2){
-										var width = (_self.footCountData.length * 3)+'rem'
-										$('.timeline-container').css("width",width)
-									}
+					_self.currentIndex = index
+					_self.iconShow = _self.iconArray[index]
+					if(index === 0){//当tabs为0时
+						_self.speed = 300;
+						setTimeout(function(){
+							if(_self.footCountData.length >2){
+								var width = (_self.footCountData.length * 3)+'rem'
+								$('.timeline-container').css("width",width)
+							}
 
-									$('#foot').Timeline({
-										itemClass: 'box-item',
-									  	dotsPosition: 'bottom',
-									  	startItem: 'last',
-									});
-									_self.setFootCount(_self.footCountData.length-1)
-								},100)
-							}else if(index === 1){
-								
+							$('#foot').Timeline({
+								itemClass: 'box-item',
+								dotsPosition: 'bottom',
+								startItem: 'last',
+							});
+							_self.setFootCount(_self.footCountData.length-1)
+						},100)
+					}else if(index === 1){
 
-							}else if(index === 2){
-								setTimeout(function(){
-									_self.setXinlvCharts();
-								},100)
-								setTimeout(function(){
-									shaftInit();
-								},100)
-							}else if(index === 3){
-								_self.speed = 10
-								setTimeout(function(){
-									if(_self.sleepCountData.length >2){
-										var width = (_self.sleepCountData.length * 3)+'rem'
-										$('.timeline-container').css("width",width)
-									}
-									$('#sleep').Timeline({
-										itemClass: 'box-item',
-									  	dotsPosition: 'bottom',
-									  	startItem: 'last',
-									});
-									_self.setSleepData(_self.sleepCountData.length-1)
-								},100)
+
+					}else if(index === 2){
+						setTimeout(function(){
+							_self.setXinlvCharts();
+						},100)
+						setTimeout(function(){
+							shaftInit();
+						},100)
+					}else if(index === 3){
+						_self.speed = 10
+						setTimeout(function(){
+							if(_self.sleepCountData.length >2){
+								var width = (_self.sleepCountData.length * 3)+'rem'
+								$('.timeline-container').css("width",width)
+							}
+							$('#sleep').Timeline({
+								itemClass: 'box-item',
+								dotsPosition: 'bottom',
+								startItem: 'last',
+							});
+							_self.setSleepData(_self.sleepCountData.length-1)
+						},100)
+					}
+				}
+			},
+			//绘制运动圈
+			runingCircle:function(circle,params){
+				circle.context.save();
+				circle.context.strokeStyle = params.runColor; //设置描边样式
+				circle.context.lineWidth = params.size; //设置线宽
+				circle.context.lineCap = 'round'; //设置线帽圆滑
+				circle.context.beginPath(); //路径开始
+				circle.context.arc(circle.centerX, circle.centerY, 200, 0.5*Math.PI, 0.5*Math.PI + circle.speed * circle.rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
+				circle.context.stroke(); //绘制
+				circle.context.closePath(); //路径结束
+				circle.context.restore();
+			},
+			//绘制背景圈
+			bgCircle:function(circle,params) {
+				circle.context.save();
+				circle.context.beginPath();
+				circle.context.lineWidth = params.size; //设置线宽
+				circle.context.strokeStyle = params.bgColor;
+				circle.context.arc(circle.centerX, circle.centerY, 200, 0, Math.PI * 2, false);
+				circle.context.stroke();
+				circle.context.closePath();
+				circle.context.restore();
+			},
+			//百分比文字绘制
+			textOutput:function(circle,params) {
+				var n = circle.speed
+				circle.context.save(); //save和restore可以保证样式属性只运用于该段canvas元素
+				circle.context.strokeStyle = params.fontColor; //设置描边样式
+				circle.context.font = params.fontSize; //设置字体大小和字体
+				//绘制字体，并且指定位置
+				circle.context.fillStyle = params.fontColor2;
+				if(n < 100) {
+					circle.context.fillText(n.toFixed(0), circle.centerX - 58, circle.centerY + 35);
+				}
+				if(n >= 100 && n < 1000) {
+					circle.context.fillText(n.toFixed(0), circle.centerX - 85, circle.centerY + 35);
+				}
+				if(n >= 1000 && n < 10000) {
+					circle.context.fillText(n.toFixed(0), circle.centerX - 110, circle.centerY + 35);
+				}
+				if(n >= 10000) {
+					circle.context.fillText(n.toFixed(0), circle.centerX - 150, circle.centerY + 35);
+				}
+				circle.context.stroke(); //执行绘制
+				circle.context.restore();
+			},
+			//动画循环，步数控制
+			drawFrame:function(circle,params) {
+				var _self = this;
+				//启动动画，每帧回调一次
+				var timer = requestAnimationFrame(function(){
+					_self.drawFrame(circle,params)
+				});
+				circle.context.clearRect(0, 0, circle.canvas.width, circle.canvas.height);
+				_self.bgCircle(circle,params);
+				if(params.textShow){
+					_self.textOutput(circle,params);
+				}
+				_self.runingCircle(circle,params);
+				//显示
+				var bushu = params.data-_self.speed;
+				if(circle.speed > bushu) {
+					circle.speed = bushu;
+					cancelAnimationFrame(function(){
+						timer
+					}); //停止动画刷新
+				}
+				circle.speed += _self.speed; //转动速度，越大变化越快
+				//setInterval(drawFrame,100);
+			},
+			//生成心率散点图表
+			setXinlvCharts:function(){
+				var myChart = echarts.init(document.getElementById('xinlv'));
+				var option = {
+					xAxis: {
+						type: 'value',
+						min: 0,
+						max: 23,
+						interval:1,
+						axisLine:{
+							show:false
+						},
+						axisTick:{
+							length:0,
+						},
+						axisLabel:{
+							color:'#BDBDBD',
+						},
+						splitLine:{
+							lineStyle:{
+								color:'#E6E6E6',
+								type:'dashed'
 							}
 						}
 					},
-					//绘制运动圈
-					runingCircle:function(circle,params){
-						circle.context.save();
-						circle.context.strokeStyle = params.runColor; //设置描边样式
-						circle.context.lineWidth = params.size; //设置线宽
-						circle.context.lineCap = 'round'; //设置线帽圆滑
-						circle.context.beginPath(); //路径开始
-						circle.context.arc(circle.centerX, circle.centerY, 200, 0.5*Math.PI, 0.5*Math.PI + circle.speed * circle.rad, false); //用于绘制圆弧context.arc(x坐标，y坐标，半径，起始角度，终止角度，顺时针/逆时针)
-						circle.context.stroke(); //绘制
-						circle.context.closePath(); //路径结束
-						circle.context.restore();
-					},
-					//绘制背景圈
-					bgCircle:function(circle,params) {
-						circle.context.save();
-						circle.context.beginPath();
-						circle.context.lineWidth = params.size; //设置线宽
-						circle.context.strokeStyle = params.bgColor;
-						circle.context.arc(circle.centerX, circle.centerY, 200, 0, Math.PI * 2, false);
-						circle.context.stroke();
-						circle.context.closePath();
-						circle.context.restore();
-					},
-					//百分比文字绘制
-					textOutput:function(circle,params) {
-						var n = circle.speed
-						circle.context.save(); //save和restore可以保证样式属性只运用于该段canvas元素
-						circle.context.strokeStyle = params.fontColor; //设置描边样式
-						circle.context.font = params.fontSize; //设置字体大小和字体
-						//绘制字体，并且指定位置
-						circle.context.fillStyle = params.fontColor2;
-						if(n < 100) {
-							circle.context.fillText(n.toFixed(0), circle.centerX - 58, circle.centerY + 35);
-						}
-						if(n >= 100 && n < 1000) {
-							circle.context.fillText(n.toFixed(0), circle.centerX - 85, circle.centerY + 35);
-						}
-						if(n >= 1000 && n < 10000) {
-							circle.context.fillText(n.toFixed(0), circle.centerX - 110, circle.centerY + 35);
-						}
-						if(n >= 10000) {
-							circle.context.fillText(n.toFixed(0), circle.centerX - 150, circle.centerY + 35);
-						}
-						circle.context.stroke(); //执行绘制
-						circle.context.restore();
-					},
-					//动画循环，步数控制
-					drawFrame:function(circle,params) {
-						var _self = this;
-						//启动动画，每帧回调一次
-						var timer = requestAnimationFrame(function(){
-							_self.drawFrame(circle,params)
-						});
-						circle.context.clearRect(0, 0, circle.canvas.width, circle.canvas.height);
-						_self.bgCircle(circle,params);
-						if(params.textShow){
-							_self.textOutput(circle,params);
-						}
-						_self.runingCircle(circle,params);
-						//显示
-						var bushu = params.data-_self.speed; 
-						if(circle.speed > bushu) {
-							circle.speed = bushu;
-							cancelAnimationFrame(function(){
-								timer
-							}); //停止动画刷新
-						}
-						circle.speed += _self.speed; //转动速度，越大变化越快
-						//setInterval(drawFrame,100);
-					},
-					//生成心率散点图表
-					setXinlvCharts:function(){
-						var myChart = echarts.init(document.getElementById('xinlv'));
-						var option = {
-						    xAxis: {
-						    	type: 'value',
-								min: 0,
-								max: 23,
-						    	interval:1,
-						    	axisLine:{
-						    		show:false
-						    	},
-						    	axisTick:{
-						    		length:0,
-						    	},
-						    	axisLabel:{
-						    		color:'#BDBDBD',
-						    	},
-						    	splitLine:{
-						    		lineStyle:{
-						    			color:'#E6E6E6',
-						    			type:'dashed'
-						    		}
-						    	}
-						    },
-						    yAxis: {
-						    	type: 'value',
-								min: 0,
-								max: 200,
-						    	axisLine:{
-						    		show:false
-						    	},
-						    	minInterval: 1,
-						    	interval:20,
-						    	axisTick:{
-						    		length:0,
-						    	},
-						    	axisLabel:{
-						    		color:'#BDBDBD'
-						    	},
-						    	splitLine:{
-						    		lineStyle:{
-						    			color:'#E6E6E6',
-						    			type:'dashed'
-						    		}
-						    	}
-						    },
-					     	grid: {
-					            left: '3%',
-					            right: '3%',
-					            bottom: '0',
-					            top: '10%',
-					            containLabel: true
-				          	},
-						    series: [{
-						        symbolSize: 10,
-								data:this.xinlvData,
-						        itemStyle:{
-						        	color:'#DC2C5A'
-						        },
-						        type: 'scatter',
-						        markArea: { //标记区域
-						            data: [
-						                [{
-							                yAxis: 60,//y轴坐标控制
-							                itemStyle:{
-							                    color:'#AFFAB5',
-							                    opacity:0.25
-							                }
-							            	}, {
-							                yAxis: 160
-							            }]
-					                ]
-						        },
-						    }]
-						};
-						// 使用刚指定的配置项和数据显示图表。
-						myChart.setOption(option);
-					},
-					//设置步数页面数据
-					setFootCount(index){
-						console.log(index);
-						// this.getDay2(index-2,'-')
-						var data2 = this.footCountData[index];
-						this.walking_calories=data2.total_calories
-						this.walking_distance=data2.total_distance
-						this.walking_duration=data2.total_duration
-						this.footDataShow={
-							walking:data2.walking,
-							running:data2.running
-						}
-						var canvas = this.$refs.bushu;
-						var circle = {
-							canvas : canvas,//获取canvas元素
-							context : canvas.getContext('2d'),//获取画图环境，指明为2d
-							centerX : canvas.width / 2,//Canvas中心点x轴坐标
-							centerY : canvas.height / 2,//Canvas中心点y轴坐标
-							rad : Math.PI * 2 / 10000, //将360度分成10000份，那么每一份就是rad度
-							speed : 0//加载的快慢就靠它了
-						}
-						var params1 = {
-							data : data2.count,
-							runColor : "#589EE9",
-							bgColor: "#D4E9FF",
-							fontColor : "#D4E9FF",
-							fontColor2 : "#589EE9",
-							fontSize : "100px 微软雅黑",
-							size : 40,
-							textShow:true
-						}
-
-						var canvas2 = this.$refs.walking;
-						var circle2 = {
-							canvas : canvas2,//获取canvas元素
-							context : canvas2.getContext('2d'),//获取画图环境，指明为2d
-							centerX : canvas2.width / 2,//Canvas中心点x轴坐标
-							centerY : canvas2.height / 2,//Canvas中心点y轴坐标
-							rad : Math.PI * 2 / 10000, //将360度分成10000份，那么每一份就是rad度
-							speed : 0//加载的快慢就靠它了
-						}
-						var params2 = {
-							data : data2.walking,
-							runColor : "#589EE9",
-							bgColor: "#E6E6E6",
-							fontColor : "#D4E9FF",
-							fontColor2 : "#589EE9",
-							fontSize : "100px 微软雅黑",
-							size : 60,
-							textShow:false
-						}
-
-						var canvas3 = this.$refs.running;
-						var circle3 = {
-							canvas : canvas3,//获取canvas元素
-							context : canvas3.getContext('2d'),//获取画图环境，指明为2d
-							centerX : canvas3.width / 2,//Canvas中心点x轴坐标
-							centerY : canvas3.height / 2,//Canvas中心点y轴坐标
-							rad : Math.PI * 2 / 10000, //将360度分成10000份，那么每一份就是rad度
-							speed : 0//加载的快慢就靠它了
-						}
-						var params3 = {
-							data : data2.running,
-							runColor : "#97C9FF",
-							bgColor: "#E6E6E6",
-							fontColor : "#D4E9FF",
-							fontColor2 : "#589EE9",
-							fontSize : "100px 微软雅黑",
-							size : 60,
-							textShow:false
-						}
-						//启动动画循环
-						this.drawFrame(circle,params1);
-						this.drawFrame(circle2,params2);
-						this.drawFrame(circle3,params3);
-					},
-					//设计睡眠页面数据
-					setSleepData:function(index){
-						var _self = this;
-						var data = _self.sleepCountData[index];
-						_self.sleepDataShow={
-							sleep:data.sleep,
-							wake:data.wake,
-							sleep_count:data.sleep_count,
-							sleep_deep:data.sleep_deep,
-							sleep_lightly:data.sleep_lightly
-						}
-						
-						var canvas = _self.$refs.sleep;
-						var circle = {
-							canvas : canvas,//获取canvas元素
-							context : canvas.getContext('2d'),//获取画图环境，指明为2d
-							centerX : canvas.width / 2,//Canvas中心点x轴坐标
-							centerY : canvas.height / 2,//Canvas中心点y轴坐标
-							rad : Math.PI * 2 / 1440, 
-							speed : 0//加载的快慢就靠它了
-						}
-						var params1 = {
-							data : data.sleep_count,
-							runColor : "#AF83FF",
-							bgColor: "#EBE0FF",
-							fontColor : "#EBE0FF",
-							fontColor2 : "#AF83FF",
-							fontSize : "100px 微软雅黑",
-							size : 40,
-							textShow:false
-						}
-						
-						var canvas2 = _self.$refs.sleep_deep;
-						var circle2 = {
-							canvas : canvas2,//获取canvas元素
-							context : canvas2.getContext('2d'),//获取画图环境，指明为2d
-							centerX : canvas2.width / 2,//Canvas中心点x轴坐标
-							centerY : canvas2.height / 2,//Canvas中心点y轴坐标
-							rad : Math.PI * 2 / 1440, 
-							speed : 0//加载的快慢就靠它了
-						}
-						var params2 = {
-							data : data.sleep_deep,
-							runColor : "#AF83FF",
-							bgColor: "#E6E6E6",
-							fontColor : "#D4E9FF",
-							fontColor2 : "#589EE9",
-							fontSize : "100px 微软雅黑",
-							size : 60,
-							textShow:false
-						}
-						
-						var canvas3 = _self.$refs.sleep_lightly;
-						var circle3 = {
-							canvas : canvas3,//获取canvas元素
-							context : canvas3.getContext('2d'),//获取画图环境，指明为2d
-							centerX : canvas3.width / 2,//Canvas中心点x轴坐标
-							centerY : canvas3.height / 2,//Canvas中心点y轴坐标
-							rad : Math.PI * 2 / 1440, 
-							speed : 0//加载的快慢就靠它了
-						}
-						var params3 = {
-							data : data.sleep_lightly,
-							runColor : "#CFB4FF",
-							bgColor: "#E6E6E6",
-							fontColor : "#D4E9FF",
-							fontColor2 : "#589EE9",
-							fontSize : "100px 微软雅黑",
-							size : 60,
-							textShow:false
-						}
-						//启动动画循环
-						_self.drawFrame(circle,params1);
-						_self.drawFrame(circle2,params2);
-						_self.drawFrame(circle3,params3);
-					},
-					//点击时间选择器更新数据
-					setDataByDate:function(index){
-						if(this.currentIndex === 0){
-							this.setFootCount(index)
-						}else if(this.currentIndex === 3){
-							this.setSleepData(index)
-						}
-					},
-					getDay2(num, str) {
-						var today = new Date();
-						var nowTime = today.getTime();
-						var ms = 24 * 3600 * 1000 * num;
-						today.setTime(parseInt(nowTime + ms));
-						var oYear = today.getFullYear();
-						var oMoth = (today.getMonth() + 1).toString();
-						if (oMoth.length <= 1) oMoth = '0' + oMoth;
-						var oDay = today.getDate().toString();
-						if (oDay.length <= 1) oDay = '0' + oDay;
-						this.selectDate = oYear + str + oMoth + str + oDay;
-						this.getInfor2({uid:this.userid,date:this.selectDate})
-					},
-					getInfor2(params){
-						var token = localStorage.getItem('token');
-						mui.ajax(baseUrl2,{
-							headers: {
-								'Authorization': token,
-							},
-							data:params,
-							dataType:'json',//服务器返回json格式数据
-							type:'get',//HTTP请求类型
-							timeout:10000,//超时时间设置为10秒；
-							success: (data)=> {
-								if(data.errno === 0){
-									vm.dayHistory =data.data.active_data?data.data.active_data:[]
-									let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
-									let arrH = []
-									heartbeat.forEach((h,index)=>{
-										h.check_time =new Date(h.check_time).toTimeString().substr(0, 2)
-										this.xinlvData.push([h.check_time,h.value])
-										arrH.push(h.value)
-									})
-									this.maxHValue=Math.max(...arrH)
-									this.minHValue=Math.min(...arrH)
-								}
-
-							},
-							error:function(xhr,type,errorThrown){
-
+					yAxis: {
+						type: 'value',
+						min: 0,
+						max: 200,
+						axisLine:{
+							show:false
+						},
+						minInterval: 1,
+						interval:20,
+						axisTick:{
+							length:0,
+						},
+						axisLabel:{
+							color:'#BDBDBD'
+						},
+						splitLine:{
+							lineStyle:{
+								color:'#E6E6E6',
+								type:'dashed'
 							}
-						});
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '3%',
+						bottom: '0',
+						top: '10%',
+						containLabel: true
+					},
+					series: [{
+						symbolSize: 10,
+						data:this.xinlvData,
+						itemStyle:{
+							color:'#DC2C5A'
+						},
+						type: 'scatter',
+						markArea: { //标记区域
+							data: [
+								[{
+									yAxis: 60,//y轴坐标控制
+									itemStyle:{
+										color:'#AFFAB5',
+										opacity:0.25
+									}
+								}, {
+									yAxis: 160
+								}]
+							]
+						},
+					}]
+				};
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+			},
+			//设置步数页面数据
+			setFootCount(index){
+				console.log(index);
+				// this.getDay2(index-2,'-')
+				var data2 = this.footCountData[index];
+				this.walking_calories=data2.total_calories
+				this.walking_distance=data2.total_distance
+				this.walking_duration=data2.total_duration
+				this.footDataShow={
+					walking:data2.walking,
+					running:data2.running
+				}
+				var canvas = this.$refs.bushu;
+				var circle = {
+					canvas : canvas,//获取canvas元素
+					context : canvas.getContext('2d'),//获取画图环境，指明为2d
+					centerX : canvas.width / 2,//Canvas中心点x轴坐标
+					centerY : canvas.height / 2,//Canvas中心点y轴坐标
+					rad : Math.PI * 2 / 10000, //将360度分成10000份，那么每一份就是rad度
+					speed : 0//加载的快慢就靠它了
+				}
+				var params1 = {
+					data : data2.count,
+					runColor : "#589EE9",
+					bgColor: "#D4E9FF",
+					fontColor : "#D4E9FF",
+					fontColor2 : "#589EE9",
+					fontSize : "100px 微软雅黑",
+					size : 40,
+					textShow:true
+				}
 
+				var canvas2 = this.$refs.walking;
+				var circle2 = {
+					canvas : canvas2,//获取canvas元素
+					context : canvas2.getContext('2d'),//获取画图环境，指明为2d
+					centerX : canvas2.width / 2,//Canvas中心点x轴坐标
+					centerY : canvas2.height / 2,//Canvas中心点y轴坐标
+					rad : Math.PI * 2 / 10000, //将360度分成10000份，那么每一份就是rad度
+					speed : 0//加载的快慢就靠它了
+				}
+				var params2 = {
+					data : data2.walking,
+					runColor : "#589EE9",
+					bgColor: "#E6E6E6",
+					fontColor : "#D4E9FF",
+					fontColor2 : "#589EE9",
+					fontSize : "100px 微软雅黑",
+					size : 60,
+					textShow:false
+				}
 
+				var canvas3 = this.$refs.running;
+				var circle3 = {
+					canvas : canvas3,//获取canvas元素
+					context : canvas3.getContext('2d'),//获取画图环境，指明为2d
+					centerX : canvas3.width / 2,//Canvas中心点x轴坐标
+					centerY : canvas3.height / 2,//Canvas中心点y轴坐标
+					rad : Math.PI * 2 / 10000, //将360度分成10000份，那么每一份就是rad度
+					speed : 0//加载的快慢就靠它了
+				}
+				var params3 = {
+					data : data2.running,
+					runColor : "#97C9FF",
+					bgColor: "#E6E6E6",
+					fontColor : "#D4E9FF",
+					fontColor2 : "#589EE9",
+					fontSize : "100px 微软雅黑",
+					size : 60,
+					textShow:false
+				}
+				//启动动画循环
+				this.drawFrame(circle,params1);
+				this.drawFrame(circle2,params2);
+				this.drawFrame(circle3,params3);
+			},
+			//设计睡眠页面数据
+			setSleepData:function(index){
+				var _self = this;
+				var data = _self.sleepCountData[index];
+				_self.sleepDataShow={
+					sleep:data.sleep,
+					wake:data.wake,
+					sleep_count:data.sleep_count,
+					sleep_deep:data.sleep_deep,
+					sleep_lightly:data.sleep_lightly
+				}
+
+				var canvas = _self.$refs.sleep;
+				var circle = {
+					canvas : canvas,//获取canvas元素
+					context : canvas.getContext('2d'),//获取画图环境，指明为2d
+					centerX : canvas.width / 2,//Canvas中心点x轴坐标
+					centerY : canvas.height / 2,//Canvas中心点y轴坐标
+					rad : Math.PI * 2 / 1440,
+					speed : 0//加载的快慢就靠它了
+				}
+				var params1 = {
+					data : data.sleep_count,
+					runColor : "#AF83FF",
+					bgColor: "#EBE0FF",
+					fontColor : "#EBE0FF",
+					fontColor2 : "#AF83FF",
+					fontSize : "100px 微软雅黑",
+					size : 40,
+					textShow:false
+				}
+
+				var canvas2 = _self.$refs.sleep_deep;
+				var circle2 = {
+					canvas : canvas2,//获取canvas元素
+					context : canvas2.getContext('2d'),//获取画图环境，指明为2d
+					centerX : canvas2.width / 2,//Canvas中心点x轴坐标
+					centerY : canvas2.height / 2,//Canvas中心点y轴坐标
+					rad : Math.PI * 2 / 1440,
+					speed : 0//加载的快慢就靠它了
+				}
+				var params2 = {
+					data : data.sleep_deep,
+					runColor : "#AF83FF",
+					bgColor: "#E6E6E6",
+					fontColor : "#D4E9FF",
+					fontColor2 : "#589EE9",
+					fontSize : "100px 微软雅黑",
+					size : 60,
+					textShow:false
+				}
+
+				var canvas3 = _self.$refs.sleep_lightly;
+				var circle3 = {
+					canvas : canvas3,//获取canvas元素
+					context : canvas3.getContext('2d'),//获取画图环境，指明为2d
+					centerX : canvas3.width / 2,//Canvas中心点x轴坐标
+					centerY : canvas3.height / 2,//Canvas中心点y轴坐标
+					rad : Math.PI * 2 / 1440,
+					speed : 0//加载的快慢就靠它了
+				}
+				var params3 = {
+					data : data.sleep_lightly,
+					runColor : "#CFB4FF",
+					bgColor: "#E6E6E6",
+					fontColor : "#D4E9FF",
+					fontColor2 : "#589EE9",
+					fontSize : "100px 微软雅黑",
+					size : 60,
+					textShow:false
+				}
+				//启动动画循环
+				_self.drawFrame(circle,params1);
+				_self.drawFrame(circle2,params2);
+				_self.drawFrame(circle3,params3);
+			},
+			//点击时间选择器更新数据
+			setDataByDate:function(index){
+				if(this.currentIndex === 0){
+					this.setFootCount(index)
+				}else if(this.currentIndex === 3){
+					this.setSleepData(index)
+				}
+			},
+			getDay2(num, str) {
+				var today = new Date();
+				var nowTime = today.getTime();
+				var ms = 24 * 3600 * 1000 * num;
+				today.setTime(parseInt(nowTime + ms));
+				var oYear = today.getFullYear();
+				var oMoth = (today.getMonth() + 1).toString();
+				if (oMoth.length <= 1) oMoth = '0' + oMoth;
+				var oDay = today.getDate().toString();
+				if (oDay.length <= 1) oDay = '0' + oDay;
+				this.selectDate = oYear + str + oMoth + str + oDay;
+				this.getInfor2({uid:this.userid,date:this.selectDate})
+			},
+			getInfor2(params){
+				var token = localStorage.getItem('token');
+				mui.ajax(baseUrl2,{
+					headers: {
+						'Authorization': token,
+					},
+					data:params,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success: (data)=> {
+						if(data.errno === 0){
+							vm.dayHistory =data.data.active_data?data.data.active_data:[]
+							let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
+							let arrH = []
+							heartbeat.forEach((h,index)=>{
+								h.check_time =new Date(h.check_time).toTimeString().substr(0, 2)
+								this.xinlvData.push([h.check_time,h.value])
+								arrH.push(h.value)
+							})
+							this.maxHValue=Math.max(...arrH)
+							this.minHValue=Math.min(...arrH)
+						}
 
 					},
-				},
+					error:function(xhr,type,errorThrown){
 
-			})
-			
-			mui.plusReady(function() {
-	//			//滚动
-	//			mui('.mui-scroll-wrapper').scroll({
-	//				scrollY: true,
-	//				deceleration: 0.0003,
-	//				indicators: false,
-	//				bounce: true //是否启用回弹
-	//			});
+					}
+				});
 
-			})
 
-			function changeDateData(index){
-				vm.setDataByDate(index)
-			}
-			
-			//返回
-			document.getElementById('back').addEventListener('tap', function() {
-				mui.back();
-			});
 
-		</script>
-	</body>
+			},
+		},
+
+	})
+
+	mui.plusReady(function() {
+		//			//滚动
+		//			mui('.mui-scroll-wrapper').scroll({
+		//				scrollY: true,
+		//				deceleration: 0.0003,
+		//				indicators: false,
+		//				bounce: true //是否启用回弹
+		//			});
+
+	})
+	mui('#foot1').on('tap','.mui-control-item',function(){
+
+		console.log(this.target);
+
+	})
+	function changeDateData(index){
+		vm.setDataByDate(index)
+	}
+
+	//返回
+	document.getElementById('back').addEventListener('tap', function() {
+		mui.back();
+	});
+
+</script>
+</body>
 </html>
