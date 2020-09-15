@@ -55,9 +55,9 @@
 			
 			<div class="tabs-panel-body" v-if="currentIndex === 0">
 				<div class="tabs-panel-taps">
-					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2">410</span>大卡</div>
-					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(88,134,233,1);">7.56</span>公里</div>
-					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(233,167,88,1);">79</span>分钟</div>
+					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2">{{walking_calories}}</span>大卡</div>
+					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(88,134,233,1);">{{walking_distance}}</span>公里</div>
+					<div class="tabs-panel-taps-font1"><span class="tabs-panel-taps-font2" style="color:rgba(233,167,88,1);">{{walking_duration}}</span>分钟</div>
 				</div>
 				
 				<div class="tabs-panel-content">
@@ -92,116 +92,80 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="my-timeline">
-					<div class="my-timeline-body">
-						<div class="timeline-container ">
-						    <div class="timeline" id="foot">
-						        <div v-for="(item,index) in footCountData" :data-time="item.day"></div>
-						    </div>	
-						</div>
-					</div>
-				</div>
-			</div>
+<!--				<div class="foot">-->
+<!--					<div v-for="(item,index) in weekList" >{{item.day}}</div>-->
+<!--				</div>-->
+<!--				<div class="my-timeline">-->
+<!--					<div class="my-timeline-body">-->·
+<!--						<div class="timeline-container ">-->
+<!--						    <div class="timeline" id="foot">-->
+<!--						        <div v-for="(item,index) in weekList" :data-time="item.day"></div>-->
+<!--						    </div>	-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
 			
 			<!--活动详情-->
 			<div class="tabs-panel-body" v-if="currentIndex === 1">
-				<div class="my-select" @click="changeDate">
+				<div class="my-select" >
 					<div class="my-select-title" >
 						<div style="display: inline-block;float: left;">今天</div>
 						<img src="img/date.png" />
 					</div>
-					<div>
-						
-					</div>
-					<ul>
+					<ul style="height: 560px;overflow:auto;">
 						<li class="line"></li>
-						<li>现在</li>
-						<li v-if='step'>
-							<div class="tip">
-								<div class="distance"> 
-									<p>417</p>
-									<p>米</p>
+<!--						<li>现在</li>-->
+						<template  v-for="item in dayHistory">
+							<li v-if="item.active_name==='走路'">
+								<div class="tip">
+									<div class="distance" style="font-size: 12px;width: auto;padding: 0 5px;display: flex;align-items: center">
+										<span >{{item.distance}}</span>
+									</div>
+									<div class="time">
+										<p>{{item.start_time}}</p>
+										<p>{{item.end_time}}</p>
+									</div>
 								</div>
-								<div class="time">
-									<p>09:16</p>
-									<p>09:19</p>
+								<div class="icon">
+									<img src="img/zoulu.png" />
 								</div>
-							</div>
-							<div class="icon">
-								<img src="img/zoulu.png" />	
-							</div>
-							<div class="type">
-								<p style="font-size:0.32rem;font-weight:500;color:rgba(88,158,233,1);">走路</p>
-								<p class="time2">17分钟</p>
-							</div>
-						</li>
-						<li v-if='step'>
-							<div class="tip">
-								<div class="distance"> 
-									<p>4.17</p>
-									<p>公里</p>
+								<div class="type">
+									<p style="font-size:0.32rem;font-weight:500;color:rgba(88,158,233,1);">{{item.active_name}}</p>
+									<p class="time2">{{item.total_time}}</p>
 								</div>
-								<div class="time">
-									<p>09:16</p>
-									<p>09:16</p>
+							</li>
+							<li  v-if="item.active_name==='睡眠'">
+								<div class="tip" style="margin: -1rem 0;">
+									<div class="time sleep">
+										<p style="border: none;">{{item.start_time}}</p>
+										<p>{{item.end_time}}</p>
+									</div>
 								</div>
-							</div>
-							<div class="icon">
-								<img src="img/zoulu.png" />	
-							</div>
-							<div class="type">
-								<p style="font-size:0.32rem;font-weight:500;color:rgba(88,158,233,1);">走路</p>
-								<p class="time2">17分钟</p>
-							</div>
-						</li>
-						<li v-if='heartRate'>
-							<div class="tip">
-								<div class="time">
-									<p style="border: none;">19:16</p>
+								<div class="icon">
+									<img src="img/sleep.png" />
 								</div>
-							</div>
-							<div class="icon">
-								<img src="img/xinlv.png" />	
-							</div>
-							<div class="type">
-								<span class="num">78 <em>次/分</em></span>
-							</div>
-						</li>
-						<li v-if='sleep'>
-							<div class="tip" style="margin: -1rem 0;">
-								<div class="time sleep">
-									<p style="border: none;">20:16</p>
-									<p>06:16</p>
+								<div class="type">
+									<p style="font-size:0.32rem;font-weight:500;color:rgba(175,131,255,1);">睡眠</p>
+									<p class="time2">{{item.total_time}}</p>
 								</div>
-							</div>
-							<div class="icon">
-								<img src="img/sleep.png" />	
-							</div>
-							<div class="type">
-							<p style="font-size:0.32rem;font-weight:500;color:rgba(175,131,255,1);">睡眠</p>
-								<p class="time2">9小时17分</p>
-							</div>
-						</li>
-						<li v-if='step'>
-							<div class="tip">
-								<div class="distance"> 
-									<p>417</p>
-									<p>米</p>
+							</li>
+							<li v-if="item.active_name==='心跳'" >
+								<div class="tip">
+									<div class="time">
+										<p style="border: none;">{{item.start_time}}</p>
+									</div>
 								</div>
-								<div class="time">
-									<p>09:16</p>
-									<p>09:19</p>
+								<div class="icon">
+									<img src="img/xinlv.png" />
 								</div>
-							</div>
-							<div class="icon">
-								<img src="img/zoulu.png" />	
-							</div>
-							<div class="type">
-								<p style="font-size:0.32rem;font-weight:500;color:rgba(88,158,233,1);">走路</p>
-								<p class="time2">17分钟</p>
-							</div>
-						</li>
+								<div class="type">
+									<span class="num">{{item.heartbeat.substring(0,item.heartbeat.length-4)}}
+										<em>次/分</em>
+									</span>
+								</div>
+							</li>
+						</template>
 					</ul>
 				</div>
 			</div>
@@ -210,11 +174,11 @@
 			<div class="tabs-panel-body" v-if="currentIndex === 2">
 				<div class="tabs-panel-taps" style="justify-content:space-around">
 					<div class="tabs-panel-taps-font4">
-						最小值<span class="tabs-panel-taps-font5">78</span>
+						最小值<span class="tabs-panel-taps-font5">{{minHValue}}</span>
 						<span class="tabs-panel-taps-font1" style="vertical-align: top;">次/分</span>
 					</div>
 					<div class="tabs-panel-taps-font4">
-						最大值<span class="tabs-panel-taps-font5">102</span>
+						最大值<span class="tabs-panel-taps-font5">{{maxHValue}}</span>
 						<span class="tabs-panel-taps-font1" style="vertical-align: top;">次/分</span>
 					</div>
 				</div>
@@ -274,7 +238,7 @@
 					<div class="my-timeline-body">
 						<div class="timeline-container ">
 						    <div class="timeline" id="sleep">
-						        <div v-for="(item,index) in sleepCountData" :data-time="item.day"></div>
+						        <div v-for="(item,index) in weekList" :data-time="item.day"></div>
 						    </div>	
 						</div>
 					</div>
@@ -293,6 +257,13 @@
 			var vm = new Vue({
 				el: "#smart_watch",
 				data: {
+					weekList:[{
+						day:'今天'
+					}],
+					walking_calories:0,
+					walking_distance:0,
+					walking_duration:0,
+					currentDate:'',
 					step:true, //走路
 					heartRate:true, //心率
 					sleep:true, //睡眠
@@ -302,52 +273,52 @@
 					test1:false,
 					speed:0,
 					footCountData:[
-						{
-							day:'5月10日',
-							count:12200,
-							walking:10325,
-							running:1982
-						},
-						{
-							day:'5月11日',
-							count:8665,
-							walking:6854,
-							running:1211
-						},
-						{
-							day:'5月12日',
-							count:9900,
-							walking:8422,
-							running:1455
-						},
-						{
-							day:'今天',
-							count:9326,
-							walking:8496,
-							running:1422
-						}
+						// {
+						// 	day:'5月10日',
+						// 	count:12200,
+						// 	walking:10325,
+						// 	running:1982
+						// },
+						// {
+						// 	day:'5月11日',
+						// 	count:8665,
+						// 	walking:6854,
+						// 	running:1211
+						// },
+						// {
+						// 	day:'5月12日',
+						// 	count:9900,
+						// 	walking:8422,
+						// 	running:1455
+						// },
+						// {
+						// 	day:'今天',
+						// 	count:0,
+						// 	walking:0,
+						// 	running:0
+						// }
 					],
 					footDataShow:{
 						walking:0,
 						running:0
 					},
 					sleepCountData:[
-						{
-							day:'5月12日',
-							sleep:"23:38",
-							wake:"7:38",
-							sleep_count:310,
-							sleep_deep:250,
-							sleep_lightly:60
-						},
-						{
-							day:'今天',
-							sleep:"24:00",
-							wake:"7:00",
-							sleep_count:300,
-							sleep_deep:240,
-							sleep_lightly:60
-						}
+						// {
+						// 	day:'5月12日',
+						// 	sleep:"23:38",
+						// 	wake:"7:38",
+						// 	sleep_count:310,
+						// 	sleep_deep:250,
+						// 	sleep_lightly:60
+						// },
+						// {
+						// 	day:'今天',
+						// 	sleep:"24:00",
+						// 	wake:"7:00",
+						// 	sleep_count:300,
+						// 	sleep_deep:240,
+						// 	sleep_lightly:60
+						// }
 					],
 					sleepDataShow:{
 						sleep:0,
@@ -383,11 +354,136 @@
 						]
 					],
 					iconShow:[],
-					
+					currDate:'',
+					selectDate:'',
+					dayHistory:[],
+					xinlvData:[],
+					minHValue:0,
+					maxHValue:0,
+
+				},
+				created(){
+					this.userid = localStorage.getItem('userid');
+					console.log(this.userid);
+					this.changeTabsIndex(0)
+					this.getNowDate()
+					setTimeout(()=>{
+						this.getDay(-1,'-')
+						this.getDay(-2,'-')
+					})
+
+				},
+				mounted:function(){
+
 				},
 				methods:{
-					changeDate:function(){
-//						console.log(111)
+					open(){
+						console.log(4594194);
+					},
+					//获取当前时间
+					getDay(num, str) {
+						var today = new Date();
+						var nowTime = today.getTime();
+						var ms = 24 * 3600 * 1000 * num;
+						today.setTime(parseInt(nowTime + ms));
+						var oYear = today.getFullYear();
+						var oMoth = (today.getMonth() + 1).toString();
+						if (oMoth.length <= 1) oMoth = '0' + oMoth;
+						var oDay = today.getDate().toString();
+						if (oDay.length <= 1) oDay = '0' + oDay;
+						this.currDate = oYear + str + oMoth + str + oDay;
+						this.showDate = oMoth + '月' + oDay+'日'
+						this.weekList.unshift({
+							day:this.showDate
+						})
+						this.getInfor({uid:this.userid,date:this.currDate})
+
+					},
+
+					getNowDate () {
+						var date = new Date();
+						var seperator1 = "-";
+						var year = date.getFullYear();
+						var month = date.getMonth() + 1;
+						var strDate = date.getDate();
+						if (month >= 1 && month <= 9) {
+							month = "0" + month;
+						}
+						if (strDate >= 0 && strDate <= 9) {
+							strDate = "0" + strDate;
+						}
+						this.currentDate = year + seperator1 + month + seperator1 + strDate;
+						this.getInfor({uid:this.userid,date:this.currentDate})
+						this.getInfor2({uid:this.userid,date:this.currentDate})
+						// this.getInfor2({uid:this.userid,date:'2020-09-14'})
+					},
+					//获取信息
+					getInfor(params){
+						var token = localStorage.getItem('token');
+						mui.ajax(baseUrl2,{
+							headers: {
+								'Authorization': token,
+							},
+							data:params,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success: (data)=> {
+								if(data.errno === 0){
+									let dataList =data.data.list
+									let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
+									let total_calories = []
+									let total_distance = []
+									let total_duration = []
+									let walking = []
+									if(dataList.length){
+										dataList.forEach((item,index)=>{
+											walking.push(item.total_steps)
+											total_calories.push(item.total_calories)
+											total_distance.push(item.total_distance)
+											total_duration.push(item.total_duration)
+											if(item.action_type==='SLEEP'){
+												this.sleepCountData.unshift({
+													sleep:new Date(item.start_time).toTimeString().substr(0, 8),
+													// sleep:item.start_time,
+													// wake:item.end_time,
+													cdate:item.create_time,
+													wake:new Date(item.end_time).toTimeString().substr(0, 8),
+													sleep_count:((item.fall_asleep+item.restless)/(1000)).toFixed(2),
+													sleep_deep:((item.fall_asleep/(1000))).toFixed(2),
+													sleep_lightly:(item.restless/(1000)).toFixed(2)
+												})
+												// console.log(this.sleepCountData.length);
+											}
+										})
+
+										// console.log(JSON.stringify(this.sleepCountData));
+
+										walking=eval(walking.join("+"))
+										total_calories=(eval(total_calories.join("+"))/1000).toFixed(2)||0
+										total_distance=(eval(total_distance.join("+"))/1000).toFixed(2)||0
+										total_duration=(eval(total_duration.join("+"))/60).toFixed(2)||0
+										// this.footCountData=[]
+										this.footCountData.unshift({
+											walking:walking,
+											running:0,
+											// day:'今天',
+											count:walking,
+											total_calories:total_calories,
+											total_distance:total_distance,
+											total_duration:total_duration,
+										})
+									}
+
+									// console.log(JSON.stringify(this.xinlvData));
+								}
+
+							},
+							error:function(xhr,type,errorThrown){
+
+							}
+						});
+
 					},
 					//选中tabs
 					changeTabsIndex:function(index){
@@ -404,7 +500,7 @@
 										var width = (_self.footCountData.length * 3)+'rem'
 										$('.timeline-container').css("width",width)
 									}
-									
+
 									$('#foot').Timeline({
 										itemClass: 'box-item',
 									  	dotsPosition: 'bottom',
@@ -516,7 +612,7 @@
 						    xAxis: {
 						    	type: 'value',
 								min: 0,
-								max: 24,
+								max: 23,
 						    	interval:1,
 						    	axisLine:{
 						    		show:false
@@ -537,7 +633,7 @@
 						    yAxis: {
 						    	type: 'value',
 								min: 0,
-								max: 220,
+								max: 200,
 						    	axisLine:{
 						    		show:false
 						    	},
@@ -565,19 +661,7 @@
 				          	},
 						    series: [{
 						        symbolSize: 10,
-						        data: [
-						            [1, 80],
-						            [2, 95],
-						            [3, 87],
-						            [4, 83],
-						            [5, 86.23],
-						            [6, 97.34],
-						            [7, 98.2],
-						            [8, 105.32],
-						            [9, 100.44],
-						            [10, 95.21],
-						            [11, 85.32]
-						        ],
+								data:this.xinlvData,
 						        itemStyle:{
 						        	color:'#DC2C5A'
 						        },
@@ -601,15 +685,18 @@
 						myChart.setOption(option);
 					},
 					//设置步数页面数据
-					setFootCount:function(index){
-						var _self = this;
-						var data = _self.footCountData[index];
-						_self.footDataShow={
-							walking:data.walking,
-							running:data.running
+					setFootCount(index){
+						console.log(index);
+						// this.getDay2(index-2,'-')
+						var data2 = this.footCountData[index];
+						this.walking_calories=data2.total_calories
+						this.walking_distance=data2.total_distance
+						this.walking_duration=data2.total_duration
+						this.footDataShow={
+							walking:data2.walking,
+							running:data2.running
 						}
-						
-						var canvas = _self.$refs.bushu;
+						var canvas = this.$refs.bushu;
 						var circle = {
 							canvas : canvas,//获取canvas元素
 							context : canvas.getContext('2d'),//获取画图环境，指明为2d
@@ -619,7 +706,7 @@
 							speed : 0//加载的快慢就靠它了
 						}
 						var params1 = {
-							data : data.count,
+							data : data2.count,
 							runColor : "#589EE9",
 							bgColor: "#D4E9FF",
 							fontColor : "#D4E9FF",
@@ -628,8 +715,8 @@
 							size : 40,
 							textShow:true
 						}
-						
-						var canvas2 = _self.$refs.walking;
+
+						var canvas2 = this.$refs.walking;
 						var circle2 = {
 							canvas : canvas2,//获取canvas元素
 							context : canvas2.getContext('2d'),//获取画图环境，指明为2d
@@ -639,7 +726,7 @@
 							speed : 0//加载的快慢就靠它了
 						}
 						var params2 = {
-							data : data.walking,
+							data : data2.walking,
 							runColor : "#589EE9",
 							bgColor: "#E6E6E6",
 							fontColor : "#D4E9FF",
@@ -648,8 +735,8 @@
 							size : 60,
 							textShow:false
 						}
-						
-						var canvas3 = _self.$refs.running;
+
+						var canvas3 = this.$refs.running;
 						var circle3 = {
 							canvas : canvas3,//获取canvas元素
 							context : canvas3.getContext('2d'),//获取画图环境，指明为2d
@@ -659,7 +746,7 @@
 							speed : 0//加载的快慢就靠它了
 						}
 						var params3 = {
-							data : data.running,
+							data : data2.running,
 							runColor : "#97C9FF",
 							bgColor: "#E6E6E6",
 							fontColor : "#D4E9FF",
@@ -669,9 +756,9 @@
 							textShow:false
 						}
 						//启动动画循环
-						_self.drawFrame(circle,params1);
-						_self.drawFrame(circle2,params2);
-						_self.drawFrame(circle3,params3);
+						this.drawFrame(circle,params1);
+						this.drawFrame(circle2,params2);
+						this.drawFrame(circle3,params3);
 					},
 					//设计睡眠页面数据
 					setSleepData:function(index){
@@ -757,18 +844,54 @@
 							this.setSleepData(index)
 						}
 					},
-					//
-					test:function(){
-						console.log('11')
-						this.test1 = !this.test1
-					}
+					getDay2(num, str) {
+						var today = new Date();
+						var nowTime = today.getTime();
+						var ms = 24 * 3600 * 1000 * num;
+						today.setTime(parseInt(nowTime + ms));
+						var oYear = today.getFullYear();
+						var oMoth = (today.getMonth() + 1).toString();
+						if (oMoth.length <= 1) oMoth = '0' + oMoth;
+						var oDay = today.getDate().toString();
+						if (oDay.length <= 1) oDay = '0' + oDay;
+						this.selectDate = oYear + str + oMoth + str + oDay;
+						this.getInfor2({uid:this.userid,date:this.selectDate})
+					},
+					getInfor2(params){
+						var token = localStorage.getItem('token');
+						mui.ajax(baseUrl2,{
+							headers: {
+								'Authorization': token,
+							},
+							data:params,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							timeout:10000,//超时时间设置为10秒；
+							success: (data)=> {
+								if(data.errno === 0){
+									vm.dayHistory =data.data.active_data?data.data.active_data:[]
+									let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
+									let arrH = []
+									heartbeat.forEach((h,index)=>{
+										h.check_time =new Date(h.check_time).toTimeString().substr(0, 2)
+										this.xinlvData.push([h.check_time,h.value])
+										arrH.push(h.value)
+									})
+									this.maxHValue=Math.max(...arrH)
+									this.minHValue=Math.min(...arrH)
+								}
+
+							},
+							error:function(xhr,type,errorThrown){
+
+							}
+						});
+
+
+
+					},
 				},
-				created:function(){
-					this.changeTabsIndex(0)
-				},
-				mounted:function(){
-					
-				}
+
 			})
 			
 			mui.plusReady(function() {
@@ -779,8 +902,9 @@
 	//				indicators: false,
 	//				bounce: true //是否启用回弹
 	//			});
+
 			})
-			
+
 			function changeDateData(index){
 				vm.setDataByDate(index)
 			}
