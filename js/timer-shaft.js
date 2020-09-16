@@ -4,7 +4,7 @@ function shaftInit(){
 	var shaft = document.getElementsByClassName('shaft')[0];
 	var timer;
 	//显示多少天
-	var totalDay = 30;
+	var totalDay =4;
 	var newDay = new Date().toLocaleDateString();
 	var toYear = newDay.substring(0,newDay.indexOf('/'));
 	var toMonth = newDay.substring(newDay.indexOf('/')+1,newDay.lastIndexOf('/'));

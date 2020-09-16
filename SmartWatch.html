@@ -189,13 +189,20 @@
 		<div class="tabs-panel-content" style="padding: 0;margin-top: 1rem;">
 			<div id="xinlv" style="width: 15rem;height: 6rem;"></div>
 		</div>
-		<div class="timerShaft-body">
-			<ul class="shaft" id="shaft">
-				<li class="timer this-day">|
-					<p>今天</p>
-				</li>
-			</ul>
+		<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			<div class="mui-scroll">
+				<a class="mui-control-item" v-for="(item,index) in weekList" @tap="open(item,index)">
+					{{item.day}}
+				</a>
+			</div>
 		</div>
+<!--		<div class="timerShaft-body">-->
+<!--			<ul class="shaft" id="shaft">-->
+<!--				<li class="timer this-day">|-->
+<!--					<p>今天</p>-->
+<!--				</li>-->
+<!--			</ul>-->
+<!--		</div>-->
 	</div>
 
 	<!--睡眠-->
@@ -261,9 +268,7 @@
 	var vm = new Vue({
 		el: "#smart_watch",
 		data: {
-			weekList:[{
-				day:'今天'
-			}],
+			weekList:[],
 			walking_calories:0,
 			walking_distance:0,
 			walking_duration:0,
@@ -330,6 +335,7 @@
 			this.changeTabsIndex(0)
 			this.getNowDate()
 			setTimeout(()=>{
+				this.getDay(0,'-')
 				this.getDay(-1,'-')
 				this.getDay(-2,'-')
 				// this.getDay(-3,'-')
@@ -341,8 +347,9 @@
 
 		},
 		methods:{
-			open(){
-				console.log(4594194);
+			open(item){
+				console.log(JSON.stringify(item));
+				this.getInfor2({uid:this.userid,date:item.bzday})
 			},
 			//获取当前时间
 			getDay(num, str) {
@@ -357,8 +364,12 @@
 				if (oDay.length <= 1) oDay = '0' + oDay;
 				this.currDate = oYear + str + oMoth + str + oDay;
 				this.showDate = oMoth + '月' + oDay+'日'
+				if(num===0){
+					this.showDate = '今天'
+				}
 				this.weekList.unshift({
-					day:this.showDate
+					day:this.showDate,
+					bzday:this.currDate
 				})
 				this.getInfor({uid:this.userid,date:this.currDate})
 
@@ -822,6 +833,7 @@
 				this.getInfor2({uid:this.userid,date:this.selectDate})
 			},
 			getInfor2(params){
+				this.xinlvData = []
 				var token = localStorage.getItem('token');
 				mui.ajax(baseUrl2,{
 					headers: {
@@ -836,13 +848,23 @@
 							vm.dayHistory =data.data.active_data?data.data.active_data:[]
 							let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
 							let arrH = []
-							heartbeat.forEach((h,index)=>{
-								h.check_time =new Date(h.check_time).toTimeString().substr(0, 2)
-								this.xinlvData.push([h.check_time,h.value])
-								arrH.push(h.value)
+							if(heartbeat.length>0){
+								heartbeat.forEach((h,index)=>{
+									h.check_time =new Date(h.check_time).toTimeString().substr(0, 2)
+									this.xinlvData.push([h.check_time,h.value])
+									arrH.push(h.value)
+								})
+								this.maxHValue=Math.max(...arrH)
+								this.minHValue=Math.min(...arrH)
+							}else {
+								this.maxHValue =0
+								this.minHValue =0
+							}
+							setTimeout(()=>{
+								this.setXinlvCharts()
+								this.setFootCount()
 							})
-							this.maxHValue=Math.max(...arrH)
-							this.minHValue=Math.min(...arrH)
+							// console.log(JSON.stringify(this.xinlvData));
 						}
 
 					},

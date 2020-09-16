@@ -455,10 +455,13 @@
 
 			//监听健康服务
 			document.getElementById('healthService').addEventListener('tap', function() {
-				mui.openWindow({
-					url: 'healthService.html',
-					id: 'healthService'
-				})
+				plus.runtime.launchApplication({pname:"com.tcl.mhs.phone"
+					,extra:{}}, function ( e ) {
+				});
+				// mui.openWindow({
+				// 	url: 'healthService.html',
+				// 	id: 'healthService'
+				// })
 			});
 
 			// 监听一键开锁

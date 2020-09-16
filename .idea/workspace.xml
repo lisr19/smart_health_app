@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f4d41cd-9276-4dde-a550-436a602dae70" name="默认的" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+    <list default="true" id="6f4d41cd-9276-4dde-a550-436a602dae70" name="默认的" comment="默认的">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SmartWatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/SmartWatch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/configUrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/configUrl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/timer-shaft.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/timer-shaft.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,9 +47,14 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../www" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\smart_health_app" />
+    </key>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -78,7 +83,8 @@
       <workItem from="1578279590730" duration="2474000" />
       <workItem from="1578286988312" duration="26000" />
       <workItem from="1578287823448" duration="9000" />
-      <workItem from="1600162400373" duration="3247000" />
+      <workItem from="1600162400373" duration="4084000" />
+      <workItem from="1600168104749" duration="9220000" />
     </task>
     <servers />
   </component>
@@ -95,10 +101,37 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600220284443">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600220284443" />
     <state x="555" y="171" key="FileChooserDialogImpl" timestamp="1600163276928">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="555" y="171" key="FileChooserDialogImpl/0.0.1549.831@0.0.1549.831" timestamp="1600163276928" />
+    <state x="618" y="126" key="RollbackChangesDialog" timestamp="1600220281873">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="618" y="126" key="RollbackChangesDialog/0.0.1549.831@0.0.1549.831" timestamp="1600220281873" />
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1600220559293">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1600220559293" />
+    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600220516061">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1549.831@0.0.1549.831" timestamp="1600220516061" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/SmartWatch.html</url>
+          <line>494</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>
