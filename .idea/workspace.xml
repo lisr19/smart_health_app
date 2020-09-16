@@ -82,7 +82,7 @@
       <workItem from="1578286988312" duration="26000" />
       <workItem from="1578287823448" duration="9000" />
       <workItem from="1600162400373" duration="4084000" />
-      <workItem from="1600168104749" duration="16656000" />
+      <workItem from="1600168104749" duration="27600000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1600220584818</created>
@@ -91,7 +91,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600220584818</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="11">
+      <created>1600228073025</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600228073025</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -112,10 +119,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="11" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600227881596">
+    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600228071904">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600227881596" />
+    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600228071904" />
     <state x="555" y="171" key="FileChooserDialogImpl" timestamp="1600221196330">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
@@ -142,14 +149,26 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SmartWatch.html</url>
-          <line>461</line>
+          <line>458</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SmartWatch.html</url>
-          <line>523</line>
+          <line>520</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/SmartWatch.html</url>
+          <line>395</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/SmartWatch.html</url>
+          <line>403</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -103,7 +103,7 @@
 			<div class="my-timeline-body">
 				<div class="timeline-container ">
 					<div class="timeline" id="foot">
-						<div v-for="(item,index) in weekList" :data-time="item.day"></div>
+						<div v-for="(item,index) in footCountData" :data-time="item.day"></div>
 					</div>
 				</div>
 			</div>
@@ -196,13 +196,6 @@
 				</a>
 			</div>
 		</div>
-<!--		<div class="timerShaft-body">-->
-<!--			<ul class="shaft" id="shaft">-->
-<!--				<li class="timer this-day">|-->
-<!--					<p>今天</p>-->
-<!--				</li>-->
-<!--			</ul>-->
-<!--		</div>-->
 	</div>
 
 	<!--睡眠-->
@@ -249,7 +242,7 @@
 			<div class="my-timeline-body">
 				<div class="timeline-container ">
 					<div class="timeline" id="sleep">
-						<div v-for="(item,index) in weekList" :data-time="item.day"></div>
+						<div v-for="(item,index) in sleepCountData" :data-time="item.day"></div>
 					</div>
 				</div>
 			</div>
@@ -331,20 +324,14 @@
 		},
 		created(){
 			this.userid = localStorage.getItem('userid');
-			console.log(this.userid);
-			this.changeTabsIndex(0)
 			this.getNowDate()
-			setTimeout(()=>{
-				this.getDay(0,'-')
-				this.getDay(-1,'-')
-				this.getDay(-2,'-')
-				// this.getDay(-3,'-')
-				// this.getDay(-4,'-')
-			})
-
+			this.getDay(0,'-')
+			this.getDay(-1,'-')
+			this.getDay(-2,'-')
+			// this.getDay(-3,'-')
+			this.changeTabsIndex(0)
 		},
 		mounted:function(){
-
 		},
 		methods:{
 			open(item){
@@ -371,10 +358,13 @@
 					day:this.showDate,
 					bzday:this.currDate
 				})
+				// console.log(this.weekList);
 				this.getInfor({uid:this.userid,date:this.currDate})
+				// if(num===0){
+				// 	this.getInfor2({uid:this.userid,date:this.currentDate})
+				// }
 
 			},
-
 			getNowDate () {
 				var date = new Date();
 				var seperator1 = "-";
@@ -388,7 +378,7 @@
 					strDate = "0" + strDate;
 				}
 				this.currentDate = year + seperator1 + month + seperator1 + strDate;
-				this.getInfor({uid:this.userid,date:this.currentDate})
+				// this.getInfor({uid:this.userid,date:this.currentDate})
 				this.getInfor2({uid:this.userid,date:this.currentDate})
 				// this.getInfor2({uid:this.userid,date:'2020-09-14'})
 			},
@@ -406,51 +396,58 @@
 					success: (data)=> {
 						if(data.errno === 0){
 							let dataList =data.data.list
-							let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
 							let total_calories = []
 							let total_distance = []
 							let total_duration = []
 							let walking = []
+							let create_time = ''
 							if(dataList.length){
 								dataList.forEach((item,index)=>{
+									create_time = item.create_time.substr(0,10)
 									walking.push(item.total_steps)
 									total_calories.push(item.total_calories)
 									total_distance.push(item.total_distance)
 									total_duration.push(item.total_duration)
 									if(item.action_type==='SLEEP'){
-										this.sleepCountData.unshift({
+										create_time = item.create_time.substr(0,10)
+										this.sleepCountData.push({
 											sleep:new Date(item.start_time).toTimeString().substr(0, 8),
 											// sleep:item.start_time,
 											// wake:item.end_time,
-											cdate:item.create_time,
+											day:create_time===this.currentDate?'今天':create_time,
 											wake:new Date(item.end_time).toTimeString().substr(0, 8),
 											sleep_count:((item.fall_asleep+item.restless)/(1000)).toFixed(2),
 											sleep_deep:((item.fall_asleep/(1000))).toFixed(2),
-											sleep_lightly:(item.restless/(1000)).toFixed(2)
+											sleep_lightly:(item.restless/(1000)).toFixed(2),
+											create_time:create_time
 										})
 										// console.log(this.sleepCountData.length);
 									}
 								})
 
 								// console.log(JSON.stringify(this.sleepCountData));
-
 								walking=eval(walking.join("+"))
 								total_calories=(eval(total_calories.join("+"))/1000).toFixed(2)||0
 								total_distance=(eval(total_distance.join("+"))/1000).toFixed(2)||0
 								total_duration=(eval(total_duration.join("+"))/60).toFixed(2)||0
-								// this.footCountData=[]
-								this.footCountData.unshift({
+								this.footCountData.push({
 									walking:walking,
 									running:0,
-									// day:'今天',
+									day:create_time===this.currentDate?'今天':create_time,
 									count:walking,
 									total_calories:total_calories,
 									total_distance:total_distance,
 									total_duration:total_duration,
+									create_time:create_time
 								})
 							}
-
-							// console.log(JSON.stringify(this.xinlvData));
+							this.footCountData.sort(function(a, b) {
+								return b.create_time < a.create_time ? 1 : -1
+							})
+							this.sleepCountData.sort(function(a, b) {
+								return b.create_time < a.create_time ? 1 : -1
+							})
+							// console.log(JSON.stringify(this.footCountData));
 						}
 
 					},
@@ -819,19 +816,6 @@
 					this.setSleepData(index)
 				}
 			},
-			getDay2(num, str) {
-				var today = new Date();
-				var nowTime = today.getTime();
-				var ms = 24 * 3600 * 1000 * num;
-				today.setTime(parseInt(nowTime + ms));
-				var oYear = today.getFullYear();
-				var oMoth = (today.getMonth() + 1).toString();
-				if (oMoth.length <= 1) oMoth = '0' + oMoth;
-				var oDay = today.getDate().toString();
-				if (oDay.length <= 1) oDay = '0' + oDay;
-				this.selectDate = oYear + str + oMoth + str + oDay;
-				this.getInfor2({uid:this.userid,date:this.selectDate})
-			},
 			getInfor2(params){
 				this.xinlvData = []
 				var token = localStorage.getItem('token');
@@ -862,7 +846,7 @@
 							}
 							setTimeout(()=>{
 								this.setXinlvCharts()
-								this.setFootCount()
+								// this.setFootCount()
 							})
 							// console.log(JSON.stringify(this.xinlvData));
 						}
