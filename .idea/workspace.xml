@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f4d41cd-9276-4dde-a550-436a602dae70" name="默认的" comment="默认的">
+    <list default="true" id="6f4d41cd-9276-4dde-a550-436a602dae70" name="默认的" comment="11">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SmartWatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/SmartWatch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/timer-shaft.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/timer-shaft.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +45,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../www" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
@@ -84,8 +82,16 @@
       <workItem from="1578286988312" duration="26000" />
       <workItem from="1578287823448" duration="9000" />
       <workItem from="1600162400373" duration="4084000" />
-      <workItem from="1600168104749" duration="9220000" />
+      <workItem from="1600168104749" duration="16656000" />
     </task>
+    <task id="LOCAL-00001" summary="11">
+      <created>1600220584818</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600220584818</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -100,35 +106,50 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="11" />
+    <option name="LAST_COMMIT_MESSAGE" value="11" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600220284443">
+    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600227881596">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600220284443" />
-    <state x="555" y="171" key="FileChooserDialogImpl" timestamp="1600163276928">
+    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600227881596" />
+    <state x="555" y="171" key="FileChooserDialogImpl" timestamp="1600221196330">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="555" y="171" key="FileChooserDialogImpl/0.0.1549.831@0.0.1549.831" timestamp="1600163276928" />
-    <state x="618" y="126" key="RollbackChangesDialog" timestamp="1600220281873">
+    <state x="555" y="171" key="FileChooserDialogImpl/0.0.1549.831@0.0.1549.831" timestamp="1600221196330" />
+    <state x="618" y="126" key="RollbackChangesDialog" timestamp="1600227877411">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="618" y="126" key="RollbackChangesDialog/0.0.1549.831@0.0.1549.831" timestamp="1600220281873" />
+    <state x="618" y="126" key="RollbackChangesDialog/0.0.1549.831@0.0.1549.831" timestamp="1600227877411" />
     <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1600220559293">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1600220559293" />
-    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600220516061">
+    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600227580785">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1549.831@0.0.1549.831" timestamp="1600220516061" />
+    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1549.831@0.0.1549.831" timestamp="1600227580785" />
+    <state x="465" y="153" width="618" height="524" key="find.popup" timestamp="1600226254045">
+      <screen x="0" y="0" width="1549" height="831" />
+    </state>
+    <state x="465" y="153" width="618" height="524" key="find.popup/0.0.1549.831@0.0.1549.831" timestamp="1600226254045" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SmartWatch.html</url>
-          <line>494</line>
+          <line>461</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/SmartWatch.html</url>
+          <line>523</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

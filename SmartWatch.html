@@ -119,7 +119,7 @@
 			</div>
 			<ul style="height: 560px;overflow:auto;">
 				<li class="line"></li>
-				<!--						<li>现在</li>-->
+				<li v-if="dayHistory.length===0">暂无数据</li>
 				<template  v-for="item in dayHistory">
 					<li v-if="item.active_name==='走路'">
 						<div class="tip">
