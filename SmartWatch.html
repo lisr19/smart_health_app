@@ -45,7 +45,7 @@
 			<div v-for="(item,index) in iconShow"
 				 :class="index === 0?'tabs-panel tabs-panel-left':(index === 3?'tabs-panel tabs-panel-right':'tabs-panel')"
 				 :style="(index === currentIndex?'background:'+color[currentIndex]:'')"
-				 @click="changeTabsIndex(index)"	>
+				 @tap="changeTabsIndex(index)"	>
 				<img :src="item.icon"/>
 				<div class="tabs-panel-line" :style="'background:'+color[currentIndex]" v-if="index !== 3"></div>
 			</div>
@@ -113,10 +113,18 @@
 	<!--活动详情-->
 	<div class="tabs-panel-body" v-if="currentIndex === 1">
 		<div class="my-select" >
-			<div class="my-select-title" >
-				<div style="display: inline-block;float: left;">今天</div>
-				<img src="img/date.png" />
+			<div style="margin-bottom:10px;" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
+					<a class="mui-control-item" :class="item.day=== '今天'?'mui-active':''"
+					   v-for="(item,index) in weekList" @tap="chageDate(item,index)">
+						{{item.day}}
+					</a>
+				</div>
 			</div>
+<!--			<div class="my-select-title" >-->
+<!--				<div style="display: inline-block;float: left;">{{currentDate}}</div>-->
+<!--				<img src="img/date.png" />-->
+<!--			</div>-->
 			<ul style="height: 560px;overflow:auto;">
 				<li class="line"></li>
 				<li v-if="dayHistory.length===0">暂无数据</li>
@@ -189,9 +197,10 @@
 		<div class="tabs-panel-content" style="padding: 0;margin-top: 1rem;">
 			<div id="xinlv" style="width: 15rem;height: 6rem;"></div>
 		</div>
-		<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		<div style="margin-top: 20px" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 			<div class="mui-scroll">
-				<a class="mui-control-item" v-for="(item,index) in weekList" @tap="open(item,index)">
+				<a class="mui-control-item" :class="item.day=== '今天'?'mui-active':''"
+				   v-for="(item,index) in weekList" @tap="chageHear(item,index)">
 					{{item.day}}
 				</a>
 			</div>
@@ -320,6 +329,7 @@
 			xinlvData:[],
 			minHValue:0,
 			maxHValue:0,
+			tabIndex:0
 
 		},
 		created(){
@@ -329,14 +339,17 @@
 			this.getDay(-1,'-')
 			this.getDay(-2,'-')
 			// this.getDay(-3,'-')
+			// this.getDay(-4,'-')
 			this.changeTabsIndex(0)
 		},
 		mounted:function(){
 		},
 		methods:{
-			open(item){
-				console.log(JSON.stringify(item));
-				this.getInfor2({uid:this.userid,date:item.bzday})
+			chageHear(item){
+				this.getHeartDate({uid:this.userid,date:item.bzday})
+			},
+			chageDate(item){
+				this.getActiveDate({uid:this.userid,date:item.bzday})
 			},
 			//获取当前时间
 			getDay(num, str) {
@@ -360,9 +373,6 @@
 				})
 				// console.log(this.weekList);
 				this.getInfor({uid:this.userid,date:this.currDate})
-				// if(num===0){
-				// 	this.getInfor2({uid:this.userid,date:this.currentDate})
-				// }
 
 			},
 			getNowDate () {
@@ -379,8 +389,8 @@
 				}
 				this.currentDate = year + seperator1 + month + seperator1 + strDate;
 				// this.getInfor({uid:this.userid,date:this.currentDate})
-				this.getInfor2({uid:this.userid,date:this.currentDate})
-				// this.getInfor2({uid:this.userid,date:'2020-09-14'})
+				this.getHeartDate({uid:this.userid,date:this.currentDate})
+				this.getActiveDate({uid:this.userid,date:this.currentDate})
 			},
 			//获取信息
 			getInfor(params){
@@ -447,6 +457,9 @@
 							this.sleepCountData.sort(function(a, b) {
 								return b.create_time < a.create_time ? 1 : -1
 							})
+							setTimeout(()=>{
+								this.setFootCount()
+							},1000)
 							// console.log(JSON.stringify(this.footCountData));
 						}
 
@@ -459,6 +472,7 @@
 			},
 			//选中tabs
 			changeTabsIndex:function(index){
+				this.tabIndex = index
 				var _self = this;
 				if(_self.currentIndex !== index){
 //							$("#foot").empty();
@@ -816,8 +830,9 @@
 					this.setSleepData(index)
 				}
 			},
-			getInfor2(params){
+			getHeartDate(params){
 				this.xinlvData = []
+				console.log(this.tabIndex);
 				var token = localStorage.getItem('token');
 				mui.ajax(baseUrl2,{
 					headers: {
@@ -829,7 +844,6 @@
 					timeout:10000,//超时时间设置为10秒；
 					success: (data)=> {
 						if(data.errno === 0){
-							vm.dayHistory =data.data.active_data?data.data.active_data:[]
 							let heartbeat = data.data.heartbeat?data.data.heartbeat:[]
 							let arrH = []
 							if(heartbeat.length>0){
@@ -860,6 +874,31 @@
 
 
 			},
+			getActiveDate(params){
+				var token = localStorage.getItem('token');
+				mui.ajax(baseUrl2,{
+					headers: {
+						'Authorization': token,
+					},
+					data:params,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					timeout:10000,//超时时间设置为10秒；
+					success: (data)=> {
+						if(data.errno === 0){
+							vm.dayHistory =data.data.active_data?data.data.active_data:[]
+						}
+
+					},
+					error:function(xhr,type,errorThrown){
+
+					}
+				});
+
+
+
+			},
+
 		},
 
 	})
