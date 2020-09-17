@@ -340,9 +340,12 @@
 			this.getDay(-2,'-')
 			// this.getDay(-3,'-')
 			// this.getDay(-4,'-')
-			this.changeTabsIndex(0)
+
 		},
 		mounted:function(){
+			setTimeout(()=>{
+				this.changeTabsIndex(0)
+			},500)
 		},
 		methods:{
 			chageHear(item){

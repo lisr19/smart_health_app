@@ -1,581 +1,605 @@
 {
-    "@platforms": ["android", "iPhone", "iPad"],
-    "id": "H55E01D53",/*应用的标识，创建应用时自动生成，勿手动修改*/
-    "name": "Hello 健康",/*应用名称，程序桌面图标名称*/
-    "version": {
-        "name": "1.0",/*应用版本名称*/
-        "code": ""
+    "@platforms" : [ "android", "iPhone", "iPad" ],
+    "id" : "H57E90F7F", /*应用的标识，创建应用时自动生成，勿手动修改*/
+    "name" : "Hello 健康", /*应用名称，程序桌面图标名称*/
+    "version" : {
+        "name" : "1.0", /*应用版本名称*/
+        "code" : ""
     },
-    "description": "",/*应用描述信息*/
-    "icons": {
-        "72": "icon.png"
+    "description" : "", /*应用描述信息*/
+    "icons" : {
+        "72" : "icon.png"
     },
-    "launch_path": "phoneLogin.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
-    "developer": {
-        "name": "",/*开发者名称*/
-        "email": "",/*开发者邮箱地址*/
-        "url": ""/*开发者个人主页地址*/
+    "launch_path" : "phoneLogin.html", /*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "developer" : {
+        "name" : "", /*开发者名称*/
+        "email" : "", /*开发者邮箱地址*/
+        "url" : "" /*开发者个人主页地址*/
     },
-    "permissions": {
-        "Messaging":{
-        	"description": "短彩邮件插件"
+    "permissions" : {
+        "Messaging" : {
+            "description" : "短彩邮件插件"
         },
-        "Cache": {
-            "description": "管理应用缓存"
+        "Cache" : {
+            "description" : "管理应用缓存"
         },
-        "Console": {
-            "description": "跟踪调试输出日志"
+        "Console" : {
+            "description" : "跟踪调试输出日志"
         },
-        "Contacts": {
-            "description": "访问系统联系人信息"
+        "Contacts" : {
+            "description" : "访问系统联系人信息"
         },
-        "Events": {
-            "description": "应用扩展事件"
+        "Events" : {
+            "description" : "应用扩展事件"
         },
-        "Maps": {
-            "description": "管理地图插件"
+        "Maps" : {
+            "description" : "管理地图插件"
         },
-        "Speech": {
-            "description": "管理语音识别插件"
+        "Speech" : {
+            "description" : "管理语音识别插件"
         }
     },
-    "plus": {
-        "splashscreen": {
-            "autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
-            "waiting": true/*是否在程序启动界面显示等待雪花，true表示显示，false表示不显示。*/
+    "plus" : {
+        "splashscreen" : {
+            "autoclose" : true, /*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
+            "waiting" : true /*是否在程序启动界面显示等待雪花，true表示显示，false表示不显示。*/
         },
-        "popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
-        "runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
-        "signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-        "distribute": {
-            "apple": {
-                "appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
-                "mobileprovision": "",/*iOS应用打包配置文件*/
-                "password": "",/*iOS应用打包个人证书导入密码*/
-                "p12": "",/*iOS应用打包个人证书，打包配置文件关联的个人证书*/
-                "devices": "universal",/*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
-                "frameworks":[
-                ]/*调用Native.js调用原生Objective-c API需要引用的FrameWork，如需调用GameCenter，则添加"GameKit.framework"*/
+        "popGesture" : "close", /*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
+        "runmode" : "normal", /*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
+        "signature" : "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==", /*可选，保留给应用签名，暂不使用*/
+        "distribute" : {
+            "apple" : {
+                "appid" : "", /*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
+                "mobileprovision" : "", /*iOS应用打包配置文件*/
+                "password" : "", /*iOS应用打包个人证书导入密码*/
+                "p12" : "", /*iOS应用打包个人证书，打包配置文件关联的个人证书*/
+                "devices" : "universal", /*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
+                "frameworks" : [] /*调用Native.js调用原生Objective-c API需要引用的FrameWork，如需调用GameCenter，则添加"GameKit.framework"*/
             },
-            "google": {
-                "packagename": "",/*Android应用包名，如io.dcloud.HelloH5*/
-                "keystore": "",/*Android应用打包使用的密钥库文件*/
-                "password": "",/*Android应用打包使用密钥库中证书的密码*/
-                "aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-               "permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
-				/*使用Native.js调用原生安卓API需要使用到的系统权限*/
+            "google" : {
+                "packagename" : "", /*Android应用包名，如io.dcloud.HelloH5*/
+                "keystore" : "", /*Android应用打包使用的密钥库文件*/
+                "password" : "", /*Android应用打包使用密钥库中证书的密码*/
+                "aliasname" : "", /*Android应用打包使用密钥库中证书的别名*/
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ]
             },
-            "orientation": [
-                "portrait-primary"
-            ],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
-            "icons": {
-                "ios": {
-                    "prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
-                     /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
-                    "iphone": {
-                        "normal": "", /*iPhone3/3GS程序图标，分辨率：57x57*/
-                        "retina": "", /*iPhone4程序图标，分辨率：114x114*/
-                         /*iPhone4S/5/6程序图标，分辨率：120x120*/
-			 /*iPhone6 Plus程序图标，分辨率：180x180*/
-                        "spotlight-normal": "", /*iPhone3/3GS Spotlight搜索程序图标，分辨率：29x29*/
-                        "spotlight-retina": "", /*iPhone4 Spotlight搜索程序图标，分辨率：58x58*/
-                         /*iPhone4S/5/6 Spotlight搜索程序图标，分辨率：80x80*/
-                        "settings-normal": "", /*iPhone4设置页面程序图标，分辨率：29x29*/
-                         /*iPhone4S/5/6设置页面程序图标，分辨率：58x58*/
-			"app@2x":"unpackage/res/icons/120x120.png","app@3x":"unpackage/res/icons/180x180.png","settings@3x":"unpackage/res/icons/87x87.png","settings@2x":"unpackage/res/icons/58x58.png","spotlight@2x":"unpackage/res/icons/80x80.png","spotlight@3x":"unpackage/res/icons/120x120.png","notification@3x":"unpackage/res/icons/60x60.png","notification@2x":"unpackage/res/icons/40x40.png" /*iPhone6Plus设置页面程序图标，分辨率：87x87*/
+            /*使用Native.js调用原生安卓API需要使用到的系统权限*/
+            "orientation" : [ "portrait-primary" ], /*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+            "icons" : {
+                "ios" : {
+                    "prerendered" : true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
+
+                    /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+                    "iphone" : {
+                        "normal" : "", /*iPhone3/3GS程序图标，分辨率：57x57*/
+                        "retina" : "", /*iPhone4程序图标，分辨率：114x114*/
+
+                        /*iPhone4S/5/6程序图标，分辨率：120x120*//*iPhone6 Plus程序图标，分辨率：180x180*/
+                        "spotlight-normal" : "", /*iPhone3/3GS Spotlight搜索程序图标，分辨率：29x29*/
+                        "spotlight-retina" : "", /*iPhone4 Spotlight搜索程序图标，分辨率：58x58*/
+
+                        /*iPhone4S/5/6 Spotlight搜索程序图标，分辨率：80x80*/
+                        "settings-normal" : "", /*iPhone4设置页面程序图标，分辨率：29x29*/
+
+                        /*iPhone4S/5/6设置页面程序图标，分辨率：58x58*/
+                        "app@2x" : "unpackage/res/icons/120x120.png",
+                        "app@3x" : "unpackage/res/icons/180x180.png",
+                        "settings@3x" : "unpackage/res/icons/87x87.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "spotlight@3x" : "unpackage/res/icons/120x120.png",
+                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png" /*iPhone6Plus设置页面程序图标，分辨率：87x87*/
                     },
-                    "ipad": {
-                        "normal": "", /*iPad普通屏幕程序图标，分辨率：72x72*/
-                        "retina": "", /*iPad高分屏程序图标，分辨率：144x144*/
-                         /*iPad iOS7程序图标，分辨率：76x76*/
-                         /*iPad iOS7高分屏程序图标，分辨率：152x152*/
-                        "spotlight-normal": "", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
-                        "spotlight-retina": "", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
-                        /*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*/
-                        /*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
-                        /*iPad设置页面程序图标，分辨率：29x29*/
-                        "app":"unpackage/res/icons/76x76.png","app@2x":"unpackage/res/icons/152x152.png","settings":"unpackage/res/icons/29x29.png","proapp@2x":"unpackage/res/icons/167x167.png","spotlight":"unpackage/res/icons/40x40.png","settings@2x":"unpackage/res/icons/58x58.png","spotlight@2x":"unpackage/res/icons/80x80.png","notification":"unpackage/res/icons/20x20.png","notification@2x":"unpackage/res/icons/40x40.png" /*iPad高分屏设置页面程序图标，分辨率：58x58*/
-                    },"appstore":"unpackage/res/icons/1024x1024.png"
+                    "ipad" : {
+                        "normal" : "", /*iPad普通屏幕程序图标，分辨率：72x72*/
+                        "retina" : "", /*iPad高分屏程序图标，分辨率：144x144*/
+
+                        /*iPad iOS7程序图标，分辨率：76x76*//*iPad iOS7高分屏程序图标，分辨率：152x152*/
+                        "spotlight-normal" : "", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
+                        "spotlight-retina" : "", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
+
+                        /*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*//*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*//*iPad设置页面程序图标，分辨率：29x29*/
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png" /*iPad高分屏设置页面程序图标，分辨率：58x58*/
+                    },
+                    "appstore" : "unpackage/res/icons/1024x1024.png"
                 },
-                "android": {
-                    "mdpi": "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
-                    "ldpi": "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
-                    "hdpi": "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
-                    "xhdpi": "unpackage/res/icons/96x96.png",/*720P高分屏程序图标，分辨率：96x96*/
-                    "xxhdpi": "unpackage/res/icons/144x144.png","xxxhdpi":"unpackage/res/icons/192x192.png"/*1080P 高分屏程序图标，分辨率：144x144*/
+                "android" : {
+                    "mdpi" : "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
+                    "ldpi" : "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
+                    "hdpi" : "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
+                    "xhdpi" : "unpackage/res/icons/96x96.png", /*720P高分屏程序图标，分辨率：96x96*/
+                    "xxhdpi" : "unpackage/res/icons/144x144.png",
+                    "xxxhdpi" : "unpackage/res/icons/192x192.png" /*1080P 高分屏程序图标，分辨率：144x144*/
                 }
             },
-            "splashscreen": {
-                "ios": {
-                    "iphone": {
-                        "default": "", /*iPhone3启动图片选，分辨率：320x480*/
-                        "retina35": "",/*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
-                        "retina40": "",/*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
-                        "retina47": "",/*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
-                        "retina55": "",/*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
-                        "retina55l": ""/*5.5 英寸设备(iPhone6 Plus)横屏启动图片，分辨率：2208x1242*/
+            "splashscreen" : {
+                "ios" : {
+                    "iphone" : {
+                        "default" : "", /*iPhone3启动图片选，分辨率：320x480*/
+                        "retina35" : "", /*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+                        "retina40" : "", /*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
+                        "retina47" : "", /*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
+                        "retina55" : "", /*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
+                        "retina55l" : "" /*5.5 英寸设备(iPhone6 Plus)横屏启动图片，分辨率：2208x1242*/
                     },
-                    "ipad": {
-                        "portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
-                        "portrait-retina": "",/*iPad高分屏竖屏图片，分辨率：1536x2008*/
-                        "landscape": "", /*iPad横屏启动图片，分辨率：1024x748*/
-                        "landscape-retina": "", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
-                        "portrait7": "", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
-                        "portrait-retina7": "",/*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
-                        "landscape7": "", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
-                        "landscape-retina7": ""/*iPad iOS7高分屏横屏启动图片，分辨率：2048x1536*/
+                    "ipad" : {
+                        "portrait" : "", /*iPad竖屏启动图片，分辨率：768x1004*/
+                        "portrait-retina" : "", /*iPad高分屏竖屏图片，分辨率：1536x2008*/
+                        "landscape" : "", /*iPad横屏启动图片，分辨率：1024x748*/
+                        "landscape-retina" : "", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+                        "portrait7" : "", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+                        "portrait-retina7" : "", /*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+                        "landscape7" : "", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+                        "landscape-retina7" : "" /*iPad iOS7高分屏横屏启动图片，分辨率：2048x1536*/
                     }
                 },
-                "android": {
-                    "mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-                    "ldpi": "", /*大屏启动图片，分辨率：320x442*/
-                    "hdpi": "C:/Users/PC/Desktop/apk/智慧健康/qidon.png", /*高分屏启动图片，分辨率：480x762*/
-                    "xhdpi": "C:/Users/PC/Desktop/apk/智慧健康/qidon.png", /*720P高分屏启动图片，分辨率：720x1242*/
-                    "xxhdpi": "C:/Users/PC/Desktop/apk/智慧健康/qidon.png"/*1080P高分屏启动图片，分辨率：1080x1882*/
+                "android" : {
+                    "mdpi" : "", /*普通屏启动图片，分辨率：240x282*/
+                    "ldpi" : "", /*大屏启动图片，分辨率：320x442*/
+                    "hdpi" : "D:/work/www/img/qidon.png", /*高分屏启动图片，分辨率：480x762*/
+                    "xhdpi" : "D:/work/www/img/qidon.png", /*720P高分屏启动图片，分辨率：720x1242*/
+                    "xxhdpi" : "D:/work/www/img/qidon.png" /*1080P高分屏启动图片，分辨率：1080x1882*/
                 }
-            },"debug":false
+            },
+            "debug" : false,
+            "plugins" : {
+                "speech" : {
+                    "ifly" : {}
+                },
+                "ad" : {}
+            }
         }
     },
-	"dependencies": {
-		"pages": {
-			"H5030DA46/www/index.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/chatByAI.html",
-					"H5030DA46/www/meals-index.html",
-					"H5030DA46/www/messageTip.html",
-					"H5030DA46/www/myself-config.html",
-					"H5030DA46/www/bodyfatScale.html",
-					"H5030DA46/www/healthCheck.html",
-					"H5030DA46/www/discovery.html",
-					"H5030DA46/www/familyHealthGroup.html",
-					"H5030DA46/www/healthyEncyclopedia.html",
-					"H5030DA46/www/businessList.html",
-					"H5030DA46/www/healthService.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/login.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/index.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/myself-config.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/messageTip.html",
-					"H5030DA46/www/discovery.html",
-					"H5030DA46/www/familyHealthGroup.html",
-					"H5030DA46/www/meals-index.html",
-					"H5030DA46/www/myselfCode.html",
-					"H5030DA46/www/chartShow.html",
-					"H5030DA46/www/passwordEdit.html",
-					"H5030DA46/www/myinformation.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/discovery.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/myself-config.html",
-					"H5030DA46/www/news.html",
-					"H5030DA46/www/meals-index.html",
-					"H5030DA46/www/news2.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/messageTip.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/discovery.html",
-					"H5030DA46/www/familyCheckById.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/chatByAI.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/consultList.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/consultList.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/chat.html",
-					"H5030DA46/www/consultOne.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/cookbook.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/buyFood.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/bodyfatScale.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/familyCheck.html",
-					"H5030DA46/www/SmartWatch.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/healthCheck.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/healthCheckHistory.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/familyHealthGroup.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/meals-index.html",
-					"H5030DA46/www/familyHealthChart.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/familyCheckById.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/healthCheckById.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/healthyEncyclopedia.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/healthyEncyclopediaList.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/businessList.html": {
-				"resources": [],
-				"refer": [
-					"H5030DA46/www/businessOne.html"
-				],
-				"priority": 0
-			},
-			"H5030DA46/www/SmartWatch.html": {
-				"resources": [
-					"H5030DA46/www/img/date-icon.png",
-					"H5030DA46/www/img/zoulu.png",
-					"H5030DA46/www/img/xinlv.png",
-					"H5030DA46/www/img/foot_blue.png",
-					"H5030DA46/www/img/sleep.png",
-					"H5030DA46/www/img/date.png",
-					"H5030DA46/www/img/foot_gray.png",
-					"H5030DA46/www/img/foot_red.png"
-				],
-				"refer": [],
-				"priority": 0
-			}
-		},
-		"idle": {
-			"resources": [
-				"H5030DA46/www/img/yp5.jpg",
-				"H5030DA46/www/img/dental.png",
-				"H5030DA46/www/img/kefu.png",
-				"H5030DA46/www/js/mui.js",
-				"H5030DA46/www/img/mall_top_categories/cwy_example.jpg",
-				"H5030DA46/www/img/return2.png",
-				"H5030DA46/www/img/eat5.jpg",
-				"H5030DA46/www/img/smartpaking.png",
-				"H5030DA46/www/img/family1.png",
-				"H5030DA46/www/img/pinglun.png",
-				"H5030DA46/www/img/bj3.jpg",
-				"H5030DA46/www/img/pingjia.png",
-				"H5030DA46/www/img/background2.png",
-				"H5030DA46/www/img/qidon.png",
-				"H5030DA46/www/unpackage/res/icons/80x80.png",
-				"H5030DA46/www/img/js2.jpg",
-				"H5030DA46/www/js/mui.picker.min.js",
-				"H5030DA46/www/img/echart.jpg",
-				"H5030DA46/www/img/fukuang.png",
-				"H5030DA46/www/img/eat0.jpg",
-				"H5030DA46/www/img/yp3.jpg",
-				"H5030DA46/www/propertyTip.html",
-				"H5030DA46/www/img/meals/jia.png",
-				"H5030DA46/www/familyHealth.html",
-				"H5030DA46/www/healthOne.html",
-				"H5030DA46/www/img/divice.png",
-				"H5030DA46/www/img/999gml.jpg",
-				"H5030DA46/www/img/boys.png",
-				"H5030DA46/www/img/yp4.jpg",
-				"H5030DA46/www/img/woman.png",
-				"H5030DA46/www/shopList.html",
-				"H5030DA46/www/unpackage/res/icons/180x180.png",
-				"H5030DA46/www/search.html",
-				"H5030DA46/www/img/meals/meals-scbl.png",
-				"H5030DA46/www/img/back.png",
-				"H5030DA46/www/img/mall_top_categories/ccg_example.jpg",
-				"H5030DA46/www/img/shequBig.png",
-				"H5030DA46/www/img/businessLogo.png",
-				"H5030DA46/www/img/baikeBig.png",
-				"H5030DA46/www/img/banner6.jpg",
-				"H5030DA46/www/js/qrcode.min.js",
-				"H5030DA46/www/img/onekey.png",
-				"H5030DA46/www/img/eat2.jpg",
-				"H5030DA46/www/img/build.png",
-				"H5030DA46/www/unpackage/res/icons/87x87.png",
-				"H5030DA46/www/js/vue.js",
-				"H5030DA46/www/img/advice.png",
-				"H5030DA46/www/img/bj2.jpg",
-				"H5030DA46/www/img/health.png",
-				"H5030DA46/www/img/options.png",
-				"H5030DA46/www/img/dermatology.png",
-				"H5030DA46/www/healthyEncyclopediaXi.html",
-				"H5030DA46/www/img/yr5.jpg",
-				"H5030DA46/www/css/buyFood.css",
-				"H5030DA46/www/js/lib-flexible.js",
-				"H5030DA46/www/img/jf3.jpg",
-				"H5030DA46/www/img/eat3.jpg",
-				"H5030DA46/www/img/jf2.jpg",
-				"H5030DA46/www/img/search.png",
-				"H5030DA46/www/img/yaocai.jpg",
-				"H5030DA46/www/img/Triangle1.png",
-				"H5030DA46/www/js/menu.js",
-				"H5030DA46/www/messageTipAll.html",
-				"H5030DA46/www/js/standard.js",
-				"H5030DA46/www/img/mall_top_categories/bjp_example.jpg",
-				"H5030DA46/www/img/jf4.jpg",
-				"H5030DA46/www/img/meals/bz4.png",
-				"H5030DA46/www/img/meals/cook-time.png",
-				"H5030DA46/www/js/health_advice.js",
-				"H5030DA46/www/img/meals/food3.png",
-				"H5030DA46/www/img/report.png",
-				"H5030DA46/www/healthyEncyclopediaBJ.html",
-				"H5030DA46/www/img/QRcode.png",
-				"H5030DA46/www/img/nomessage.png",
-				"H5030DA46/www/img/mans.png",
-				"H5030DA46/www/js/iconfont.js",
-				"H5030DA46/www/img/nomessage1.jpg",
-				"H5030DA46/www/unpackage/res/icons/144x144.png",
-				"H5030DA46/www/img/yr2.jpg",
-				"H5030DA46/www/healthCheckShare.html",
-				"H5030DA46/www/unpackage/res/icons/48x48.png",
-				"H5030DA46/www/img/dinner.png",
-				"H5030DA46/www/img/yp2.jpg",
-				"H5030DA46/www/img/Rectangle 141.png",
-				"H5030DA46/www/img/meals/shop.png",
-				"H5030DA46/www/unpackage/res/icons/152x152.png",
-				"H5030DA46/www/healthyEncyclopediaZ.html",
-				"H5030DA46/www/familyHealthOne.html",
-				"H5030DA46/www/img/home.svg",
-				"H5030DA46/www/img/yr0.jpg",
-				"H5030DA46/www/img/nodata.png",
-				"H5030DA46/www/img/Group 61.png",
-				"H5030DA46/www/img/Shape.png",
-				"H5030DA46/www/img/kaisuo.png",
-				"H5030DA46/www/index2.html",
-				"H5030DA46/www/shop.html",
-				"H5030DA46/www/img/meals/jian.png",
-				"H5030DA46/www/img/bj4.jpg",
-				"H5030DA46/www/img/warning.png",
-				"H5030DA46/www/img/banner1.jpg",
-				"H5030DA46/www/img/mall_top_categories/zmy_example.jpg",
-				"H5030DA46/www/unpackage/res/icons/76x76.png",
-				"H5030DA46/www/img/run.png",
-				"H5030DA46/www/airDataUpdate.html",
-				"H5030DA46/www/unpackage/res/icons/58x58.png",
-				"H5030DA46/www/img/familyBig.png",
-				"H5030DA46/www/phoneLoginCheck.html",
-				"H5030DA46/www/img/meals/bz5.png",
-				"H5030DA46/www/img/banner5.jpg",
-				"H5030DA46/www/js/kuNum.js",
-				"H5030DA46/www/img/healthBig.png",
-				"H5030DA46/www/saomaLogin.html",
-				"H5030DA46/www/lexinData.html",
-				"H5030DA46/www/img/js1.jpg",
-				"H5030DA46/www/img/meals/meals-collection.png",
-				"H5030DA46/www/airData.html",
-				"H5030DA46/www/manifest.json",
-				"H5030DA46/www/img/mall_top_categories/xsp_exmaple.jpg",
-				"H5030DA46/www/saoma.html",
-				"H5030DA46/www/img/shopping.png",
-				"H5030DA46/www/img/hand.png",
-				"H5030DA46/www/diseaseSearchResult.html",
-				"H5030DA46/www/healthcareResult.html",
-				"H5030DA46/www/img/meals/food2.png",
-				"H5030DA46/www/img/Star Copy 2.png",
-				"H5030DA46/www/unpackage/res/icons/192x192.png",
-				"H5030DA46/www/buildTip.html",
-				"H5030DA46/www/img/meals/bz2.png",
-				"H5030DA46/www/OneKeyLogon.html",
-				"H5030DA46/www/css/style(norobot).css",
-				"H5030DA46/www/healthyEncyclopediaSearch.html",
-				"H5030DA46/www/img/meals/meals-today-yx.png",
-				"H5030DA46/www/img/guahao.png",
-				"H5030DA46/www/img/tingche.png",
-				"H5030DA46/www/img/meals/meals-search-logo.png",
-				"H5030DA46/www/familyOneAdd.html",
-				"H5030DA46/www/unpackage/res/icons/167x167.png",
-				"H5030DA46/www/unpackage/res/icons/29x29.png",
-				"H5030DA46/www/img/yp1.jpg",
-				"H5030DA46/www/js/echarts.min.js",
-				"H5030DA46/www/img/mall_top_categories/zcg_example.jpg",
-				"H5030DA46/www/img/eat0.png",
-				"H5030DA46/www/css/mui.picker.min.css",
-				"H5030DA46/www/myinformationFirst.html",
-				"H5030DA46/www/img/ok.png",
-				"H5030DA46/www/img/meals/buyFood-return.png",
-				"H5030DA46/www/img/js5.jpg",
-				"H5030DA46/www/img/wuye.png",
-				"H5030DA46/www/img/yr4.jpg",
-				"H5030DA46/www/img/bj0.jpg",
-				"H5030DA46/www/img/user.png",
-				"H5030DA46/www/img/nomessage2.png",
-				"H5030DA46/www/leftMessage.html",
-				"H5030DA46/www/familyGroupAdd.html",
-				"H5030DA46/www/img/luyouqi.png",
-				"H5030DA46/www/css/style.css",
-				"H5030DA46/www/img/Star.png",
-				"H5030DA46/www/img/999pipa.jpg",
-				"H5030DA46/www/js/city.data-3.js",
-				"H5030DA46/www/js/mui.imageViewer.js",
-				"H5030DA46/www/js/swiper.min.js",
-				"H5030DA46/www/unpackage/res/icons/60x60.png",
-				"H5030DA46/www/img/meals/food1.png",
-				"H5030DA46/www/img/jianshen.jpg",
-				"H5030DA46/www/img/return.png",
-				"H5030DA46/www/img/Triangle.png",
-				"H5030DA46/www/img/eat1.jpg",
-				"H5030DA46/www/img/homeAd.png",
-				"H5030DA46/www/img/yp0.jpg",
-				"H5030DA46/www/healthcareList.html",
-				"H5030DA46/www/img/tip.png",
-				"H5030DA46/www/img/meals/meals-yxms.png",
-				"H5030DA46/www/adressAdd.html",
-				"H5030DA46/www/img/history.png",
-				"H5030DA46/www/img/meals/meals-tpyp.png",
-				"H5030DA46/www/img/newtip.png",
-				"H5030DA46/www/airGroupSelect.html",
-				"H5030DA46/www/img/meals/meals-banner.png",
-				"index.html",
-				"H5030DA46/www/disease.html",
-				"H5030DA46/www/img/mall_top_categories/gmy_example.jpg",
-				"H5030DA46/www/adverisement.html",
-				"H5030DA46/www/js/configUrl.js",
-				"H5030DA46/www/diseaseList.html",
-				"H5030DA46/www/familyHealthOneMore.html",
-				"H5030DA46/www/js/vue-router.js",
-				"H5030DA46/www/js/rem.js",
-				"H5030DA46/www/img/wuyeBig.png",
-				"H5030DA46/www/img/pingjia2.png",
-				"H5030DA46/www/img/psychology.png",
-				"H5030DA46/www/img/meals/jinru.png",
-				"H5030DA46/www/familyEdit.html",
-				"H5030DA46/www/img/jf0.jpg",
-				"H5030DA46/www/consult.html",
-				"H5030DA46/www/img/saomiao.png",
-				"H5030DA46/www/propertyRead.html",
-				"H5030DA46/www/js/mui.min.js",
-				"H5030DA46/www/img/js0.jpg",
-				"H5030DA46/www/img/bj1.jpg",
-				"H5030DA46/www/css/cookbook.css",
-				"H5030DA46/www/healthcareResult1.html",
-				"H5030DA46/www/css/mui.css",
-				"H5030DA46/www/img/meals/xiaoxi.png",
-				"H5030DA46/www/unpackage/res/icons/120x120.png",
-				"H5030DA46/www/img/work.png",
-				"H5030DA46/www/familyHealthOne1.html",
-				"H5030DA46/www/img/vup.png",
-				"H5030DA46/www/myself.html",
-				"H5030DA46/www/img/meals/bz3.png",
-				"H5030DA46/www/img/meals/cook-xz.png",
-				"H5030DA46/www/js/utils/http.js",
-				"H5030DA46/www/lawTip.html",
-				"H5030DA46/www/img/bj5.jpg",
-				"H5030DA46/www/img/mall_top_categories/yys_example.jpg",
-				"H5030DA46/www/img/jf1.jpg",
-				"H5030DA46/www/img/girls.png",
-				"H5030DA46/www/img/meals/ck-return.png",
-				"H5030DA46/www/healthCheckQR.html",
-				"H5030DA46/www/img/right-tip.png",
-				"H5030DA46/www/img/Rectangle 6.png",
-				"H5030DA46/www/css/swiper.min.css",
-				"H5030DA46/www/img/up.png",
-				"H5030DA46/www/todayData.html",
-				"H5030DA46/www/css/meals.css",
-				"H5030DA46/www/img/shouhuo.png",
-				"H5030DA46/www/unpackage/res/icons/72x72.png",
-				"H5030DA46/www/img/meals/meals-food-one.png",
-				"H5030DA46/www/img/password.png",
-				"H5030DA46/www/img/Group 3.png",
-				"H5030DA46/www/unpackage/res/icons/20x20.png",
-				"H5030DA46/www/img/yr1.jpg",
-				"H5030DA46/www/img/yaopin.jpg",
-				"H5030DA46/www/phoneLogin.html",
-				"H5030DA46/www/img/light.png",
-				"H5030DA46/www/img/lunch.png",
-				"H5030DA46/www/loginSelect.html",
-				"H5030DA46/www/img/yutip.png",
-				"H5030DA46/www/img/shouhou.png",
-				"H5030DA46/www/unpackage/res/icons/96x96.png",
-				"H5030DA46/www/img/weight.png",
-				"H5030DA46/www/img/meals/meals-sysm.png",
-				"H5030DA46/www/fonts/mui.ttf",
-				"H5030DA46/www/img/yuer.jpg",
-				"H5030DA46/www/img/js3.jpg",
-				"H5030DA46/www/img/healthcheck.png",
-				"H5030DA46/www/img/background.svg",
-				"H5030DA46/www/img/shape1.png",
-				"H5030DA46/www/img/jf5.jpg",
-				"H5030DA46/www/img/my.svg",
-				"H5030DA46/www/img/meals/dinwei.png",
-				"H5030DA46/www/unpackage/res/icons/256x256.png",
-				"H5030DA46/www/familyGroupEditName.html",
-				"H5030DA46/www/img/sport.png",
-				"H5030DA46/www/img/hot.png",
-				"H5030DA46/www/img/health.svg",
-				"H5030DA46/www/img/find.svg",
-				"H5030DA46/www/img/activity.png",
-				"H5030DA46/www/img/family3.png",
-				"H5030DA46/www/css/mui.min.css",
-				"H5030DA46/www/img/home.png",
-				"H5030DA46/www/js/standardCheck.js",
-				"H5030DA46/www/img/meals/meals-food1.png",
-				"H5030DA46/www/img/background1.png",
-				"H5030DA46/www/img/zuji.png",
-				"H5030DA46/www/img/prosess.png",
-				"H5030DA46/www/img/username.png",
-				"H5030DA46/www/adressList.html",
-				"H5030DA46/www/TVfamilySelect.html",
-				"H5030DA46/www/img/breakfast.png",
-				"H5030DA46/www/TVlogin.html",
-				"H5030DA46/www/img/Rectangle 142.png",
-				"H5030DA46/www/img/meals/bz1.png",
-				"H5030DA46/www/propertyService.html",
-				"H5030DA46/www/img/eat4.jpg",
-				"H5030DA46/www/img/shoucang.png",
-				"H5030DA46/www/img/tvlogin.png",
-				"H5030DA46/www/img/js4.jpg",
-				"H5030DA46/www/img/family2.png",
-				"H5030DA46/www/img/meals/cook-bz.png",
-				"H5030DA46/www/unpackage/res/icons/40x40.png",
-				"H5030DA46/www/img/down.png",
-				"H5030DA46/www/unpackage/res/icons/1024x1024.png",
-				"H5030DA46/www/register.html",
-				"H5030DA46/www/img/meals/health.png",
-				"H5030DA46/www/img/doctorLogo.png",
-				"H5030DA46/www/img/air.png",
-				"H5030DA46/www/SmartPaking.html",
-				"H5030DA46/www/img/meals/ck-page.png",
-				"H5030DA46/www/js/arttmpl.js",
-				"H5030DA46/www/img/Rectangle 14.png",
-				"H5030DA46/www/airDataBinding.html",
-				"H5030DA46/www/adressEdit.html",
-				"H5030DA46/www/diseaseMessage.html",
-				"H5030DA46/www/img/yr3.jpg",
-				"H5030DA46/www/img/Banner.png",
-				"H5030DA46/www/img/meals/meals-zczp.png",
-				"H5030DA46/www/xueyaCheck.html",
-				"H5030DA46/www/healthyEncyclopediaResult.html"
-			]
-		}
-	}
+    "dependencies" : {
+        "pages" : {
+            "H5030DA46/www/index.html" : {
+                "resources" : [],
+                "refer" : [
+                    "H5030DA46/www/chatByAI.html",
+                    "H5030DA46/www/meals-index.html",
+                    "H5030DA46/www/messageTip.html",
+                    "H5030DA46/www/myself-config.html",
+                    "H5030DA46/www/bodyfatScale.html",
+                    "H5030DA46/www/healthCheck.html",
+                    "H5030DA46/www/discovery.html",
+                    "H5030DA46/www/familyHealthGroup.html",
+                    "H5030DA46/www/healthyEncyclopedia.html",
+                    "H5030DA46/www/businessList.html",
+                    "H5030DA46/www/healthService.html"
+                ],
+                "priority" : 0
+            },
+            "H5030DA46/www/login.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/index.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/myself-config.html" : {
+                "resources" : [],
+                "refer" : [
+                    "H5030DA46/www/messageTip.html",
+                    "H5030DA46/www/discovery.html",
+                    "H5030DA46/www/familyHealthGroup.html",
+                    "H5030DA46/www/meals-index.html",
+                    "H5030DA46/www/myselfCode.html",
+                    "H5030DA46/www/chartShow.html",
+                    "H5030DA46/www/passwordEdit.html",
+                    "H5030DA46/www/myinformation.html"
+                ],
+                "priority" : 0
+            },
+            "H5030DA46/www/discovery.html" : {
+                "resources" : [],
+                "refer" : [
+                    "H5030DA46/www/myself-config.html",
+                    "H5030DA46/www/news.html",
+                    "H5030DA46/www/meals-index.html",
+                    "H5030DA46/www/news2.html"
+                ],
+                "priority" : 0
+            },
+            "H5030DA46/www/messageTip.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/discovery.html", "H5030DA46/www/familyCheckById.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/chatByAI.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/consultList.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/consultList.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/chat.html", "H5030DA46/www/consultOne.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/cookbook.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/buyFood.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/bodyfatScale.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/familyCheck.html", "H5030DA46/www/SmartWatch.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/healthCheck.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/healthCheckHistory.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/familyHealthGroup.html" : {
+                "resources" : [],
+                "refer" : [
+                    "H5030DA46/www/meals-index.html",
+                    "H5030DA46/www/familyHealthChart.html"
+                ],
+                "priority" : 0
+            },
+            "H5030DA46/www/familyCheckById.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/healthCheckById.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/healthyEncyclopedia.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/healthyEncyclopediaList.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/businessList.html" : {
+                "resources" : [],
+                "refer" : [ "H5030DA46/www/businessOne.html" ],
+                "priority" : 0
+            },
+            "H5030DA46/www/SmartWatch.html" : {
+                "resources" : [
+                    "H5030DA46/www/img/date-icon.png",
+                    "H5030DA46/www/img/zoulu.png",
+                    "H5030DA46/www/img/xinlv.png",
+                    "H5030DA46/www/img/foot_blue.png",
+                    "H5030DA46/www/img/sleep.png",
+                    "H5030DA46/www/img/date.png",
+                    "H5030DA46/www/img/foot_gray.png",
+                    "H5030DA46/www/img/foot_red.png"
+                ],
+                "refer" : [],
+                "priority" : 0
+            }
+        },
+        "idle" : {
+            "resources" : [
+                "H5030DA46/www/img/yp5.jpg",
+                "H5030DA46/www/img/dental.png",
+                "H5030DA46/www/img/kefu.png",
+                "H5030DA46/www/js/mui.js",
+                "H5030DA46/www/img/mall_top_categories/cwy_example.jpg",
+                "H5030DA46/www/img/return2.png",
+                "H5030DA46/www/img/eat5.jpg",
+                "H5030DA46/www/img/smartpaking.png",
+                "H5030DA46/www/img/family1.png",
+                "H5030DA46/www/img/pinglun.png",
+                "H5030DA46/www/img/bj3.jpg",
+                "H5030DA46/www/img/pingjia.png",
+                "H5030DA46/www/img/background2.png",
+                "H5030DA46/www/img/qidon.png",
+                "H5030DA46/www/unpackage/res/icons/80x80.png",
+                "H5030DA46/www/img/js2.jpg",
+                "H5030DA46/www/js/mui.picker.min.js",
+                "H5030DA46/www/img/echart.jpg",
+                "H5030DA46/www/img/fukuang.png",
+                "H5030DA46/www/img/eat0.jpg",
+                "H5030DA46/www/img/yp3.jpg",
+                "H5030DA46/www/propertyTip.html",
+                "H5030DA46/www/img/meals/jia.png",
+                "H5030DA46/www/familyHealth.html",
+                "H5030DA46/www/healthOne.html",
+                "H5030DA46/www/img/divice.png",
+                "H5030DA46/www/img/999gml.jpg",
+                "H5030DA46/www/img/boys.png",
+                "H5030DA46/www/img/yp4.jpg",
+                "H5030DA46/www/img/woman.png",
+                "H5030DA46/www/shopList.html",
+                "H5030DA46/www/unpackage/res/icons/180x180.png",
+                "H5030DA46/www/search.html",
+                "H5030DA46/www/img/meals/meals-scbl.png",
+                "H5030DA46/www/img/back.png",
+                "H5030DA46/www/img/mall_top_categories/ccg_example.jpg",
+                "H5030DA46/www/img/shequBig.png",
+                "H5030DA46/www/img/businessLogo.png",
+                "H5030DA46/www/img/baikeBig.png",
+                "H5030DA46/www/img/banner6.jpg",
+                "H5030DA46/www/js/qrcode.min.js",
+                "H5030DA46/www/img/onekey.png",
+                "H5030DA46/www/img/eat2.jpg",
+                "H5030DA46/www/img/build.png",
+                "H5030DA46/www/unpackage/res/icons/87x87.png",
+                "H5030DA46/www/js/vue.js",
+                "H5030DA46/www/img/advice.png",
+                "H5030DA46/www/img/bj2.jpg",
+                "H5030DA46/www/img/health.png",
+                "H5030DA46/www/img/options.png",
+                "H5030DA46/www/img/dermatology.png",
+                "H5030DA46/www/healthyEncyclopediaXi.html",
+                "H5030DA46/www/img/yr5.jpg",
+                "H5030DA46/www/css/buyFood.css",
+                "H5030DA46/www/js/lib-flexible.js",
+                "H5030DA46/www/img/jf3.jpg",
+                "H5030DA46/www/img/eat3.jpg",
+                "H5030DA46/www/img/jf2.jpg",
+                "H5030DA46/www/img/search.png",
+                "H5030DA46/www/img/yaocai.jpg",
+                "H5030DA46/www/img/Triangle1.png",
+                "H5030DA46/www/js/menu.js",
+                "H5030DA46/www/messageTipAll.html",
+                "H5030DA46/www/js/standard.js",
+                "H5030DA46/www/img/mall_top_categories/bjp_example.jpg",
+                "H5030DA46/www/img/jf4.jpg",
+                "H5030DA46/www/img/meals/bz4.png",
+                "H5030DA46/www/img/meals/cook-time.png",
+                "H5030DA46/www/js/health_advice.js",
+                "H5030DA46/www/img/meals/food3.png",
+                "H5030DA46/www/img/report.png",
+                "H5030DA46/www/healthyEncyclopediaBJ.html",
+                "H5030DA46/www/img/QRcode.png",
+                "H5030DA46/www/img/nomessage.png",
+                "H5030DA46/www/img/mans.png",
+                "H5030DA46/www/js/iconfont.js",
+                "H5030DA46/www/img/nomessage1.jpg",
+                "H5030DA46/www/unpackage/res/icons/144x144.png",
+                "H5030DA46/www/img/yr2.jpg",
+                "H5030DA46/www/healthCheckShare.html",
+                "H5030DA46/www/unpackage/res/icons/48x48.png",
+                "H5030DA46/www/img/dinner.png",
+                "H5030DA46/www/img/yp2.jpg",
+                "H5030DA46/www/img/Rectangle 141.png",
+                "H5030DA46/www/img/meals/shop.png",
+                "H5030DA46/www/unpackage/res/icons/152x152.png",
+                "H5030DA46/www/healthyEncyclopediaZ.html",
+                "H5030DA46/www/familyHealthOne.html",
+                "H5030DA46/www/img/home.svg",
+                "H5030DA46/www/img/yr0.jpg",
+                "H5030DA46/www/img/nodata.png",
+                "H5030DA46/www/img/Group 61.png",
+                "H5030DA46/www/img/Shape.png",
+                "H5030DA46/www/img/kaisuo.png",
+                "H5030DA46/www/index2.html",
+                "H5030DA46/www/shop.html",
+                "H5030DA46/www/img/meals/jian.png",
+                "H5030DA46/www/img/bj4.jpg",
+                "H5030DA46/www/img/warning.png",
+                "H5030DA46/www/img/banner1.jpg",
+                "H5030DA46/www/img/mall_top_categories/zmy_example.jpg",
+                "H5030DA46/www/unpackage/res/icons/76x76.png",
+                "H5030DA46/www/img/run.png",
+                "H5030DA46/www/airDataUpdate.html",
+                "H5030DA46/www/unpackage/res/icons/58x58.png",
+                "H5030DA46/www/img/familyBig.png",
+                "H5030DA46/www/phoneLoginCheck.html",
+                "H5030DA46/www/img/meals/bz5.png",
+                "H5030DA46/www/img/banner5.jpg",
+                "H5030DA46/www/js/kuNum.js",
+                "H5030DA46/www/img/healthBig.png",
+                "H5030DA46/www/saomaLogin.html",
+                "H5030DA46/www/lexinData.html",
+                "H5030DA46/www/img/js1.jpg",
+                "H5030DA46/www/img/meals/meals-collection.png",
+                "H5030DA46/www/airData.html",
+                "H5030DA46/www/manifest.json",
+                "H5030DA46/www/img/mall_top_categories/xsp_exmaple.jpg",
+                "H5030DA46/www/saoma.html",
+                "H5030DA46/www/img/shopping.png",
+                "H5030DA46/www/img/hand.png",
+                "H5030DA46/www/diseaseSearchResult.html",
+                "H5030DA46/www/healthcareResult.html",
+                "H5030DA46/www/img/meals/food2.png",
+                "H5030DA46/www/img/Star Copy 2.png",
+                "H5030DA46/www/unpackage/res/icons/192x192.png",
+                "H5030DA46/www/buildTip.html",
+                "H5030DA46/www/img/meals/bz2.png",
+                "H5030DA46/www/OneKeyLogon.html",
+                "H5030DA46/www/css/style(norobot).css",
+                "H5030DA46/www/healthyEncyclopediaSearch.html",
+                "H5030DA46/www/img/meals/meals-today-yx.png",
+                "H5030DA46/www/img/guahao.png",
+                "H5030DA46/www/img/tingche.png",
+                "H5030DA46/www/img/meals/meals-search-logo.png",
+                "H5030DA46/www/familyOneAdd.html",
+                "H5030DA46/www/unpackage/res/icons/167x167.png",
+                "H5030DA46/www/unpackage/res/icons/29x29.png",
+                "H5030DA46/www/img/yp1.jpg",
+                "H5030DA46/www/js/echarts.min.js",
+                "H5030DA46/www/img/mall_top_categories/zcg_example.jpg",
+                "H5030DA46/www/img/eat0.png",
+                "H5030DA46/www/css/mui.picker.min.css",
+                "H5030DA46/www/myinformationFirst.html",
+                "H5030DA46/www/img/ok.png",
+                "H5030DA46/www/img/meals/buyFood-return.png",
+                "H5030DA46/www/img/js5.jpg",
+                "H5030DA46/www/img/wuye.png",
+                "H5030DA46/www/img/yr4.jpg",
+                "H5030DA46/www/img/bj0.jpg",
+                "H5030DA46/www/img/user.png",
+                "H5030DA46/www/img/nomessage2.png",
+                "H5030DA46/www/leftMessage.html",
+                "H5030DA46/www/familyGroupAdd.html",
+                "H5030DA46/www/img/luyouqi.png",
+                "H5030DA46/www/css/style.css",
+                "H5030DA46/www/img/Star.png",
+                "H5030DA46/www/img/999pipa.jpg",
+                "H5030DA46/www/js/city.data-3.js",
+                "H5030DA46/www/js/mui.imageViewer.js",
+                "H5030DA46/www/js/swiper.min.js",
+                "H5030DA46/www/unpackage/res/icons/60x60.png",
+                "H5030DA46/www/img/meals/food1.png",
+                "H5030DA46/www/img/jianshen.jpg",
+                "H5030DA46/www/img/return.png",
+                "H5030DA46/www/img/Triangle.png",
+                "H5030DA46/www/img/eat1.jpg",
+                "H5030DA46/www/img/homeAd.png",
+                "H5030DA46/www/img/yp0.jpg",
+                "H5030DA46/www/healthcareList.html",
+                "H5030DA46/www/img/tip.png",
+                "H5030DA46/www/img/meals/meals-yxms.png",
+                "H5030DA46/www/adressAdd.html",
+                "H5030DA46/www/img/history.png",
+                "H5030DA46/www/img/meals/meals-tpyp.png",
+                "H5030DA46/www/img/newtip.png",
+                "H5030DA46/www/airGroupSelect.html",
+                "H5030DA46/www/img/meals/meals-banner.png",
+                "index.html",
+                "H5030DA46/www/disease.html",
+                "H5030DA46/www/img/mall_top_categories/gmy_example.jpg",
+                "H5030DA46/www/adverisement.html",
+                "H5030DA46/www/js/configUrl.js",
+                "H5030DA46/www/diseaseList.html",
+                "H5030DA46/www/familyHealthOneMore.html",
+                "H5030DA46/www/js/vue-router.js",
+                "H5030DA46/www/js/rem.js",
+                "H5030DA46/www/img/wuyeBig.png",
+                "H5030DA46/www/img/pingjia2.png",
+                "H5030DA46/www/img/psychology.png",
+                "H5030DA46/www/img/meals/jinru.png",
+                "H5030DA46/www/familyEdit.html",
+                "H5030DA46/www/img/jf0.jpg",
+                "H5030DA46/www/consult.html",
+                "H5030DA46/www/img/saomiao.png",
+                "H5030DA46/www/propertyRead.html",
+                "H5030DA46/www/js/mui.min.js",
+                "H5030DA46/www/img/js0.jpg",
+                "H5030DA46/www/img/bj1.jpg",
+                "H5030DA46/www/css/cookbook.css",
+                "H5030DA46/www/healthcareResult1.html",
+                "H5030DA46/www/css/mui.css",
+                "H5030DA46/www/img/meals/xiaoxi.png",
+                "H5030DA46/www/unpackage/res/icons/120x120.png",
+                "H5030DA46/www/img/work.png",
+                "H5030DA46/www/familyHealthOne1.html",
+                "H5030DA46/www/img/vup.png",
+                "H5030DA46/www/myself.html",
+                "H5030DA46/www/img/meals/bz3.png",
+                "H5030DA46/www/img/meals/cook-xz.png",
+                "H5030DA46/www/js/utils/http.js",
+                "H5030DA46/www/lawTip.html",
+                "H5030DA46/www/img/bj5.jpg",
+                "H5030DA46/www/img/mall_top_categories/yys_example.jpg",
+                "H5030DA46/www/img/jf1.jpg",
+                "H5030DA46/www/img/girls.png",
+                "H5030DA46/www/img/meals/ck-return.png",
+                "H5030DA46/www/healthCheckQR.html",
+                "H5030DA46/www/img/right-tip.png",
+                "H5030DA46/www/img/Rectangle 6.png",
+                "H5030DA46/www/css/swiper.min.css",
+                "H5030DA46/www/img/up.png",
+                "H5030DA46/www/todayData.html",
+                "H5030DA46/www/css/meals.css",
+                "H5030DA46/www/img/shouhuo.png",
+                "H5030DA46/www/unpackage/res/icons/72x72.png",
+                "H5030DA46/www/img/meals/meals-food-one.png",
+                "H5030DA46/www/img/password.png",
+                "H5030DA46/www/img/Group 3.png",
+                "H5030DA46/www/unpackage/res/icons/20x20.png",
+                "H5030DA46/www/img/yr1.jpg",
+                "H5030DA46/www/img/yaopin.jpg",
+                "H5030DA46/www/phoneLogin.html",
+                "H5030DA46/www/img/light.png",
+                "H5030DA46/www/img/lunch.png",
+                "H5030DA46/www/loginSelect.html",
+                "H5030DA46/www/img/yutip.png",
+                "H5030DA46/www/img/shouhou.png",
+                "H5030DA46/www/unpackage/res/icons/96x96.png",
+                "H5030DA46/www/img/weight.png",
+                "H5030DA46/www/img/meals/meals-sysm.png",
+                "H5030DA46/www/fonts/mui.ttf",
+                "H5030DA46/www/img/yuer.jpg",
+                "H5030DA46/www/img/js3.jpg",
+                "H5030DA46/www/img/healthcheck.png",
+                "H5030DA46/www/img/background.svg",
+                "H5030DA46/www/img/shape1.png",
+                "H5030DA46/www/img/jf5.jpg",
+                "H5030DA46/www/img/my.svg",
+                "H5030DA46/www/img/meals/dinwei.png",
+                "H5030DA46/www/unpackage/res/icons/256x256.png",
+                "H5030DA46/www/familyGroupEditName.html",
+                "H5030DA46/www/img/sport.png",
+                "H5030DA46/www/img/hot.png",
+                "H5030DA46/www/img/health.svg",
+                "H5030DA46/www/img/find.svg",
+                "H5030DA46/www/img/activity.png",
+                "H5030DA46/www/img/family3.png",
+                "H5030DA46/www/css/mui.min.css",
+                "H5030DA46/www/img/home.png",
+                "H5030DA46/www/js/standardCheck.js",
+                "H5030DA46/www/img/meals/meals-food1.png",
+                "H5030DA46/www/img/background1.png",
+                "H5030DA46/www/img/zuji.png",
+                "H5030DA46/www/img/prosess.png",
+                "H5030DA46/www/img/username.png",
+                "H5030DA46/www/adressList.html",
+                "H5030DA46/www/TVfamilySelect.html",
+                "H5030DA46/www/img/breakfast.png",
+                "H5030DA46/www/TVlogin.html",
+                "H5030DA46/www/img/Rectangle 142.png",
+                "H5030DA46/www/img/meals/bz1.png",
+                "H5030DA46/www/propertyService.html",
+                "H5030DA46/www/img/eat4.jpg",
+                "H5030DA46/www/img/shoucang.png",
+                "H5030DA46/www/img/tvlogin.png",
+                "H5030DA46/www/img/js4.jpg",
+                "H5030DA46/www/img/family2.png",
+                "H5030DA46/www/img/meals/cook-bz.png",
+                "H5030DA46/www/unpackage/res/icons/40x40.png",
+                "H5030DA46/www/img/down.png",
+                "H5030DA46/www/unpackage/res/icons/1024x1024.png",
+                "H5030DA46/www/register.html",
+                "H5030DA46/www/img/meals/health.png",
+                "H5030DA46/www/img/doctorLogo.png",
+                "H5030DA46/www/img/air.png",
+                "H5030DA46/www/SmartPaking.html",
+                "H5030DA46/www/img/meals/ck-page.png",
+                "H5030DA46/www/js/arttmpl.js",
+                "H5030DA46/www/img/Rectangle 14.png",
+                "H5030DA46/www/airDataBinding.html",
+                "H5030DA46/www/adressEdit.html",
+                "H5030DA46/www/diseaseMessage.html",
+                "H5030DA46/www/img/yr3.jpg",
+                "H5030DA46/www/img/Banner.png",
+                "H5030DA46/www/img/meals/meals-zczp.png",
+                "H5030DA46/www/xueyaCheck.html",
+                "H5030DA46/www/healthyEncyclopediaResult.html"
+            ]
+        }
+    },
+    "screenOrientation" : [ "portrait-primary" ]
 }
