@@ -159,11 +159,13 @@
 			
 			//智能手表
 			document.getElementById('watch-button').addEventListener('tap', function() {
-
-				mui.openWindow({
-					url: 'SmartWatch.html',
-					id: 'SmartWatch'
-				})
+				plus.runtime.launchApplication({pname:"com.alcatel.movetime"
+					,extra:{}}, function ( e ) {
+				});
+				// mui.openWindow({
+				// 	url: 'SmartWatch.html',
+				// 	id: 'SmartWatch'
+				// })
 
 			})
 			

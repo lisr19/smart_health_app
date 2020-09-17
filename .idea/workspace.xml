@@ -4,7 +4,8 @@
     <list default="true" id="6f4d41cd-9276-4dde-a550-436a602dae70" name="默认的" comment="11">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SmartWatch.html" beforeDir="false" afterPath="$PROJECT_DIR$/SmartWatch.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bodyfatScale.html" beforeDir="false" afterPath="$PROJECT_DIR$/bodyfatScale.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +85,7 @@
       <workItem from="1578287823448" duration="9000" />
       <workItem from="1600162400373" duration="4084000" />
       <workItem from="1600168104749" duration="33246000" />
-      <workItem from="1600304241652" duration="4294000" />
+      <workItem from="1600304241652" duration="12850000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1600220584818</created>
@@ -114,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600246037984</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="11">
+      <created>1600308564642</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1600308564642</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -136,52 +144,52 @@
     <option name="LAST_COMMIT_MESSAGE" value="11" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600308380075">
+    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600324055222">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600308380075" />
+    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600324055222" />
     <state x="555" y="171" key="FileChooserDialogImpl" timestamp="1600221196330">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="555" y="171" key="FileChooserDialogImpl/0.0.1549.831@0.0.1549.831" timestamp="1600221196330" />
-    <state x="618" y="126" key="RollbackChangesDialog" timestamp="1600308377030">
+    <state x="618" y="126" key="RollbackChangesDialog" timestamp="1600324035016">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="618" y="126" key="RollbackChangesDialog/0.0.1549.831@0.0.1549.831" timestamp="1600308377030" />
+    <state x="618" y="126" key="RollbackChangesDialog/0.0.1549.831@0.0.1549.831" timestamp="1600324035016" />
     <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1600220559293">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1600220559293" />
-    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600308364922">
+    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600324029051">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1549.831@0.0.1549.831" timestamp="1600308364922" />
-    <state x="465" y="153" width="618" height="524" key="find.popup" timestamp="1600306960070">
+    <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1549.831@0.0.1549.831" timestamp="1600324029051" />
+    <state x="6" y="151" width="618" height="524" key="find.popup" timestamp="1600319674014">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="465" y="153" width="618" height="524" key="find.popup/0.0.1549.831@0.0.1549.831" timestamp="1600306960070" />
+    <state x="6" y="151" width="618" height="524" key="find.popup/0.0.1549.831@0.0.1549.831" timestamp="1600319674014" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SmartWatch.html</url>
-          <line>455</line>
+          <line>445</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SmartWatch.html</url>
-          <line>500</line>
+          <line>478</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SmartWatch.html</url>
-          <line>411</line>
+          <line>408</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/SmartWatch.html</url>
-          <line>402</line>
+          <line>399</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
