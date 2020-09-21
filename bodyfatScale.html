@@ -72,6 +72,17 @@
                     	<img src="img/right-tip.png" />
                     </div>
 				</div>
+				<div class="divice-select" id="jiaju-button">
+					<div class="divice-select-left">
+						<img src="img/jiaju.png" />
+					</div>
+					<div class="divice-select-center">
+						智能家居
+					</div>
+					<div class="divice-select-right">
+						<img src="img/right-tip.png" />
+					</div>
+				</div>
 				<div class="divice-add">
 					请期待更多设备~
 				</div>
@@ -168,7 +179,15 @@
 				// })
 
 			})
-			
+			//智能家居
+			document.getElementById('jiaju-button').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'http://wanfanji.3322.org:8123/',
+					id: 'SmartWatch'
+				})
+
+			})
+
 		</script>
 	</body>
 

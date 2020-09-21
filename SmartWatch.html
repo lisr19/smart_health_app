@@ -197,7 +197,7 @@
 		<div class="tabs-panel-content" style="padding: 0;margin-top: 1rem;">
 			<div id="xinlv" style="width: 15rem;height: 6rem;"></div>
 		</div>
-		<div style="margin-top: 20px" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		<div style="margin-top: 20px;text-align: center" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 			<div class="mui-scroll">
 				<a class="mui-control-item" :class="item.day=== '今天'?'mui-active':''"
 				   v-for="(item,index) in weekList" @tap="chageHear(item,index)">
@@ -270,6 +270,15 @@
 	var vm = new Vue({
 		el: "#smart_watch",
 		data: {
+			options :{
+				scrollY: false, //是否竖向滚动
+				scrollX: true, //是否横向滚动
+				startX: 0, //初始化时滚动至x
+				startY: 0, //初始化时滚动至y
+				indicators: true, //是否显示滚动条
+				deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
+				bounce: true //是否启用回弹
+			},
 			weekList:[],
 			walking_calories:0,
 			walking_distance:0,
@@ -335,11 +344,15 @@
 		created(){
 			this.userid = localStorage.getItem('userid');
 			this.getNowDate()
-			this.getDay(0,'-')
-			this.getDay(-1,'-')
-			this.getDay(-2,'-')
-			// this.getDay(-3,'-')
+			// this.getDay(-6,'-')
+			// this.getDay(-5,'-')
 			// this.getDay(-4,'-')
+			// this.getDay(-3,'-')
+			this.getDay(-2,'-')
+			this.getDay(-1,'-')
+			this.getDay(0,'-')
+			// this.changeTabsIndex(0)
+
 
 		},
 		mounted:function(){
@@ -367,16 +380,25 @@
 				if (oDay.length <= 1) oDay = '0' + oDay;
 				this.currDate = oYear + str + oMoth + str + oDay;
 				this.showDate = oMoth + '月' + oDay+'日'
-				if(num===0){
-					this.showDate = '今天'
-				}
-				this.weekList.unshift({
+				// if(num===0){
+				// 	this.showDate = '今天'
+				// }
+				this.weekList.push({
 					day:this.showDate,
 					bzday:this.currDate
 				})
 				// console.log(this.weekList);
 				this.getInfor({uid:this.userid,date:this.currDate})
 
+			},
+			formatDate (now) {
+				var year=now.getFullYear();  //取得4位数的年份
+				var month=now.getMonth()+1;  //取得日期中的月份，其中0表示1月，11表示12月
+				var date=now.getDate();      //返回日期月份中的天数（1到31）
+				var hour=now.getHours();     //返回日期中的小时数（0到23）
+				var minute=now.getMinutes(); //返回日期中的分钟数（0到59）
+				var second=now.getSeconds(); //返回日期中的秒数（0到59）
+				return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
 			},
 			getNowDate () {
 				var date = new Date();
@@ -411,58 +433,124 @@
 							let dataList =data.data.list
 							let total_calories = []
 							let total_distance = []
+							let fall_asleep = []
+							let restless = []
 							let total_duration = []
 							let walking = []
+							let running = []
 							let create_time = ''
 							if(dataList.length){
 								dataList.forEach((item,index)=>{
-									create_time = item.create_time.substr(0,10)
-									walking.push(item.total_steps)
-									total_calories.push(item.total_calories)
-									total_distance.push(item.total_distance)
-									total_duration.push(item.total_duration)
-									if(item.action_type==='SLEEP'){
-										create_time = item.create_time.substr(0,10)
-										this.sleepCountData.push({
-											sleep:new Date(item.start_time).toTimeString().substr(0, 8),
-											// sleep:item.start_time,
-											// wake:item.end_time,
-											day:create_time===this.currentDate?'今天':create_time,
-											wake:new Date(item.end_time).toTimeString().substr(0, 8),
-											sleep_count:((item.fall_asleep+item.restless)/(1000)).toFixed(2),
-											sleep_deep:((item.fall_asleep/(1000))).toFixed(2),
-											sleep_lightly:(item.restless/(1000)).toFixed(2),
-											create_time:create_time
-										})
+									if(item.action_type==='WALK'){
+										console.log(item.total_steps);
+										walking.push(item.total_steps)
+										total_calories.push(item.total_calories)
+										total_distance.push(item.total_distance)
+										total_duration.push(item.total_duration)
+									}if(item.action_type==='SLEEP'){
+										fall_asleep.push(item.fall_asleep)
+										fall_asleep=eval(fall_asleep.join("+"))
+										let nowday = this.formatDate(item.start_time)
+										console.log(item.start_time);
+										// console.log(JSON.stringify(this.sleepCountData));
 										// console.log(this.sleepCountData.length);
+										console.log(nowday);
+										// this.sleepCountData.push({
+										// 	sleep:new Date(item.start_time).toTimeString().substr(0, 8),
+										// 	sleep:item.start_time,
+										// 	wake:item.end_time,
+										// 	wake:new Date(item.end_time).toTimeString().substr(0, 8),
+										// 	sleep_count:((fall_asleep+restless)/(1000)).toFixed(2),
+										// 	sleep_deep:fall_asleep,
+										// 	nowday:nowday,
+										// 	sleep_lightly:(restless/(1000)).toFixed(2),
+										// })
+										// this.sleepCountData = this.sleepCountData.map((item,index) => {
+										// 	return {...item, ...this.weekList[index]}
+										//
+										// })
+										// console.log(JSON.stringify(this.sleepCountData));
 									}
+
+									// create_time = item.create_time.substr(0,10)
+
+
 								})
 
+
 								// console.log(JSON.stringify(this.sleepCountData));
-								walking=eval(walking.join("+"))
-								total_calories=(eval(total_calories.join("+"))/1000).toFixed(2)||0
-								total_distance=(eval(total_distance.join("+"))/1000).toFixed(2)||0
-								total_duration=(eval(total_duration.join("+"))/60).toFixed(2)||0
 								this.footCountData.push({
 									walking:walking,
-									running:0,
-									day:create_time===this.currentDate?'今天':create_time,
-									count:walking,
+									// running:running,
+									// day:create_time===this.currentDate?'今天':create_time,
+									count:walking+running,
 									total_calories:total_calories,
 									total_distance:total_distance,
 									total_duration:total_duration,
-									create_time:create_time
+									// create_time:create_time
 								})
+								// console.log(JSON.stringify(this.footCountData));
+								// console.log(JSON.stringify(this.sleepCountData));
+								// walking=eval(walking.join("+"))
+								// console.log(walking);
+								// running=eval(running.join("+"))
+								// total_calories=(eval(total_calories.join("+"))/1000).toFixed(2)||0
+								// total_distance=(eval(total_distance.join("+"))/1000).toFixed(2)||0
+								// total_duration=(eval(total_duration.join("+"))/60).toFixed(2)||0
+								// fall_asleep=(eval(fall_asleep.join("+"))).toFixed(2)
+								// restless=(eval(restless.join("+"))).toFixed(2)
+
+								// this.sleepCountData.push({
+								// 	// sleep:new Date(item.start_time).toTimeString().substr(0, 8),
+								// 	// sleep:item.start_time,
+								// 	// wake:item.end_time,
+								// 	// day:create_time===this.currentDate?'今天':create_time,
+								// 	// wake:new Date(item.end_time).toTimeString().substr(0, 8),
+								// 	sleep_count:(fall_asleep+restless).toFixed(2),
+								// 	sleep_deep:fall_asleep,
+								// 	sleep_lightly:restless,
+								// 	// create_time:create_time
+								// })
+							}else {
+								// this.footCountData.push({
+								// 	walking:0,
+								// 	running:0,
+								// 	// day:this.currDate,
+								// 	count:0,
+								// 	total_calories:0,
+								// 	total_distance:0,
+								// 	total_duration:0,
+								// 	create_time:this.currDate
+								// })
+								// this.sleepCountData.push({
+								// 	sleep:0,
+								// 	// day:this.currDate,
+								// 	wake:0,
+								// 	sleep_count:0,
+								// 	sleep_deep:0,
+								// 	sleep_lightly:0,
+								// 	create_time:this.currDate
+								// })
+								// console.log(this.currDate);
 							}
-							this.footCountData.sort(function(a, b) {
-								return b.create_time < a.create_time ? 1 : -1
+
+							this.footCountData = this.footCountData.map((item,index) => {
+								return {...item, ...this.weekList[index]}
+
 							})
-							this.sleepCountData.sort(function(a, b) {
-								return b.create_time < a.create_time ? 1 : -1
-							})
+							// console.log(JSON.stringify(this.weekList));
+							// this.footCountData.sort(function(a, b) {
+							// 	return b.bzday < a.bzday ? 1 : -1
+							// })
+
+							// console.log(JSON.stringify(this.footCountData));
+							// this.sleepCountData.sort(function(a, b) {
+							// 	return b.create_time < a.create_time ? 1 : -1
+							// })
 							setTimeout(()=>{
-								this.setFootCount()
-							},1000)
+								// this.changeTabsIndex(0)
+								// this.setFootCount()
+							},100)
 							// console.log(JSON.stringify(this.footCountData));
 						}
 
@@ -905,7 +993,9 @@
 		},
 
 	})
-
+	mui('.mui-scroll-wrapper').scroll({
+		deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+	});
 	mui.plusReady(function() {
 		//			//滚动
 		//			mui('.mui-scroll-wrapper').scroll({
