@@ -573,24 +573,48 @@
 				
 				//机器人回复
 				var toRobot = function(content) {
-					console.log(content);
 					var params = {
-						question:content
+						question:content,
+						user_id:userId
 					}
-					doGet('/healthAI/findAnswer', params, function(data) {
-						console.log(JSON.stringify(data));
-						if(data.code != '0') {
-							console.log('链接失败，请检查网络');
-						} else {
+					mui.ajax('http://120.24.0.130:11002/index/healthAnswer', {
+						headers: {
+							'Authorization': localStorage.getItem('token'),
+							phone: localStorage.getItem('phone')
+						},
+						data:params,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒,
+						async: false,
+						success: function(data) {
+							console.log(JSON.stringify(data));
 							record.push({
 								sender: 'zs',
 								type: 'text',
 								avatarUrl:'img/roboot.png',
-								content: data.data
+								content: data.data.answer
 							});
 							bindMsgList();
-						}  
-					})
+						},
+						error: function(xhr1, type1, errorThrown1) {
+							console.log(errorThrown1);
+						}
+					});
+					// doPost('http://120.24.0.130:11002/index/healthAnswer', params, function(data) {
+					// 	console.log(JSON.stringify(data));
+					// 	if(data.code != '0') {
+					// 		console.log('链接失败，请检查网络');
+					// 	} else {
+					// 		record.push({
+					// 			sender: 'zs',
+					// 			type: 'text',
+					// 			avatarUrl:'img/roboot.png',
+					// 			content: data.data
+					// 		});
+					// 		bindMsgList();
+					// 	}
+					// })
 				};
 
 				//获取聊天历史
