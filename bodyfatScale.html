@@ -50,6 +50,17 @@
                     	<img src="img/right-tip.png" />
                     </div>
 				</div>
+				<div class="divice-select" id="online-button">
+					<div class="divice-select-left">
+						<img src="img/familyBig.png" />
+					</div>
+					<div class="divice-select-center">
+						在线会诊
+					</div>
+					<div class="divice-select-right">
+						<img src="img/right-tip.png" />
+					</div>
+				</div>
 				<div class="divice-select" id="scale-button">
                     <div class="divice-select-left">
                     	<img src="img/weight.png" />
@@ -183,9 +194,20 @@
 			document.getElementById('jiaju-button').addEventListener('tap', function() {
 				mui.openWindow({
 					url: 'http://wanfanji.3322.org:8123/',
-					id: 'SmartWatch'
+					id: 'SmartWatch',
+					styles:{
+						titleNView: {
+							autoBackButton: true,
+							backgroundColor: '',
+						},
+					}
 				})
 
+			})
+			document.getElementById('online-button').addEventListener('tap', function() {
+				plus.runtime.launchApplication({pname:"com.annet.annetconsultationzlhz"
+					,extra:{}}, function ( e ) {
+				});
 			})
 
 		</script>

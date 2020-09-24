@@ -67,15 +67,15 @@
 								<div class="swiper" style="margin-top: -0.3rem;" >
 									<div class="swiper-container">
 										<div class="swiper-wrapper" style="margin-left: -30px;" id="loopImg">
-											<div class="swiper-slide">
+											<div class="swiper-slide" @tap="open">
 												<div class="swiper-shadow"></div>
 												<img src="img/banner6.jpg" />
 											</div>
-											<div class="swiper-slide">
+											<div class="swiper-slide" @tap="open">
 												<div class="swiper-shadow"></div>
 												<img src="img/banner5.jpg" />
 											</div>
-											<div class="swiper-slide">
+											<div class="swiper-slide" @tap="open">
 												<div class="swiper-shadow"></div>
 												<img src="img/banner1.jpg" />
 											</div>
@@ -297,6 +297,18 @@
 					labelArray:''
 				},
 				methods:{
+					open(){
+						mui.openWindow({
+							url: 'http://ep.halohealth.cn/contentArticle/index.html',
+							id: 'contentArticle',
+							styles:{
+								titleNView: {
+									autoBackButton: true,
+									backgroundColor: '',
+								},
+							}
+						})
+					},
 					imgSuijiOne:function(index){
 						var arr = [1,2,3,4,5,6];
 						//var index = Math.floor((Math.random()*arr.length));
