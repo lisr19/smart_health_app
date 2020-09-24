@@ -128,15 +128,6 @@
 				mui.back();
 			});
 
-			//家庭检测设备
-			document.getElementById('family-button').addEventListener('tap', function() {
-
-				mui.openWindow({
-					url: 'familyCheck.html',
-					id: 'familyCheck'
-				})
-
-			})
 			
 			//乐心体脂秤
 			document.getElementById('scale-button').addEventListener('tap', function() {
@@ -177,8 +168,16 @@
 //					id: 'lexinData'
 //				})
 			})
-			
-			
+
+			//家庭检测设备
+			document.getElementById('family-button').addEventListener('tap', function() {
+
+				mui.openWindow({
+					url: 'familyCheck.html',
+					id: 'familyCheck'
+				})
+
+			})
 			//智能手表
 			document.getElementById('watch-button').addEventListener('tap', function() {
 				plus.runtime.launchApplication({pname:"com.alcatel.movetime"
@@ -204,6 +203,7 @@
 				})
 
 			})
+			//远程会诊
 			document.getElementById('online-button').addEventListener('tap', function() {
 				plus.runtime.launchApplication({pname:"com.annet.annetconsultationzlhz"
 					,extra:{}}, function ( e ) {

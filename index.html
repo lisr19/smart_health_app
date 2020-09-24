@@ -12,7 +12,12 @@
 		<script type="text/javascript" src="js/iconfont.js"></script>
 		<!--<script type="text/javascript" src="js/lib-flexible.js" ></script>-->
 		<style>
-
+			.main-samllcom-one img{
+				width:auto;
+				height:1.2rem;
+				margin-bottom: 0.1rem;
+				border-radius: 8px;
+			}
 		</style>
 	</head>
 
@@ -83,24 +88,41 @@
 				</div>
 
 				<!--小区服务-->
+<!--				<div class="main-smallcom">-->
+<!--					<div class="main-smallcom-title">小区服务</div>-->
+<!--					<div class="main-smallcom-content">-->
+<!--						<div class="main-samllcom-one" id="propertyTip">-->
+<!--							<img src="img/wuyeBig.png" />-->
+<!--							<span>物业服务</span>-->
+<!--						</div>-->
+<!--						<div class="main-samllcom-one" id="parking">-->
+<!--							<img src="img/smartpaking.png" />-->
+<!--							<span>智能停车</span>-->
+<!--						</div>-->
+<!--						<div class="main-samllcom-one" id="onekey">-->
+<!--							<img src="img/onekey.png" />-->
+<!--							<span>一键开锁</span>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--				综合服务-->
 				<div class="main-smallcom">
-					<div class="main-smallcom-title">小区服务</div>
+					<div class="main-smallcom-title">综合服务</div>
 					<div class="main-smallcom-content">
-						<div class="main-samllcom-one" id="propertyTip">
-							<img src="img/wuyeBig.png" />
-							<span>物业服务</span>
+						<div class="main-samllcom-one" id="watch-button">
+							<img src="img/watch.png" />
+							<span>智能手表</span>
 						</div>
-						<div class="main-samllcom-one" id="parking">
-							<img src="img/smartpaking.png" />
-							<span>智能停车</span>
+						<div class="main-samllcom-one" id="online-button">
+							<img src="img/zaixian.jpg" />
+							<span>远程会诊</span>
 						</div>
-						<div class="main-samllcom-one" id="onekey">
-							<img src="img/onekey.png" />
-							<span>一键开锁</span>
+						<div class="main-samllcom-one" id="jiaju-button">
+							<img src="img/jiaju.png" />
+							<span>智能家居</span>
 						</div>
 					</div>
 				</div>
-
 				<div style="width: 7.5rem;height: 1.2rem;"></div>
 
 			</div>
@@ -414,14 +436,14 @@
 
 			//监听家庭体检
 			document.getElementById('familyCheck').addEventListener('tap', function() {
-//				mui.openWindow({
-//					url: 'familyCheck.html',
-//					id: 'familyCheck'
-//				})
 				mui.openWindow({
-					url: 'bodyfatScale.html',
-					id: 'bodyfatScale'
+					url: 'familyCheck.html',
+					id: 'familyCheck'
 				})
+// 				mui.openWindow({
+// 					url: 'bodyfatScale.html',
+// 					id: 'bodyfatScale'
+// 				})
 			});
 
 			//监听健康百科
@@ -432,26 +454,26 @@
 				})
 			});
 
-			//监听智能停车
-			document.getElementById('parking').addEventListener('tap', function() {
-				mui.openWindow({
-					url: 'SmartPaking.html',
-					id: 'SmartPaking'
-				})
-
-			});
-
-			//监听物业通知
-			document.getElementById('propertyTip').addEventListener('tap', function() {
-//				mui.openWindow({
-//					url: 'propertyTip.html',
-//					id: 'propertyTip'
-//				})
-				mui.openWindow({
-					url: 'propertyService.html',
-					id: 'propertyService'
-				})
-			});
+// 			//监听智能停车
+// 			document.getElementById('parking').addEventListener('tap', function() {
+// 				mui.openWindow({
+// 					url: 'SmartPaking.html',
+// 					id: 'SmartPaking'
+// 				})
+//
+// 			});
+//
+// 			//监听物业通知
+// 			document.getElementById('propertyTip').addEventListener('tap', function() {
+// //				mui.openWindow({
+// //					url: 'propertyTip.html',
+// //					id: 'propertyTip'
+// //				})
+// 				mui.openWindow({
+// 					url: 'propertyService.html',
+// 					id: 'propertyService'
+// 				})
+// 			});
 
 			//监听健康服务
 			document.getElementById('healthService').addEventListener('tap', function() {
@@ -465,24 +487,55 @@
 			});
 
 			// 监听一键开锁
-			document.getElementById('onekey').addEventListener('tap', function() {
-				var token2 = localStorage.getItem('token2');
-				if(mui.os.android) {
-					// 获取主Activity对象的实例
-					var main = plus.android.runtimeMainActivity();
-					var Intent = plus.android.importClass("android.content.Intent");
-					var intent = new Intent(main.getIntent());
-					intent.putExtra("token",token2);
-					intent.setClassName(main, "com.sysu.Smart_health.OneKey.MainActivity");
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// document.getElementById('onekey').addEventListener('tap', function() {
+			// 	var token2 = localStorage.getItem('token2');
+			// 	if(mui.os.android) {
+			// 		// 获取主Activity对象的实例
+			// 		var main = plus.android.runtimeMainActivity();
+			// 		var Intent = plus.android.importClass("android.content.Intent");
+			// 		var intent = new Intent(main.getIntent());
+			// 		intent.putExtra("token",token2);
+			// 		intent.setClassName(main, "com.sysu.Smart_health.OneKey.MainActivity");
+			// 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			//
+			// 		main.startActivity(intent);
+			//
+			// 	} else {
+			// 		mui.alert('目前一键开锁功能仅支持安卓平台。', '提示', null);
+			// 	}
+			// });
 
-					main.startActivity(intent);
+			//智能手表
+			document.getElementById('watch-button').addEventListener('tap', function() {
+				plus.runtime.launchApplication({pname:"com.alcatel.movetime"
+					,extra:{}}, function ( e ) {
+				});
+				// mui.openWindow({
+				// 	url: 'SmartWatch.html',
+				// 	id: 'SmartWatch'
+				// })
 
-				} else {
-					mui.alert('目前一键开锁功能仅支持安卓平台。', '提示', null);
-				}
-			});
+			})
+			//智能家居
+			document.getElementById('jiaju-button').addEventListener('tap', function() {
+				mui.openWindow({
+					url: 'http://wanfanji.3322.org:8123/',
+					id: 'SmartWatch',
+					styles:{
+						titleNView: {
+							autoBackButton: true,
+							backgroundColor: '',
+						},
+					}
+				})
 
+			})
+			//远程会诊
+			document.getElementById('online-button').addEventListener('tap', function() {
+				plus.runtime.launchApplication({pname:"com.annet.annetconsultationzlhz"
+					,extra:{}}, function ( e ) {
+				});
+			})
 			//获取徕康最后的体检数据
 			function loadLKdata() {
 
