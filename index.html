@@ -14,7 +14,7 @@
 		<style>
 			.main-samllcom-one img{
 				width:auto;
-				height:1.2rem;
+				height:0.8rem;
 				margin-bottom: 0.1rem;
 				border-radius: 8px;
 			}
@@ -111,15 +111,15 @@
 					<div class="main-smallcom-content">
 						<div class="main-samllcom-one" id="watch-button">
 							<img src="img/watch.png" />
-							<span>智能手表</span>
+							<p style="color: #000000;font-size: 12px">智能手表</p>
 						</div>
 						<div class="main-samllcom-one" id="online-button">
 							<img src="img/zaixian.jpg" />
-							<span>远程会诊</span>
+							<p style="color: #000000;font-size: 12px">远程会诊</p>
 						</div>
 						<div class="main-samllcom-one" id="jiaju-button">
 							<img src="img/jiaju.png" />
-							<span>智能家居</span>
+							<p style="color: #000000;font-size: 12px">智能家居</p>
 						</div>
 					</div>
 				</div>
@@ -166,7 +166,12 @@
 		<script type="text/javascript" src="js/configUrl.js"></script>
 		<script type="text/javascript" src="js/utils/http.js"></script>
 		<script>
-			mui.init();
+			mui.init({
+				keyEventBind: {
+					swipeBack:true //启用右滑关闭功能
+				}
+			}
+			);
 			var msg_content = ''; //消息内容
 			var msg_topic = ''; //主题
 			var clientId = ''; //个推生成的客户端id
@@ -236,6 +241,7 @@
 				var first = null;
 				mui.back = function() {
 					if(!first) {
+						plus.webview.currentWebview().close();
 						first = new Date().getTime();
 						mui.toast('再按一次退出应用');
 						setTimeout(function() {
@@ -486,6 +492,7 @@
 				// })
 			});
 
+
 			// 监听一键开锁
 			// document.getElementById('onekey').addEventListener('tap', function() {
 			// 	var token2 = localStorage.getItem('token2');
@@ -519,15 +526,20 @@
 			//智能家居
 			document.getElementById('jiaju-button').addEventListener('tap', function() {
 				mui.openWindow({
-					url: 'http://wanfanji.3322.org:8123/',
-					id: 'SmartWatch',
-					styles:{
-						titleNView: {
-							autoBackButton: true,
-							backgroundColor: '',
-						},
-					}
+					url: 'healthService.html',
+					id: 'healthService'
 				})
+				// mui.openWindow({
+				// 	url: 'http://wanfanji.3322.org:8123/',
+				// 	id: 'jiaju',
+				//
+				// 	styles:{
+				// 		titleNView: {
+				// 			autoBackButton: true,
+				// 			backgroundColor: '',
+				// 		},
+				// 	}
+				// })
 
 			})
 			//远程会诊

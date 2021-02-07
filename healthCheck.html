@@ -703,6 +703,7 @@
 				}
 
 				var data = doGet('/data/findLKLastData', params, function(data) {
+					console.log('徕康设备111');
 					console.log('徕康设备' + JSON.stringify(data));
 					if(data.code != '0') {
 						console.log('链接失败，请检查网络');
@@ -750,7 +751,7 @@
 				}
 				
 				doGet('/user/findById', params, function(data) {
-					console.log('信息：' + JSON.stringify(data));
+					// console.log('信息：' + JSON.stringify(data));
 					if(data.code != '0') {
 						console.log('链接失败，请检查网络');
 					} else {

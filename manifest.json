@@ -1,6 +1,6 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
-    "id" : "H57E90F7F", /*应用的标识，创建应用时自动生成，勿手动修改*/
+    "id" : "H5B1FF04F", /*应用的标识，创建应用时自动生成，勿手动修改*/
     "name" : "智慧健康", /*应用名称，程序桌面图标名称*/
     "version" : {
         "name" : "1.0", /*应用版本名称*/
@@ -163,7 +163,8 @@
                         "retina40" : "", /*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
                         "retina47" : "", /*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
                         "retina55" : "", /*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
-                        "retina55l" : "" /*5.5 英寸设备(iPhone6 Plus)横屏启动图片，分辨率：2208x1242*/
+                        "retina55l" : "", /*5.5 英寸设备(iPhone6 Plus)横屏启动图片，分辨率：2208x1242*/
+                        "portrait-896h@3x" : "img/qidon.png"
                     },
                     "ipad" : {
                         "portrait" : "", /*iPad竖屏启动图片，分辨率：768x1004*/
@@ -179,9 +180,9 @@
                 "android" : {
                     "mdpi" : "", /*普通屏启动图片，分辨率：240x282*/
                     "ldpi" : "", /*大屏启动图片，分辨率：320x442*/
-                    "hdpi" : "D:/work/www/img/qidon.png", /*高分屏启动图片，分辨率：480x762*/
-                    "xhdpi" : "D:/work/www/img/qidon.png", /*720P高分屏启动图片，分辨率：720x1242*/
-                    "xxhdpi" : "D:/work/www/img/qidon.png" /*1080P高分屏启动图片，分辨率：1080x1882*/
+                    "hdpi" : "img/qidon.png", /*高分屏启动图片，分辨率：480x762*/
+                    "xhdpi" : "img/qidon.png", /*720P高分屏启动图片，分辨率：720x1242*/
+                    "xxhdpi" : "img/qidon.png" /*1080P高分屏启动图片，分辨率：1080x1882*/
                 }
             },
             "debug" : false,
@@ -612,5 +613,6 @@
             ]
         }
     },
-    "screenOrientation" : [ "portrait-primary" ]
+    "screenOrientation" : [ "portrait-primary" ],
+    "fullscreen" : true
 }

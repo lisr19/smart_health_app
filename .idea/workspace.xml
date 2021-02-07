@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f4d41cd-9276-4dde-a550-436a602dae70" name="默认的" comment="跳转">
-      <change afterPath="$PROJECT_DIR$/img/zaixian.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bodyfatScale.html" beforeDir="false" afterPath="$PROJECT_DIR$/bodyfatScale.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +90,8 @@
       <workItem from="1600751102205" duration="3196000" />
       <workItem from="1600763791367" duration="1241000" />
       <workItem from="1600823027923" duration="2614000" />
-      <workItem from="1600913831823" duration="7790000" />
+      <workItem from="1600913831823" duration="8072000" />
+      <workItem from="1600999521399" duration="597000" />
     </task>
     <task id="LOCAL-00001" summary="11">
       <created>1600220584818</created>
@@ -152,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600933573818</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="跳转">
+      <created>1600941232910</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1600941232910</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -177,10 +181,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="跳转" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600933683922">
+    <state x="426" y="8" key="CommitChangelistDialog2" timestamp="1600941229854">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600933683922" />
+    <state x="426" y="8" key="CommitChangelistDialog2/0.0.1549.831@0.0.1549.831" timestamp="1600941229854" />
     <state x="555" y="171" key="FileChooserDialogImpl" timestamp="1600933424815">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
@@ -189,10 +193,10 @@
       <screen x="0" y="0" width="1549" height="831" />
     </state>
     <state x="618" y="126" key="RollbackChangesDialog/0.0.1549.831@0.0.1549.831" timestamp="1600324035016" />
-    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1600933576323">
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2" timestamp="1600941239718">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
-    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1600933576323" />
+    <state x="367" y="149" key="Vcs.Push.Dialog.v2/0.0.1549.831@0.0.1549.831" timestamp="1600941239718" />
     <state x="93" y="93" width="1363" height="645" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600324309067">
       <screen x="0" y="0" width="1549" height="831" />
     </state>
@@ -241,7 +245,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index.html</url>
           <line>324</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
